@@ -1,6 +1,8 @@
 package org.union4dev.base.module.render;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiIngame;
+import net.minecraft.item.ItemStack;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.Startup;
@@ -8,7 +10,9 @@ import org.union4dev.base.events.render.Render2DEvent;
 import org.union4dev.base.module.movement.Sprint;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.NumberValue;
+import skid.cedo.shader.RoundedUtil;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 @Startup // enable when client startup
@@ -19,8 +23,9 @@ public class HUD implements Access.InstanceAccess {
      */
     public BooleanValue array = new BooleanValue("Array", true);
     public BooleanValue blur = new BooleanValue("Blur", false);
-    public NumberValue blurRadius = new NumberValue("blurRadius",3,0,20,1);
     public NumberValue spacing = new NumberValue("Spacing",3,1,5,1);
+    public static BooleanValue mchotbar = new BooleanValue("MCHotbar", false);
+    public static NumberValue hotbarRadius = new NumberValue("HotbarRadius", 2,0,10,1);
 
 
     /**
@@ -36,6 +41,7 @@ public class HUD implements Access.InstanceAccess {
         double x = event.getScaledResolution().getScaledWidth() / 1.85;
         double y = event.getScaledResolution().getScaledHeight() * 0.8;
         access.getFontManager().F18.drawStringWithShadow(String.format("[Sprint: %s]", new Sprint().isEnabled(Sprint.class) ? "Toggled" : "Disable"),x,y,-1);
+
 
         if(array.getValue()){
             int width = event.getScaledResolution().getScaledWidth();

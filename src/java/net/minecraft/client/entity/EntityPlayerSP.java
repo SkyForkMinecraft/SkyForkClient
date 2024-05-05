@@ -24,6 +24,7 @@ import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.*;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
+import org.union4dev.base.Access;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.movement.MotionUpdateEvent;
 import org.union4dev.base.events.movement.MoveEvent;
@@ -271,6 +272,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void sendChatMessage(String message)
     {
+        if(Access.getInstance().getCommandManager().processCommand(message)) return;
         this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
     }
 

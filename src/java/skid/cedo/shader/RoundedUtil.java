@@ -2,13 +2,9 @@ package skid.cedo.shader;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import org.union4dev.base.Access;
-import org.union4dev.base.module.render.HUD;
 import skid.cedo.misc.ColorUtil;
 import skid.cedo.render.GLUtil;
 import skid.cedo.render.RenderUtil;
-import skid.cedo.shader.ShaderUtil;
-import skid.cedo.shader.blur.GaussianBlur;
 
 import java.awt.*;
 
@@ -23,10 +19,7 @@ public class RoundedUtil {
 
 
     public static void drawRound(float x, float y, float width, float height, float radius, Color color) {
-        boolean blur = new HUD().blur.getValue();
-        if(blur) GaussianBlur.startBlur();
         drawRound(x, y, width, height, radius, false, color);
-        if(blur) GaussianBlur.endBlur(new HUD().blurRadius.getValue().intValue(),0);
     }
 
     public static void drawGradientHorizontal(float x, float y, float width, float height, float radius, Color left, Color right) {

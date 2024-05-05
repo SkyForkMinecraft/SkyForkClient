@@ -18,7 +18,7 @@ public class CommandManager {
     /**
      * Command Prefix, you can edit it
      */
-    private static final String prefix = "-";
+    private static final String prefix = ".";
     /**
      * Command map
      */
@@ -65,10 +65,10 @@ public class CommandManager {
             if (command != null) {
                 command.run(args);
             } else {
-                ChatUtil.info("Try -help.");
+                ChatUtil.info("Try .help.");
             }
         } else {
-            ChatUtil.info("Try -help.");
+            ChatUtil.info("Try .help.");
         }
 
         return true;

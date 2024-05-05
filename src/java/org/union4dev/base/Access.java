@@ -28,6 +28,8 @@ import java.util.regex.Pattern;
 public final class Access {
 
     public static String CLIENT_NAME = "SkyClient-Fork";
+    public static Color CLIENT_COLOR = new Color(205,189,255);
+    public static boolean loaded;
 
     /**
      * Client Instance, access managers with this
@@ -80,6 +82,8 @@ public final class Access {
 
         // Finished Initialization
         Display.setTitle(CLIENT_NAME);
+
+        loaded = true;
     }
 
 
