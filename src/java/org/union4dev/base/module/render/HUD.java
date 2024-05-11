@@ -38,10 +38,6 @@ public class HUD implements Access.InstanceAccess {
         FontManager.F18.drawStringWithShadow("SkyFork Client", 4, 4, -1);
         FontManager.F18.drawStringWithShadow(String.format("[FPS: %s]", Minecraft.getDebugFPS()),event.getScaledResolution().getScaledWidth() / 2.0,0,-1);
 
-        double x = event.getScaledResolution().getScaledWidth() / 1.85;
-        double y = event.getScaledResolution().getScaledHeight() - 32;
-        FontManager.F18.drawStringWithShadow(String.format("[Sprint: %s]", new Sprint().isEnabled(Sprint.class) ? "Toggled" : "Disabled"),x,y,-1);
-
         if(array.getValue()){
             int width = event.getScaledResolution().getScaledWidth();
             int y1 = 4;
@@ -58,7 +54,6 @@ public class HUD implements Access.InstanceAccess {
                 y1 += FontManager.F18.getHeight() + spacing.getValue().intValue();
             }
         }
-        BlurUtil.drawString("SBSB",50,50,Color.white);
 
     }
 
