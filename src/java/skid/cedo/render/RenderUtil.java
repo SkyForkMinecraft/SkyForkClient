@@ -7,10 +7,14 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.union4dev.base.Access;
 
+import java.awt.*;
+
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL14.glBlendFuncSeparate;
 
 /**
  * @author LangYa466
@@ -111,4 +115,33 @@ public class RenderUtil implements Access.InstanceAccess {
 
         GLUtil.end2DRendering();
     }
+
+    // liquidbounce
+    public static void drawLoadingCircle(float x, float y) {
+        for (int i = 0; i < 4; i++) {
+            long time = System.nanoTime();
+            int rot = (int) ((time / 5000000 * i) % 360);
+            drawCircle(x, y, i * 10, rot - 180, rot);
+        }
+    }
+
+    public static void drawCircle(float x, float y, float radius, int start, int end) {
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+        color(Color.WHITE.getRGB());
+
+        glEnable(GL_LINE_SMOOTH);
+        glLineWidth(2F);
+        glBegin(GL_LINE_STRIP);
+        for (float i = end; i >= start; i -= (360 / 90.0f)) {
+            glVertex2f((float) (x + (Math.cos(i * Math.PI / 180) * (radius * 1.001F))), (float) (y + (Math.sin(i * Math.PI / 180) * (radius * 1.001F))));
+        }
+        glEnd();
+        glDisable(GL_LINE_SMOOTH);
+
+        glEnable(GL_TEXTURE_2D);
+        glDisable(GL_BLEND);
+    }
+
 }

@@ -1,5 +1,7 @@
 package net.minecraft.client.gui;
 
+import cn.langya.modules.client.CustomHotbar;
+import cn.langya.modules.client.PostProcessing;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -375,12 +377,16 @@ public class GuiIngame extends Gui
             float f = this.zLevel;
             this.zLevel = -90.0F;
 
-            if (HUD.mchotbar.getValue()) {
+            if (Access.InstanceAccess.access.getModuleManager().isEnabled(CustomHotbar.class)) {
+                if (CustomHotbar.mcHotbar.getValue())  {
+                    this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
+                    this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
+                } else {
+                    CustomHotbar.drawCustomHotbar(sr);
+                }
+            } else {
                 this.drawTexturedModalRect(i - 91, sr.getScaledHeight() - 22, 0, 0, 182, 22);
                 this.drawTexturedModalRect(i - 91 - 1 + entityplayer.inventory.currentItem * 20, sr.getScaledHeight() - 22 - 1, 0, 22, 24, 22);
-            } else {
-                RoundedUtil.drawRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 22, 180, 20, 3, new Color(0, 0, 0, 80));
-                RoundedUtil.drawRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 22F, 180, 1, HUD.hotbarRadius.getValue().intValue(), Access.CLIENT_COLOR);
             }
             this.zLevel = f;
             GlStateManager.enableRescaleNormal();

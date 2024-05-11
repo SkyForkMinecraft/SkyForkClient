@@ -87,7 +87,9 @@ public class GuiButton extends Gui
             if(!Access.isContainsChinese(this.displayString)) {
                 Access.getInstance().getFontManager().F18.drawCenteredString(this.displayString, this.xPosition + this.width / 2.0, this.yPosition + (this.height - 8.0) / 2, j);
             } else {
+                GlStateManager.resetColor();
                 this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, j);
+                GlStateManager.resetColor();
             }
         }
     }

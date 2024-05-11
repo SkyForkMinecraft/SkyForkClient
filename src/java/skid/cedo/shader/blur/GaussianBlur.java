@@ -18,7 +18,7 @@ import java.nio.FloatBuffer;
  */
 public class GaussianBlur implements Access.InstanceAccess {
 
-    private static final ShaderUtil gaussianBlur = new ShaderUtil("gaussian");
+    private static final ShaderUtil gaussianBlur = new ShaderUtil("shaders/gaussian-blur.frag");
 
     private static Framebuffer framebuffer = new Framebuffer(1, 1, false);
 

@@ -1,6 +1,10 @@
 package net.minecraft.client.gui;
 
+import cn.langya.utils.BlurUtil;
+import cn.langya.verify.Verify;
 import com.google.common.collect.Lists;
+
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,7 +38,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 import org.union4dev.base.Access;
+import org.union4dev.base.gui.font.FontManager;
 import skid.cedo.render.RenderUtil;
+
+import javax.swing.*;
 
 public class GuiMainMenu extends GuiScreen {
     private static final AtomicInteger field_175373_f = new AtomicInteger(0);
@@ -167,6 +174,7 @@ public class GuiMainMenu extends GuiScreen {
 
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options")));
         this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, I18n.format("menu.quit")));
+        this.buttonList.add(new GuiButton(114514, 5, 5, 50, 20, "Copy hwid"));
         this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 72 + 12));
 
         synchronized (this.threadLock)
@@ -217,6 +225,10 @@ public class GuiMainMenu extends GuiScreen {
             this.mc.displayGuiScreen(new GuiMultiplayer(this));
         }
 
+        if (button.id == 114514)
+        {
+            JOptionPane.showInputDialog(null, Verify.getHWID(),Verify.getHWID());
+        }
 
         if (button.id == 4)
         {
@@ -314,8 +326,8 @@ public class GuiMainMenu extends GuiScreen {
 
         Access.getInstance().getFontManager().F18.drawString( s, 2, this.height - 10, -1);
 
-        String s2 = "client base by cubk1 || client by langya";
-        Access.getInstance().getFontManager().F18.drawString(s2, this.width - this.fontRendererObj.getStringWidth(s2) - 10, this.height - 10, -1);
+        String s2 = "client by langya";
+        Access.getInstance().getFontManager().F18.drawCenteredString(s2, this.width - this.fontRendererObj.getStringWidth(s2) - 10, this.height - 10, -1);
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
         {
@@ -336,7 +348,7 @@ public class GuiMainMenu extends GuiScreen {
             this.modUpdateNotification.drawScreen(mouseX, mouseY, partialTicks);
         }
 
-        Access.getInstance().getFontManager().F50.drawCenteredStringWithShadow("SkyClient", width / 2.0,height / 3.5, -1);
+        FontManager.F50.drawCenteredStringWithShadow("SkyClient", width / 2.0,height / 4, -1);
 
     }
 

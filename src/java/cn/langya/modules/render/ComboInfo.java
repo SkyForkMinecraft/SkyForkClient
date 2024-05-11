@@ -19,6 +19,7 @@ public class ComboInfo implements Access.InstanceAccess {
 
     @EventTarget
     private void onRender2D(Render2DEvent event) {
+        new cn.langya.elements.impls.ComboInfo().setState(true);
         setSuffix(String.valueOf(new cn.langya.elements.impls.ComboInfo().getCombo()),this);
         new cn.langya.elements.impls.ComboInfo().setX(x.getValue().intValue());
         new cn.langya.elements.impls.ComboInfo().setY(y.getValue().intValue());

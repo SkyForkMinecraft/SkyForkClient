@@ -1,5 +1,9 @@
 package org.union4dev.base.module;
 
+import cn.langya.modules.client.Cape;
+import cn.langya.modules.client.CustomHotbar;
+import cn.langya.modules.client.IRC;
+import cn.langya.modules.client.PostProcessing;
 import cn.langya.modules.misc.*;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
@@ -45,6 +49,7 @@ public final class ModuleManager {
         // Register Render
         register(HUD.class, "HUD", Category.Render);
         register(ClickGui.class,"ClickGui",Category.Render);
+        register(CustomHotbar.class,"CustomHotbar",Category.Render);
 
         /*
         register(ComboInfo.class,"ComboInfo",Category.Render);
@@ -53,8 +58,8 @@ public final class ModuleManager {
         register(TargetHUD.class,"TargetHUD",Category.Render);
          */
 
-        // Register Misc
-        register(About.class,"About",Category.Misc);
+        // Register Client
+        register(Cape.class,"Cape",Category.Client);
 
     }
 

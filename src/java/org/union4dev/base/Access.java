@@ -1,6 +1,9 @@
 package org.union4dev.base;
 
+import cn.langya.GuiHuaYuTing;
 import cn.langya.elements.ElementManager;
+import cn.langya.verify.User;
+import cn.langya.verify.Verify;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
@@ -27,7 +30,8 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static String CLIENT_NAME = "SkyClient-Fork";
+    public static final String CLIENT_VERSION = "1.3";
+    public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
 
@@ -59,6 +63,20 @@ public final class Access {
     @Getter
     private ElementManager elementManager;
 
+    public static void displayTray(String title, String text, TrayIcon.MessageType type) {
+        SystemTray tray = SystemTray.getSystemTray();
+        Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
+        TrayIcon trayIcon = new TrayIcon(image, "Tray Demo");
+        trayIcon.setImageAutoSize(true);
+        trayIcon.setToolTip("System tray icon demo");
+        try {
+            tray.add(trayIcon);
+            trayIcon.displayMessage(title, text, type);
+        } catch (AWTException e) {
+            System.err.println("TrayIcon could not be added.");
+        }
+    }
+
     /**
      * Entry point
      */
@@ -66,12 +84,9 @@ public final class Access {
     public Access() {
         INSTANCE = this;
 
-        Display.setTitle(CLIENT_NAME + "Loading...");
+        Display.setTitle(CLIENT_NAME  + " - " + CLIENT_VERSION + " - 加载中...");
 
-        if (!WebUtils.get("https://gitee.com/langya1337/sky-client/raw/master/version.txt").contains("1.0")) {
-            Desktop.getDesktop().browse(new URL("https://qm.qq.com/q/qH7jTDrJcI").toURI());
-            Runtime.getRuntime().exit(0);
-        }
+        Verify.verify();
 
         // Initialize managers
         moduleManager = new ModuleManager();
@@ -81,7 +96,11 @@ public final class Access {
         elementManager = new ElementManager();
 
         // Finished Initialization
-        Display.setTitle(CLIENT_NAME);
+        if(Verify.user == User.User) {
+            Display.setTitle(CLIENT_NAME + " - " + Verify.user.getDisplayName());
+        } else {
+            Display.setTitle(CLIENT_NAME  + " - " + CLIENT_VERSION);
+        }
 
         loaded = true;
     }

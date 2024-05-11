@@ -50,7 +50,7 @@ public class ModeButton extends Component {
     @Override
     public void mouseClicked(int mouseX, int mouseY, int button) {
         if (isMouseOnButton(mouseX, mouseY) && button == 0 && this.parent.open) {
-            //value.setMode(value.getNextMode().getName());
+            value.setValue(value.getNextValue());
         }
     }
 

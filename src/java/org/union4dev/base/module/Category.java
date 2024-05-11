@@ -18,5 +18,6 @@ public enum Category {
     /**
      * Other Modules
      */
-    Misc
+    Misc,
+    Client
 }

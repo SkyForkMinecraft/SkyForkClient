@@ -2,6 +2,7 @@ package skid.cedo.shader;
 
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
+import org.union4dev.base.Access;
 import skid.cedo.misc.FileUtils;
 
 import java.io.ByteArrayInputStream;
@@ -10,9 +11,8 @@ import java.io.InputStream;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
-import static org.union4dev.base.Access.InstanceAccess.mc;
 
-public class ShaderUtil {
+public class ShaderUtil implements Access.InstanceAccess {
     private final int programID;
 
     public ShaderUtil(String fragmentShaderLoc, String vertexShaderLoc) {
@@ -61,9 +61,6 @@ public class ShaderUtil {
                     break;
                 case "roundedRectGradient":
                     fragmentShaderID = createShader(new ByteArrayInputStream(roundedRectGradient.getBytes()), GL_FRAGMENT_SHADER);
-                    break;
-                case "gaussian":
-                    fragmentShaderID = createShader(new ByteArrayInputStream(gaussian.getBytes()), GL_FRAGMENT_SHADER);
                     break;
                 default:
                     fragmentShaderID = createShader(mc.getResourceManager().getResource(new ResourceLocation(fragmentShaderLoc)).getInputStream(), GL_FRAGMENT_SHADER);
@@ -208,28 +205,6 @@ public class ShaderUtil {
 
         return shader;
     }
-
-    private String gaussian = "#version 120\n" +
-            "\n" +
-            "uniform sampler2D textureIn;\n" +
-            "uniform vec2 texelSize, direction;\n" +
-            "uniform float radius, weights[256];\n" +
-            "\n" +
-            "#define offset texelSize * direction\n" +
-            "\n" +
-            "void main() {\n" +
-            "    vec3 color = texture2D(textureIn, gl_TexCoord[0].st).rgb * weights[0];\n" +
-            "    float totalWeight = weights[0];\n" +
-            "\n" +
-            "    for (float f = 1.0; f <= radius; f++) {\n" +
-            "        color += texture2D(textureIn, gl_TexCoord[0].st + f * offset).rgb * (weights[int(abs(f))]);\n" +
-            "        color += texture2D(textureIn, gl_TexCoord[0].st - f * offset).rgb * (weights[int(abs(f))]);\n" +
-            "\n" +
-            "        totalWeight += (weights[int(abs(f))]) * 2.0;\n" +
-            "    }\n" +
-            "\n" +
-            "    gl_FragColor = vec4(color / totalWeight, 1.0);\n" +
-            "}";
 
     private String kawaseUpGlow = "#version 120\n" +
             "\n" +

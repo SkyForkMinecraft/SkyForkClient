@@ -1,5 +1,6 @@
 package net.minecraft.client.entity;
 
+import cn.langya.modules.client.Cape;
 import com.mojang.authlib.GameProfile;
 import java.io.File;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ import net.minecraft.world.WorldSettings;
 import net.optifine.player.CapeUtils;
 import net.optifine.player.PlayerConfigurations;
 import net.optifine.reflect.Reflector;
+import org.union4dev.base.Access;
 
 public abstract class AbstractClientPlayer extends EntityPlayer
 {
@@ -96,9 +98,9 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         if (!Config.isShowCapes())
         {
             return null;
-        }
-        else
-        {
+        } else if(Access.InstanceAccess.access.getModuleManager().isEnabled(Cape.class))  {
+                return Cape.getCape();
+        } else {
             if (this.reloadCapeTimeMs != 0L && System.currentTimeMillis() > this.reloadCapeTimeMs)
             {
                 CapeUtils.reloadCape(this);
