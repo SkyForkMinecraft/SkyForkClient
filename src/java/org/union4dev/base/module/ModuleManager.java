@@ -1,10 +1,6 @@
 package org.union4dev.base.module;
 
-import cn.langya.modules.client.Cape;
-import cn.langya.modules.client.CustomHotbar;
-import cn.langya.modules.client.IRC;
-import cn.langya.modules.client.PostProcessing;
-import cn.langya.modules.misc.*;
+import cn.langya.modules.client.*;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.*;
@@ -15,6 +11,7 @@ import org.union4dev.base.module.movement.*;
 import org.union4dev.base.module.render.*;
 import org.union4dev.base.value.AbstractValue;
 import org.union4dev.base.value.impl.*;
+import skid.canelex.DragonWings;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -60,6 +57,8 @@ public final class ModuleManager {
 
         // Register Client
         register(Cape.class,"Cape",Category.Client);
+        register(NoHurtCam.class,"NoHurtCam",Category.Client);
+        register(DragonWings.class,"DragonWings",Category.Client);
 
     }
 

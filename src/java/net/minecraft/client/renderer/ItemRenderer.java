@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer;
 
+import cn.langya.modules.client.OldAnimation;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,10 +18,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemMap;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.src.Config;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -363,64 +361,70 @@ public class ItemRenderer
     /**
      * Renders the active item in the player's hand when in first person mode. Args: partialTickTime
      */
-    public void renderItemInFirstPerson(float partialTicks)
-    {
-        if (!Config.isShaders() || !Shaders.isSkipRenderHand())
-        {
+    public void renderItemInFirstPerson(float partialTicks) {
+        if (!Config.isShaders() || !Shaders.isSkipRenderHand()) {
             float f = 1.0F - (this.prevEquippedProgress + (this.equippedProgress - this.prevEquippedProgress) * partialTicks);
-            AbstractClientPlayer abstractclientplayer = this.mc.thePlayer;
-            float f1 = abstractclientplayer.getSwingProgress(partialTicks);
-            float f2 = abstractclientplayer.prevRotationPitch + (abstractclientplayer.rotationPitch - abstractclientplayer.prevRotationPitch) * partialTicks;
-            float f3 = abstractclientplayer.prevRotationYaw + (abstractclientplayer.rotationYaw - abstractclientplayer.prevRotationYaw) * partialTicks;
+            float f1 = this.mc.thePlayer.getSwingProgress(partialTicks);
+            float f2 = this.mc.thePlayer.prevRotationPitch + (this.mc.thePlayer.rotationPitch - this.mc.thePlayer.prevRotationPitch) * partialTicks;
+            float f3 = this.mc.thePlayer.prevRotationYaw + (this.mc.thePlayer.rotationYaw - this.mc.thePlayer.prevRotationYaw) * partialTicks;
             this.rotateArroundXAndY(f2, f3);
-            this.setLightMapFromPlayer(abstractclientplayer);
-            this.rotateWithPlayerRotations((EntityPlayerSP)abstractclientplayer, partialTicks);
+            this.setLightMapFromPlayer(this.mc.thePlayer);
+            this.rotateWithPlayerRotations(this.mc.thePlayer, partialTicks);
             GlStateManager.enableRescaleNormal();
             GlStateManager.pushMatrix();
 
-            if (this.itemToRender != null)
-            {
-                if (this.itemToRender.getItem() instanceof ItemMap)
-                {
-                    this.renderItemMap(abstractclientplayer, f2, f, f1);
+            if (this.itemToRender != null) {
+                if (OldAnimation.oldRod.getValue() && itemToRender.getItem() instanceof ItemCarrotOnAStick) {
+                    GlStateManager.translate(0.08F, -0.027F, -0.33F);
+                    GlStateManager.scale(0.93F, 1.0F, 1.0F);
                 }
-                else if (abstractclientplayer.getItemInUseCount() > 0)
-                {
+                if (OldAnimation.oldRod.getValue() && itemToRender.getItem() instanceof ItemFishingRod) {
+                    GlStateManager.translate(0.08F, -0.027F, -0.33F);
+                    GlStateManager.scale(0.93F, 1.0F, 1.0F);
+                }
+                if (OldAnimation.oldSwing.getValue() && f1 != 0.0F && !mc.thePlayer.isBlocking() && !mc.thePlayer.isEating() && !mc.thePlayer.isUsingItem()) {
+                    GlStateManager.scale(0.85F, 0.85F, 0.85F);
+                    GlStateManager.translate(-0.06F, 0.003F, 0.05F);
+                }
+                if (this.itemToRender.getItem() instanceof ItemMap) {
+                    this.renderItemMap(this.mc.thePlayer, f2, f, f1);
+                } else if (this.mc.thePlayer.getItemInUseCount() > 0) {
                     EnumAction enumaction = this.itemToRender.getItemUseAction();
-
-                    switch (enumaction)
-                    {
+                    switch (enumaction) {
                         case NONE:
                             this.transformFirstPersonItem(f, 0.0F);
                             break;
-
                         case EAT:
                         case DRINK:
-                            this.performDrinking(abstractclientplayer, partialTicks);
+                            this.performDrinking(this.mc.thePlayer, partialTicks);
                             this.transformFirstPersonItem(f, 0.0F);
                             break;
 
                         case BLOCK:
-                            this.transformFirstPersonItem(f, 0.0F);
+                            if (OldAnimation.blockHit.getValue()) {
+                                this.transformFirstPersonItem(f, f1);
+                            } else {
+                                this.transformFirstPersonItem(f, 0.0F);
+                            }
                             this.doBlockTransformations();
                             break;
 
                         case BOW:
-                            this.transformFirstPersonItem(f, 0.0F);
-                            this.doBowTransformations(partialTicks, abstractclientplayer);
+                            if (OldAnimation.oldBow.getValue()) {
+                                this.transformFirstPersonItem(f, f1);
+                            } else {
+                                this.transformFirstPersonItem(f, 0.0F);
+                            }
+                            this.doBowTransformations(partialTicks, this.mc.thePlayer);
                     }
-                }
-                else
-                {
+                } else {
                     this.doItemUsedTransformations(f1);
                     this.transformFirstPersonItem(f, f1);
                 }
 
-                this.renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
-            }
-            else if (!abstractclientplayer.isInvisible())
-            {
-                this.renderPlayerArm(abstractclientplayer, f, f1);
+                this.renderItem(this.mc.thePlayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
+            } else if (!this.mc.thePlayer.isInvisible()) {
+                this.renderPlayerArm(this.mc.thePlayer, f, f1);
             }
 
             GlStateManager.popMatrix();

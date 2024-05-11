@@ -98,7 +98,7 @@ public abstract class AbstractClientPlayer extends EntityPlayer
         if (!Config.isShowCapes())
         {
             return null;
-        } else if(Access.InstanceAccess.access.getModuleManager().isEnabled(Cape.class))  {
+        } else if(Access.InstanceAccess.access.getModuleManager().isEnabled(Cape.class) && this == Minecraft.getMinecraft().thePlayer)  {
                 return Cape.getCape();
         } else {
             if (this.reloadCapeTimeMs != 0L && System.currentTimeMillis() > this.reloadCapeTimeMs)
