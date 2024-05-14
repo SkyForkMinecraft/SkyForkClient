@@ -317,10 +317,10 @@ public class GuiMainMenu extends GuiScreen {
         GlStateManager.popMatrix();
         String s = "Minecraft 1.8.9";
 
-        FontManager.F18.drawString( s, 2, this.height - 10, -1);
+        FontManager.F18.drawStringWithShadow( s, 2, this.height - 10, -1);
 
         String s2 = "Copyright Mojang AB. Do not distribute. || SkyforkClient Author : LangYa466";
-        FontManager.F18.drawCenteredString(s2, this.width - this.fontRendererObj.getStringWidth(s2) - 2, this.height - 10, -1);
+        FontManager.F18.drawStringWithShadow(s2, this.width - FontManager.F18.getWidth(s2) - 2, this.height - 11, -1);
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
         {
