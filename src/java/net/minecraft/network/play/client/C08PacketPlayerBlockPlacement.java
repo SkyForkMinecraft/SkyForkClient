@@ -1,6 +1,8 @@
 package net.minecraft.network.play.client;
 
 import java.io.IOException;
+
+import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
@@ -9,13 +11,13 @@ import net.minecraft.util.BlockPos;
 
 public class C08PacketPlayerBlockPlacement implements Packet<INetHandlerPlayServer>
 {
-    private static final BlockPos field_179726_a = new BlockPos(-1, -1, -1);
-    private BlockPos position;
-    private int placedBlockDirection;
-    private ItemStack stack;
-    private float facingX;
-    private float facingY;
-    private float facingZ;
+    public static final BlockPos field_179726_a = new BlockPos(-1, -1, -1);
+    public BlockPos position;
+    public int placedBlockDirection;
+    public ItemStack stack;
+    public float facingX;
+    public float facingY;
+    public float facingZ;
 
     public C08PacketPlayerBlockPlacement()
     {
@@ -36,35 +38,44 @@ public class C08PacketPlayerBlockPlacement implements Packet<INetHandlerPlayServ
         this.facingZ = facingZIn;
     }
 
-    /**
-     * Reads the raw packet data from the data stream.
-     */
     public void readPacketData(PacketBuffer buf) throws IOException
     {
         this.position = buf.readBlockPos();
         this.placedBlockDirection = buf.readUnsignedByte();
         this.stack = buf.readItemStackFromBuffer();
-        this.facingX = (float)buf.readUnsignedByte() / 16.0F;
-        this.facingY = (float)buf.readUnsignedByte() / 16.0F;
-        this.facingZ = (float)buf.readUnsignedByte() / 16.0F;
+        if (ViaLoadingBase.getInstance().getTargetVersion().getVersion() > 47) {
+            this.facingX = buf.readUnsignedByte();
+            this.facingY = buf.readUnsignedByte();
+            this.facingZ = buf.readUnsignedByte();
+        } else {
+            this.facingX = buf.readUnsignedByte() / 16.0F;
+            this.facingY = buf.readUnsignedByte() / 16.0F;
+            this.facingZ = buf.readUnsignedByte() / 16.0F;
+        }
     }
+
+
 
     /**
      * Writes the raw packet data to the data stream.
      */
     public void writePacketData(PacketBuffer buf) throws IOException
     {
+
         buf.writeBlockPos(this.position);
         buf.writeByte(this.placedBlockDirection);
         buf.writeItemStackToBuffer(this.stack);
-        buf.writeByte((int)(this.facingX * 16.0F));
-        buf.writeByte((int)(this.facingY * 16.0F));
-        buf.writeByte((int)(this.facingZ * 16.0F));
+        if (ViaLoadingBase.getInstance().getTargetVersion().getVersion() > 47) {
+            buf.writeByte((int)(this.facingX));
+            buf.writeByte((int)(this.facingY));
+            buf.writeByte((int)(this.facingZ));
+        } else {
+            buf.writeByte((int)(this.facingX * 16.0F));
+            buf.writeByte((int)(this.facingY * 16.0F));
+            buf.writeByte((int)(this.facingZ * 16.0F));
+        }
     }
 
-    /**
-     * Passes this Packet on to the NetHandler for processing.
-     */
     public void processPacket(INetHandlerPlayServer handler)
     {
         handler.processPlayerBlockPlacement(this);
@@ -85,25 +96,16 @@ public class C08PacketPlayerBlockPlacement implements Packet<INetHandlerPlayServ
         return this.stack;
     }
 
-    /**
-     * Returns the offset from xPosition where the actual click took place.
-     */
     public float getPlacedBlockOffsetX()
     {
         return this.facingX;
     }
 
-    /**
-     * Returns the offset from yPosition where the actual click took place.
-     */
     public float getPlacedBlockOffsetY()
     {
         return this.facingY;
     }
 
-    /**
-     * Returns the offset from zPosition where the actual click took place.
-     */
     public float getPlacedBlockOffsetZ()
     {
         return this.facingZ;

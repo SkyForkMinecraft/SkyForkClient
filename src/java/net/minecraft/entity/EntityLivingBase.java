@@ -3,6 +3,7 @@ package net.minecraft.entity;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
+import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -1938,7 +1939,12 @@ public abstract class EntityLivingBase extends Entity
      */
     public void onLivingUpdate()
     {
-        if (this.jumpTicks > 0)
+        double movementThreshold = 0.005D;
+
+        if (ViaLoadingBase.getInstance().getTargetVersion().getVersion() > 47) {
+            movementThreshold = 0.003;
+        }
+            if (this.jumpTicks > 0)
         {
             --this.jumpTicks;
         }
@@ -1962,17 +1968,17 @@ public abstract class EntityLivingBase extends Entity
             this.motionZ *= 0.98D;
         }
 
-        if (Math.abs(this.motionX) < 0.005D)
+        if (Math.abs(this.motionX) < movementThreshold)
         {
             this.motionX = 0.0D;
         }
 
-        if (Math.abs(this.motionY) < 0.005D)
+        if (Math.abs(this.motionY) < movementThreshold)
         {
             this.motionY = 0.0D;
         }
 
-        if (Math.abs(this.motionZ) < 0.005D)
+        if (Math.abs(this.motionZ) < movementThreshold)
         {
             this.motionZ = 0.0D;
         }

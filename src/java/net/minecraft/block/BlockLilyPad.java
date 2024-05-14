@@ -1,6 +1,8 @@
 package net.minecraft.block;
 
 import java.util.List;
+
+import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -35,7 +37,11 @@ public class BlockLilyPad extends BlockBush
 
     public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state)
     {
-        return new AxisAlignedBB((double)pos.getX() + this.minX, (double)pos.getY() + this.minY, (double)pos.getZ() + this.minZ, (double)pos.getX() + this.maxX, (double)pos.getY() + this.maxY, (double)pos.getZ() + this.maxZ);
+        if (ViaLoadingBase.getInstance().getTargetVersion().getVersion() > 47) {
+            // return new AxisAlignedBB(p_getCollisionBoundingBox_2_.func_177958_n() + 0.0625, (double)p_getCollisionBoundingBox_2_.func_177956_o(), p_getCollisionBoundingBox_2_.func_177952_p() + 0.0625, p_getCollisionBoundingBox_2_.func_177958_n() + 0.9375, p_getCollisionBoundingBox_2_.func_177956_o() + 0.09375, p_getCollisionBoundingBox_2_.func_177952_p() + 0.9375);
+            return new AxisAlignedBB(pos.getX() + 0.0625, pos.getY(), pos.getZ() + this.minZ + 0.0625, pos.getX() + 0.9375, pos.getY() + 0.09375, pos.getZ() + 0.9375);
+        }
+        return new AxisAlignedBB(pos.getX() + this.minX, pos.getY() + this.minY, pos.getZ() + this.minZ, pos.getX() + this.maxX, pos.getY() + this.maxY, pos.getZ() + this.maxZ);
     }
 
     public int getBlockColor()
@@ -66,7 +72,7 @@ public class BlockLilyPad extends BlockBush
         if (pos.getY() >= 0 && pos.getY() < 256)
         {
             IBlockState iblockstate = worldIn.getBlockState(pos.down());
-            return iblockstate.getBlock().getMaterial() == Material.water && ((Integer)iblockstate.getValue(BlockLiquid.LEVEL)).intValue() == 0;
+            return iblockstate.getBlock().getMaterial() == Material.water && iblockstate.getValue(BlockLiquid.LEVEL).intValue() == 0;
         }
         else
         {
