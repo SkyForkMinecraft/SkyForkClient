@@ -1,10 +1,8 @@
 package net.minecraft.client.gui;
 
-import cn.langya.utils.BlurUtil;
 import cn.langya.verify.Verify;
 import com.google.common.collect.Lists;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,7 +19,6 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.EnumChatFormatting;
@@ -34,12 +31,8 @@ import net.optifine.CustomPanoramaProperties;
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
-import org.lwjgl.util.glu.Project;
-import org.union4dev.base.Access;
 import org.union4dev.base.gui.font.FontManager;
-import skid.cedo.render.RenderUtil;
 
 import javax.swing.*;
 
@@ -324,10 +317,10 @@ public class GuiMainMenu extends GuiScreen {
         GlStateManager.popMatrix();
         String s = "Minecraft 1.8.9";
 
-        Access.getInstance().getFontManager().F18.drawString( s, 2, this.height - 10, -1);
+        FontManager.F18.drawString( s, 2, this.height - 10, -1);
 
-        String s2 = "client by langya";
-        Access.getInstance().getFontManager().F18.drawCenteredString(s2, this.width - this.fontRendererObj.getStringWidth(s2) - 10, this.height - 10, -1);
+        String s2 = "Copyright Mojang AB. Do not distribute. || SkyforkClient Author : LangYa466";
+        FontManager.F18.drawCenteredString(s2, this.width - this.fontRendererObj.getStringWidth(s2) - 2, this.height - 10, -1);
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
         {

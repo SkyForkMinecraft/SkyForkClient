@@ -1,16 +1,13 @@
 package org.union4dev.base.module.render;
 
-import cn.langya.utils.BlurUtil;
+import cn.langya.FontRenderer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiIngame;
-import net.minecraft.item.ItemStack;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.Startup;
 import org.union4dev.base.events.render.Render2DEvent;
 import org.union4dev.base.events.render.ShaderEvent;
 import org.union4dev.base.gui.font.FontManager;
-import org.union4dev.base.module.movement.Sprint;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.NumberValue;
 import skid.cedo.shader.RoundedUtil;
@@ -37,7 +34,6 @@ public class HUD implements Access.InstanceAccess {
     public void onRender2D(Render2DEvent event) {
         FontManager.F18.drawStringWithShadow("SkyFork Client", 4, 4, -1);
         FontManager.F18.drawStringWithShadow(String.format("[FPS: %s]", Minecraft.getDebugFPS()),event.getScaledResolution().getScaledWidth() / 2.0,0,-1);
-
         if(array.getValue()){
             int width = event.getScaledResolution().getScaledWidth();
             int y1 = 4;
@@ -55,11 +51,6 @@ public class HUD implements Access.InstanceAccess {
             }
         }
 
-    }
-
-    @EventTarget
-    void onS(ShaderEvent e) {
-        RoundedUtil.drawRound(100,100,100,100,10,new Color(0,0,0,50));
     }
 
 }

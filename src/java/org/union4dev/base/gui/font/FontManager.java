@@ -2,6 +2,7 @@ package org.union4dev.base.gui.font;
 
 import java.awt.Font;
 
+import cn.langya.FontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -10,6 +11,7 @@ public class FontManager {
     public static CFontRenderer F16 = new CFontRenderer(getFont(new ResourceLocation("client/fonts/misans.ttf"), 16));
     public static CFontRenderer F18 = new CFontRenderer(getFont(new ResourceLocation("client/fonts/misans.ttf"), 18));
     public static CFontRenderer F50 = new CFontRenderer(getFont(new ResourceLocation("client/fonts/misans.ttf"), 50));
+    public static CFontRenderer W18 = new CFontRenderer(new Font("微软雅黑",Font.BOLD, 18));
     private static Font getFont(ResourceLocation resourceLocation, float fontSize) {
         try {
             Font output = Font.createFont(Font.PLAIN, Minecraft.getMinecraft().getResourceManager().getResource(resourceLocation).getInputStream());

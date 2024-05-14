@@ -1,23 +1,18 @@
 package org.union4dev.base;
 
-import cn.langya.GuiHuaYuTing;
 import cn.langya.elements.ElementManager;
 import cn.langya.verify.User;
 import cn.langya.verify.Verify;
+import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.Display;
-import org.union4dev.base.command.CommandManager;
-
 import org.union4dev.base.gui.click.ClickGuiScreen;
 import org.union4dev.base.gui.font.FontManager;
 import org.union4dev.base.module.ModuleManager;
-import unknow.WebUtils;
 
-import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +25,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "1.4";
+    public static final String CLIENT_VERSION = "1.6";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -44,11 +39,6 @@ public final class Access {
      * ModuleManager Instance, access modules here
      */
     private final ModuleManager moduleManager;
-
-    /**
-     * CommandManager Instance, access commands here
-     */
-    private final CommandManager commandManager;
 
     /**
      * ClickGui Instance
@@ -90,10 +80,21 @@ public final class Access {
 
         // Initialize managers
         moduleManager = new ModuleManager();
-        commandManager = new CommandManager();
         fontManager = new FontManager();
         clickGui = new ClickGuiScreen();
         elementManager = new ElementManager();
+
+        // Init ViaMCP
+        try {
+            ViaMCP.create();
+
+            // In case you want a version slider like in the Minecraft options, you can use this code here, please choose one of those:
+
+            ViaMCP.INSTANCE.initAsyncSlider(); // For top left aligned slider
+            ViaMCP.INSTANCE.initAsyncSlider(5, 0, 110, 20);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Finished Initialization
         if(Verify.user == User.User) {
@@ -122,15 +123,6 @@ public final class Access {
      */
     public ModuleManager getModuleManager() {
         return moduleManager;
-    }
-
-    /**
-     * Get command manager instance
-     *
-     * @return {@link CommandManager}
-     */
-    public CommandManager getCommandManager() {
-        return commandManager;
     }
 
     /**

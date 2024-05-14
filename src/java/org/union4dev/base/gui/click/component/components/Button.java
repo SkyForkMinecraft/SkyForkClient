@@ -31,7 +31,7 @@ public class Button extends Component {
         this.mod = mod;
         this.parent = parent;
         this.offset = offset;
-        this.subcomponents = new ArrayList<Component>();
+        this.subcomponents = new ArrayList<>();
         this.open = false;
         height = 12;
         int opY = offset + 12;

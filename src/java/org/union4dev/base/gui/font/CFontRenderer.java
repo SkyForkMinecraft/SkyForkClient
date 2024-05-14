@@ -86,7 +86,7 @@ public class CFontRenderer extends CFont {
         y -= 1;
         GlStateManager.resetColor();
         if (text == null) return 0;
-        text = processString(text);
+        // text = processString(text);
 
         final int textLength = text.length();
 
@@ -161,7 +161,7 @@ public class CFontRenderer extends CFont {
     public int getWidth(String text) {
 
         if (text == null) return 0;
-        text = processString(text);
+        // text = processString(text);
 
         int width = 0;
 
@@ -174,14 +174,6 @@ public class CFontRenderer extends CFont {
         return width / 2;
     }
 
-
-    private String processString(String text) {
-        final StringBuilder sb = new StringBuilder();
-        for (char c : text.toCharArray()) if ((c < 50000 || c > 60000) && c != 9917) sb.append(c);
-
-        return sb.toString();
-    }
-
     public void drawCenteredTextScaled(final String text, final int givenX, final int givenY, final int color, final double givenScale) {
         GL11.glPushMatrix();
         GL11.glTranslated(givenX, givenY, 0.0);
@@ -189,7 +181,6 @@ public class CFontRenderer extends CFont {
         this.drawCenteredString(text, 0.0f, 0.0f, color);
         GL11.glPopMatrix();
     }
-
     public static class MCFont extends CFontRenderer {
 
         public MCFont() {

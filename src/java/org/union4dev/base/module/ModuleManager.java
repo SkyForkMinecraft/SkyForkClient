@@ -59,6 +59,7 @@ public final class ModuleManager {
         register(Cape.class,"Cape",Category.Client);
         register(NoHurtCam.class,"NoHurtCam",Category.Client);
         register(DragonWings.class,"DragonWings",Category.Client);
+        register(OldAnimation.class,"OldAnimation",Category.Client);
 
     }
 
