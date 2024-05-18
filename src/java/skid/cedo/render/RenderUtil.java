@@ -2,6 +2,7 @@ package skid.cedo.render;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -10,9 +11,12 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.union4dev.base.Access;
+import skid.cedo.misc.ColorUtil;
 
 import java.awt.*;
 
+import static net.minecraft.client.renderer.GlStateManager.disableBlend;
+import static net.minecraft.client.renderer.GlStateManager.enableTexture2D;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL14.glBlendFuncSeparate;
 
@@ -54,12 +58,203 @@ public class RenderUtil implements Access.InstanceAccess {
         glBindTexture(GL_TEXTURE_2D, texture);
     }
 
+    public static void drawRect(float left, float top, float right, float bottom, final int color) {
+        if (left < right) {
+            final float e = left;
+            left = right;
+            right = e;
+        }
+        if (top < bottom) {
+            final float e = top;
+            top = bottom;
+            bottom = e;
+        }
+        final float a = (color >> 24 & 0xFF) / 255.0f;
+        final float b = (color >> 16 & 0xFF) / 255.0f;
+        final float c = (color >> 8 & 0xFF) / 255.0f;
+        final float d = (color & 0xFF) / 255.0f;
+        final WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(b, c, d, a);
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(left, bottom, 0.0).endVertex();
+        worldRenderer.pos(right, bottom, 0.0).endVertex();
+        worldRenderer.pos(right, top, 0.0).endVertex();
+        worldRenderer.pos(left, top, 0.0).endVertex();
+        Tessellator.getInstance().draw();
+        enableTexture2D();
+        disableBlend();
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+    public static void drawArc(float x1, float y1, double r, int color, int startPoint, double arc, int linewidth) {
+        r *= 2.0;
+        x1 *= 2.0F;
+        y1 *= 2.0F;
+        float f = (color >> 24 & 255) / 255.0F;
+        float f1 = (color >> 16 & 255) / 255.0F;
+        float f2 = (color >> 8 & 255) / 255.0F;
+        float f3 = (color & 255) / 255.0F;
+        glDisable(2929);
+        glEnable(3042);
+        glDisable(3553);
+        glBlendFunc(770, 771);
+        glDepthMask(true);
+        glEnable(2848);
+        glHint(3154, 4354);
+        glHint(3155, 4354);
+        glScalef(0.5F, 0.5F, 0.5F);
+        glLineWidth(linewidth);
+        glEnable(2848);
+        glColor4f(f1, f2, f3, f);
+        glBegin(3);
+
+        for (int i = startPoint; i <= arc; ++i) {
+            double x = Math.sin(i * Math.PI / 180.0) * r;
+            double y = Math.cos(i * Math.PI / 180.0) * r;
+            glVertex2d(x1 + x, y1 + y);
+        }
+
+        glEnd();
+        glDisable(2848);
+        glScalef(2.0F, 2.0F, 2.0F);
+        glEnable(3553);
+        glDisable(3042);
+        glEnable(2929);
+        glDisable(2848);
+        glHint(3154, 4352);
+        glHint(3155, 4352);
+    }
+
+    public static void glColor(int hex) {
+        float alpha = (hex >> 24 & 0xFF) / 255.0F;
+        float red = (hex >> 16 & 0xFF) / 255.0F;
+        float green = (hex >> 8 & 0xFF) / 255.0F;
+        float blue = (hex & 0xFF) / 255.0F;
+        GlStateManager.color(red, green, blue, alpha);
+    }
+
+    public static void doGlScissor(final float x, final float y, final float windowWidth2, final float windowHeight2) {
+        int scaleFactor = 1;
+        float k = mc.gameSettings.guiScale;
+        if (k == 0.0f) {
+            k = 1000.0f;
+        }
+        while (scaleFactor < k && mc.displayWidth / (scaleFactor + 1) >= 320 && mc.displayHeight / (scaleFactor + 1) >= 240) {
+            ++scaleFactor;
+        }
+        glScissor((int) (x * scaleFactor), (int) (mc.displayHeight - (y + windowHeight2) * scaleFactor), (int) (windowWidth2 * scaleFactor), (int) (windowHeight2 * scaleFactor));
+    }
+
+    public static void drawArc(float x1, float y1, double r, int color, int startPoint, double arc, int linewidth, boolean rainbow) {
+        r *= 2.0;
+        x1 *= 2.0F;
+        y1 *= 2.0F;
+        float f = (color >> 24 & 255) / 255.0F;
+        float f1 = (color >> 16 & 255) / 255.0F;
+        float f2 = (color >> 8 & 255) / 255.0F;
+        float f3 = (color & 255) / 255.0F;
+        glDisable(2929);
+        glEnable(3042);
+        glDisable(3553);
+        glBlendFunc(770, 771);
+        glDepthMask(true);
+        glEnable(2848);
+        glHint(3154, 4354);
+        glHint(3155, 4354);
+        glScalef(0.5F, 0.5F, 0.5F);
+        glLineWidth(linewidth);
+        glEnable(2848);
+        glColor4f(f1, f2, f3, f);
+        glBegin(3);
+
+        for (int i = startPoint; i <= arc; ++i) {
+            if (rainbow) glColor(ColorUtil.rainbow(-(long) (1.0E10f / 360 * i)).getRGB());
+            double x = Math.sin(i * Math.PI / 180.0) * r;
+            double y = Math.cos(i * Math.PI / 180.0) * r;
+            glVertex2d(x1 + x, y1 + y);
+        }
+
+        glEnd();
+        glDisable(2848);
+        glScalef(2.0F, 2.0F, 2.0F);
+        glEnable(3553);
+        glDisable(3042);
+        glEnable(2929);
+        glDisable(2848);
+        glHint(3154, 4352);
+        glHint(3155, 4352);
+    }
+
+
+    public static void drawRect(double left, double top, double right, double bottom, final int color) {
+        if (left < right) {
+            final double e = left;
+            left = right;
+            right = e;
+        }
+        if (top < bottom) {
+            final double e = top;
+            top = bottom;
+            bottom = e;
+        }
+        final float a = (color >> 24 & 0xFF) / 255.0f;
+        final float b = (color >> 16 & 0xFF) / 255.0f;
+        final float c = (color >> 8 & 0xFF) / 255.0f;
+        final float d = (color & 0xFF) / 255.0f;
+        final WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(b, c, d, a);
+        worldRenderer.begin(7, DefaultVertexFormats.POSITION);
+        worldRenderer.pos(left, bottom, 0.0).endVertex();
+        worldRenderer.pos(right, bottom, 0.0).endVertex();
+        worldRenderer.pos(right, top, 0.0).endVertex();
+        worldRenderer.pos(left, top, 0.0).endVertex();
+        Tessellator.getInstance().draw();
+        enableTexture2D();
+        disableBlend();
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
     public static void drawImage(ResourceLocation resourceLocation, float x, float y, float imgWidth, float imgHeight) {
         GLUtil.startBlend();
         mc.getTextureManager().bindTexture(resourceLocation);
         Gui.drawModalRectWithCustomSizedTexture((int) x, (int) y, 0, 0, (int) imgWidth, (int) imgHeight, imgWidth, imgHeight);
         GLUtil.endBlend();
     }
+
+    public static void drawImage(final ResourceLocation image, final int x, final int y, final float width, final float height, final float alpha) {
+        glPushMatrix();
+        glDisable(2929);
+        glEnable(3042);
+        glDepthMask(false);
+        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+        glColor4f(1.0f, 1.0f, 1.0f, alpha);
+        mc.getTextureManager().bindTexture(image);
+        Gui.drawModalRectWithCustomSizedTexture((float) x, y, 0.0f, 0.0f, (int) width, (int) height, width, height);
+        glDepthMask(true);
+        glDisable(3042);
+        glEnable(2929);
+        glPopMatrix();
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+
+    public static void drawImage(final ResourceLocation image, final float x, final float y, final float width, final float height, Color c) {
+        glDisable(2929);
+        glEnable(3042);
+        glDepthMask(false);
+        OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+        glColor4f(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, c.getAlpha() / 255f);
+        mc.getTextureManager().bindTexture(image);
+        Gui.drawModalRectWithCustomSizedTexture(x, y, 0.0f, 0.0f, (int) width, (int) height, width, height);
+        glDepthMask(true);
+        glDisable(3042);
+        glEnable(2929);
+    }
+
 
     public static void color(int color, float alpha) {
         float r = (color >> 16 & 255) / 255.0F;

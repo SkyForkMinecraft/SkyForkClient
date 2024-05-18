@@ -1,11 +1,11 @@
 package org.union4dev.base.gui.click.component;
 
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 import org.union4dev.base.Access;
 import org.union4dev.base.gui.click.ClickGuiScreen;
 import org.union4dev.base.gui.click.component.components.Button;
+import cn.langya.font.FontManager;
 import org.union4dev.base.module.Category;
 
 import java.util.ArrayList;
@@ -69,8 +69,8 @@ public class Frame {
     public void renderFrame() {
         Gui.drawRect(this.x, this.y, this.x + this.width, this.y + this.barHeight, ClickGuiScreen.color);
         GL11.glPushMatrix();
-        Access.getInstance().getFontManager().F18.drawStringWithShadow(this.category.name(), (this.x + 2)  + 5, (this.y + 2.5f) , 0xFFFFFFFF);
-        Access.getInstance().getFontManager().F18.drawStringWithShadow(this.open ? "-" : "+", (this.x + this.width - 10)  + 3, (this.y + 2.5f) , -1);
+        FontManager.M18.drawStringWithShadow(this.category.name(), (this.x + 2)  + 5, (this.y + 2.5f) , 0xFFFFFFFF);
+        FontManager.M18.drawStringWithShadow(this.open ? "-" : "+", (this.x + this.width - 10)  + 3, (this.y + 2.5f) , -1);
         GL11.glPopMatrix();
         if (this.open) {
             if (!this.components.isEmpty()) {

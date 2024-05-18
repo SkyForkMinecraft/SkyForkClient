@@ -1,18 +1,14 @@
 package org.union4dev.base.module.render;
 
-import cn.langya.FontRenderer;
 import net.minecraft.client.Minecraft;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.Startup;
 import org.union4dev.base.events.render.Render2DEvent;
-import org.union4dev.base.events.render.ShaderEvent;
-import org.union4dev.base.gui.font.FontManager;
+import cn.langya.font.FontManager;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.NumberValue;
-import skid.cedo.shader.RoundedUtil;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 @Startup // enable when client startup
@@ -32,8 +28,9 @@ public class HUD implements Access.InstanceAccess {
      */
     @EventTarget
     public void onRender2D(Render2DEvent event) {
-        FontManager.F18.drawStringWithShadow("SkyFork Client", 4, 4, -1);
-        FontManager.F18.drawStringWithShadow(String.format("[FPS: %s]", Minecraft.getDebugFPS()),event.getScaledResolution().getScaledWidth() / 2.0,0,-1);
+        FontManager.M50.drawStringWithShadow("天空分支", 4, 4, -1);
+        FontManager.M18.drawStringWithShadow(String.format("[FPS: %s]", Minecraft.getDebugFPS()), (float) (event.getScaledResolution().getScaledWidth() / 2.0),0,-1);
+
         if(array.getValue()){
             int width = event.getScaledResolution().getScaledWidth();
             int y1 = 4;
@@ -43,11 +40,11 @@ public class HUD implements Access.InstanceAccess {
                     enabledModules.add(m);
                 }
             }
-            enabledModules.sort((o1, o2) -> FontManager.F18.getWidth(access.getModuleManager().format(o2)) - FontManager.F18.getWidth(access.getModuleManager().format(o1)));
+            enabledModules.sort((o1, o2) -> FontManager.M18.getStringWidth(access.getModuleManager().format(o2)) - FontManager.M18.getStringWidth(access.getModuleManager().format(o1)));
             for (Class<?> module : enabledModules) {
-                int moduleWidth = FontManager.F18.getWidth(access.getModuleManager().format(module));
-                FontManager.F18.drawStringWithShadow(access.getModuleManager().format(module), width - moduleWidth - 4, y1, -1);
-                y1 += FontManager.F18.getHeight() + spacing.getValue().intValue();
+                int moduleWidth = FontManager.M18.getStringWidth(access.getModuleManager().format(module));
+                FontManager.M18.drawStringWithShadow(access.getModuleManager().format(module), width - moduleWidth - 4, y1, -1);
+                y1 += FontManager.M18.getHeight() + spacing.getValue().intValue();
             }
         }
 

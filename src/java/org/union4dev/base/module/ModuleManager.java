@@ -1,6 +1,7 @@
 package org.union4dev.base.module;
 
 import cn.langya.modules.client.*;
+import cn.langya.modules.render.*;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.*;
@@ -47,19 +48,17 @@ public final class ModuleManager {
         register(HUD.class, "HUD", Category.Render);
         register(ClickGui.class,"ClickGui",Category.Render);
         register(CustomHotbar.class,"CustomHotbar",Category.Render);
-
-        /*
-        register(ComboInfo.class,"ComboInfo",Category.Render);
-        register(Info.class,"Info",Category.Render);
+        register(CustomNameTags.class,"CustomNameTags",Category.Render);
         register(KeyStore.class,"KeyStore",Category.Render);
         register(TargetHUD.class,"TargetHUD",Category.Render);
-         */
+
 
         // Register Client
         register(Cape.class,"Cape",Category.Client);
         register(NoHurtCam.class,"NoHurtCam",Category.Client);
         register(DragonWings.class,"DragonWings",Category.Client);
         register(OldAnimation.class,"OldAnimation",Category.Client);
+        register(FakeFPS.class,"FakeFPS",Category.Client);
 
     }
 
@@ -257,6 +256,15 @@ public final class ModuleManager {
      */
     public List<Class<?>> getModules() {
         return new ArrayList<>(modules.keySet());
+    }
+
+    /**
+     * Get all module classes
+     *
+     * @return {@link Set}<{@link Class}<{@link ?}>>
+     */
+    public HashMap<Class<?>, ModuleHandle> getCModules() {
+        return modules;
     }
 
     /**

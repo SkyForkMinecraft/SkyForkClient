@@ -1,11 +1,10 @@
 package org.union4dev.base.gui.click.component.components.sub;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
-import org.union4dev.base.Access;
 import org.union4dev.base.gui.click.component.Component;
 import org.union4dev.base.gui.click.component.components.Button;
+import cn.langya.font.FontManager;
 import org.union4dev.base.value.impl.NumberValue;
 
 import java.math.BigDecimal;
@@ -40,7 +39,7 @@ public class Slider extends Component {
         Gui.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + 2, parent.parent.getY() + offset + 12, 0xFF111111);
         GL11.glPushMatrix();
 
-        Access.getInstance().getFontManager().F18.drawStringWithShadow(this.val.getName() + ": " + this.val.getValue(), (parent.parent.getX() + 8) , (parent.parent.getY() + offset + 2)  + 1, -1);
+        FontManager.M18.drawStringWithShadow(this.val.getName() + ": " + this.val.getValue(), (parent.parent.getX() + 8) , (parent.parent.getY() + offset + 2)  + 1, -1);
 
         GL11.glPopMatrix();
     }

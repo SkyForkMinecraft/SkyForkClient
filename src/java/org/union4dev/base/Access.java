@@ -1,15 +1,16 @@
 package org.union4dev.base;
 
-import cn.langya.elements.ElementManager;
+import cn.langya.files.ConfigManager;
 import cn.langya.verify.User;
 import cn.langya.verify.Verify;
 import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
 import org.union4dev.base.gui.click.ClickGuiScreen;
-import org.union4dev.base.gui.font.FontManager;
 import org.union4dev.base.module.ModuleManager;
 
 import java.awt.*;
@@ -25,10 +26,11 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "1.6";
+    public static final String CLIENT_VERSION = "1.7";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
+    public static final Logger logger = LogManager.getLogger(CLIENT_NAME);
 
     /**
      * Client Instance, access managers with this
@@ -37,21 +39,31 @@ public final class Access {
 
     /**
      * ModuleManager Instance, access modules here
+     * -- GETTER --
+     *  Get module manager instance
+     *
+     * @return {@link ModuleManager}
+
      */
+    @Getter
     private final ModuleManager moduleManager;
 
     /**
-     * ClickGui Instance
+     * ConfigManager instance for access config
      */
-    private final ClickGuiScreen clickGui;
+    @Getter
+    private final ConfigManager configManager;
 
     /**
-     * Font renderers
-     */
-    private final FontManager fontManager;
+     * ClickGui Instance
+     * -- GETTER --
+     *  Get ClickGui Instance
+     *
+     * @return {@link ClickGuiScreen}
 
+     */
     @Getter
-    private ElementManager elementManager;
+    private final ClickGuiScreen clickGui;
 
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
         SystemTray tray = SystemTray.getSystemTray();
@@ -76,13 +88,13 @@ public final class Access {
 
         Display.setTitle(CLIENT_NAME  + " - " + CLIENT_VERSION + " - 加载中...");
 
-        Verify.verify();
+//        Verify.verify();
 
         // Initialize managers
         moduleManager = new ModuleManager();
-        fontManager = new FontManager();
+        configManager = new ConfigManager();
+        configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
         clickGui = new ClickGuiScreen();
-        elementManager = new ElementManager();
 
         // Init ViaMCP
         try {
@@ -114,33 +126,6 @@ public final class Access {
      */
     public static Access getInstance() {
         return INSTANCE;
-    }
-
-    /**
-     * Get module manager instance
-     *
-     * @return {@link ModuleManager}
-     */
-    public ModuleManager getModuleManager() {
-        return moduleManager;
-    }
-
-    /**
-     * Get ClickGui Instance
-     *
-     * @return {@link ClickGuiScreen}
-     */
-    public ClickGuiScreen getClickGui() {
-        return clickGui;
-    }
-
-    /**
-     * Get FontManager Instance
-     *
-     * @return {@link FontManager}
-     */
-    public FontManager getFontManager() {
-        return fontManager;
     }
 
 

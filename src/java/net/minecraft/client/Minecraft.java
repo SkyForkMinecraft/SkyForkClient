@@ -1,5 +1,6 @@
 package net.minecraft.client;
 
+import cn.langya.modules.client.FakeFPS;
 import com.google.common.collect.*;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -133,7 +134,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private ServerData currentServerData;
 
     /** The RenderEngine instance used by Minecraft */
-    private TextureManager renderEngine;
+    public TextureManager renderEngine;
 
     /**
      * Set to 'this' in Minecraft constructor; used by some settings get methods
@@ -962,6 +963,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         {
             this.stream.shutdownStream();
             logger.info("Stopping!");
+            Access.getInstance().getConfigManager().saveConfig(Access.getInstance().getConfigManager().moduleConfig.name);
 
             try
             {
@@ -3066,7 +3068,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     public static int getDebugFPS()
     {
-        return debugFPS;
+        if(debugFPS > 60) return debugFPS + FakeFPS.fakefps.getValue().intValue(); else return debugFPS;
     }
 
     /**

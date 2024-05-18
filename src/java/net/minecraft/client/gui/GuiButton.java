@@ -5,7 +5,7 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import org.union4dev.base.Access;
+import cn.langya.font.FontManager;
 import skid.cedo.shader.RoundedUtil;
 
 import java.awt.*;
@@ -75,22 +75,14 @@ public class GuiButton extends Gui
             FontRenderer fontrenderer = mc.fontRendererObj;
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-            GlStateManager.blendFunc(770, 771);
             if(hovered)
                 RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 3.0F, new Color(0, 0, 0, 160));
             else RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 3.0F, new Color(0, 0, 0, 80));
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
             this.mouseDragged(mc, mouseX, mouseY);
 
-            if(!Access.isContainsChinese(this.displayString)) {
-                Access.getInstance().getFontManager().F18.drawCenteredString(this.displayString, this.xPosition + this.width / 2.0, this.yPosition + (this.height - 8.0) / 2, j);
-            } else {
-                GlStateManager.resetColor();
-                this.drawCenteredString(fontrenderer, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, j);
-                GlStateManager.resetColor();
-            }
+            FontManager.M18.drawCenteredString(this.displayString, this.xPosition + this.width / 2, (float) (this.yPosition + (this.height - 8.0) / 2), j);
         }
     }
 

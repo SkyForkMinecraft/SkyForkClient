@@ -1,10 +1,10 @@
 package cn.langya.elements.impls.keystore;
 
 import org.lwjgl.input.Keyboard;
-import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.misc.KeyInputEvent;
+import cn.langya.font.FontManager;
 import skid.cedo.shader.RoundedUtil;
 
 import java.awt.*;
@@ -42,7 +42,7 @@ public class KeyButton {
         if(use) RoundedUtil.drawRound(x,y,width,height,radius,new Color(0,0,0,160));
         else RoundedUtil.drawRound(x,y,width,height,radius,new Color(0,0,0,80));
 
-        Access.getInstance().getFontManager().F14.drawStringWithShadow(Keyboard.getKeyName(keyCode),x + 12,y + 10,-1);
+        FontManager.M14.drawStringWithShadow(Keyboard.getKeyName(keyCode),x + 12,y + 10,-1);
 
     }
 

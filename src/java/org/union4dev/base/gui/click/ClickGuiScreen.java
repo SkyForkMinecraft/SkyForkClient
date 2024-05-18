@@ -1,7 +1,7 @@
 package org.union4dev.base.gui.click;
 
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
+import org.union4dev.base.Access;
 import org.union4dev.base.gui.click.component.Component;
 import org.union4dev.base.gui.click.component.Frame;
 import org.union4dev.base.module.Category;
@@ -28,12 +28,13 @@ public class ClickGuiScreen extends GuiScreen {
     }
 
     @Override
-    public void initGui() {
+    public void onGuiClosed() {
+        Access.getInstance().getConfigManager().saveConfig(Access.getInstance().getConfigManager().moduleConfig.name);
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        Gui.drawRect(0,0,width,height,new Color(0,0,0,80).getRGB());
+        drawRect(0,0,width,height,new Color(0,0,0,80).getRGB());
         for (Frame frame : frames) {
             frame.renderFrame();
             frame.updatePosition(mouseX, mouseY);

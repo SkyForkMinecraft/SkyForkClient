@@ -42,7 +42,6 @@ public class Verify {
         if (!WebUtils.get("https://skyclient.lol/%E5%93%A5%E6%88%91%E5%B0%B1%E4%B8%80%E5%85%8D%E8%B4%B9%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%AB%E7%A0%B4%E8%A7%A3%E4%BA%862.txt").contains(CLIENT_VERSION)) {
             displayTray(CLIENT_NAME,"您的客户端版本过低，请更新到最新版本！", TrayIcon.MessageType.ERROR);
             Desktop.getDesktop().browse(new URL("https://qm.qq.com/q/qH7jTDrJcI").toURI());
-            Runtime.getRuntime().exit(0);
         }
 
         if(getToken() != null) {

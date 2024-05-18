@@ -32,7 +32,7 @@ import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GLContext;
-import org.union4dev.base.gui.font.FontManager;
+import cn.langya.font.FontManager;
 
 import javax.swing.*;
 
@@ -317,10 +317,10 @@ public class GuiMainMenu extends GuiScreen {
         GlStateManager.popMatrix();
         String s = "Minecraft 1.8.9";
 
-        FontManager.F18.drawStringWithShadow( s, 2, this.height - 10, -1);
+        FontManager.M18.drawStringWithShadow( s, 2, this.height - 10, -1);
 
         String s2 = "Copyright Mojang AB. Do not distribute. || SkyforkClient Author : LangYa466";
-        FontManager.F18.drawStringWithShadow(s2, this.width - FontManager.F18.getWidth(s2) - 2, this.height - 11, -1);
+        FontManager.M18.drawStringWithShadow(s2, this.width - FontManager.M18.getStringWidth(s2) - 2, this.height - 11, -1);
 
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
         {
@@ -341,7 +341,7 @@ public class GuiMainMenu extends GuiScreen {
             this.modUpdateNotification.drawScreen(mouseX, mouseY, partialTicks);
         }
 
-        FontManager.F50.drawCenteredStringWithShadow("SkyClient", width / 2.0,height / 4, -1);
+        FontManager.M50.drawCenteredStringWithShadow("天空分支", width / 2.0,height / 4, -1);
 
     }
 

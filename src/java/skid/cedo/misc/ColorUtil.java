@@ -7,6 +7,30 @@ import static skid.cedo.misc.MathUtils.interpolateFloat;
 import static skid.cedo.misc.MathUtils.interpolateInt;
 
 public class ColorUtil {
+    public static Color getIColor(int color) {
+        return new Color((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF);
+    }
+
+    public static int reAlpha(final int color, final float alpha) {
+        try {
+            final Color c = new Color(color);
+            final float r = 0.003921569f * c.getRed();
+            final float g = 0.003921569f * c.getGreen();
+            final float b = 0.003921569f * c.getBlue();
+            return new Color(r, g, b, alpha).getRGB();
+        } catch (Throwable e) {
+            return color;
+        }
+    }
+
+    public static Color getColorFromHex(int color) {
+        return getIColor(color);
+    }
+
+    public static Color rainbow(final long offset) {
+        final float hue = (System.nanoTime() + offset) / 1.0E10f % 1.0f;
+        return new Color(Color.HSBtoRGB(hue, 1.0f, 1.0f));
+    }
 
     public static Color tripleColor(int rgbValue) {
         return tripleColor(rgbValue, 1);

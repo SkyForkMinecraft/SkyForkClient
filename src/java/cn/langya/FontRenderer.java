@@ -5,9 +5,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
-import org.union4dev.base.gui.font.CFontRenderer;
 import skid.cedo.render.GLUtil;
 
 import java.awt.*;
