@@ -2,10 +2,13 @@ package org.union4dev.base.gui.click.component.components.sub;
 
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
+import org.union4dev.base.Access;
 import org.union4dev.base.gui.click.component.Component;
 import org.union4dev.base.gui.click.component.components.Button;
 import cn.langya.font.FontManager;
 import org.union4dev.base.value.impl.BooleanValue;
+
+import java.awt.*;
 
 public class Checkbox extends Component {
 
@@ -32,9 +35,9 @@ public class Checkbox extends Component {
 
         FontManager.M18.drawStringWithShadow(this.op.getName(), (parent.parent.getX() + 10 + 4)  + 5, (parent.parent.getY() + offset + 2)  , -1);
         GL11.glPopMatrix();
-        Gui.drawRect(parent.parent.getX() + 3 + 4, parent.parent.getY() + offset + 3, parent.parent.getX() + 9 + 4, parent.parent.getY() + offset + 9, 0xFF999999);
+        Gui.drawRect(parent.parent.getX() + 3 + 4, parent.parent.getY() + offset + 3, parent.parent.getX() + 9 + 4, parent.parent.getY() + offset + 9, new Color(0xFF999999).getRGB());
         if (this.op.getValue())
-            Gui.drawRect(parent.parent.getX() + 4 + 4, parent.parent.getY() + offset + 4, parent.parent.getX() + 8 + 4, parent.parent.getY() + offset + 8, 0xFF666666);
+            Gui.drawRect(parent.parent.getX() + 4 + 4, parent.parent.getY() + offset + 4, parent.parent.getX() + 8 + 4, parent.parent.getY() + offset + 8, Access.CLIENT_COLOR.getRGB());
     }
 
     @Override

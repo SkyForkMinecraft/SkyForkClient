@@ -1,5 +1,7 @@
 package net.minecraft.client.gui;
 
+import cn.langya.font.FontManager;
+import cn.langya.modules.client.CustomGuiNewChat;
 import com.google.common.collect.Lists;
 
 import java.awt.*;
@@ -83,10 +85,20 @@ public class GuiNewChat extends Gui
                             {
                                 int i2 = 0;
                                 int j2 = -i1 * 9;
-                                drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
+                                if (!CustomGuiNewChat.rect.getValue() && Access.getInstance().getModuleManager().isEnabled(CustomGuiNewChat.class)) {
+                                    drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
+                                }
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
-                                this.mc.fontRendererObj.drawStringWithShadow(s, i2, (j2 - 8), 16777215 + (l1 << 24));
+                                if (Access.getInstance().getModuleManager().isEnabled(CustomGuiNewChat.class)) {
+                                    if (CustomGuiNewChat.font.getValue()) {
+                                        CustomGuiNewChat.getCustomFont().drawStringWithShadow(s, i2, (j2 - 8), 16777215 + (l1 << 24));
+                                    } else {
+                                        this.mc.fontRendererObj.drawStringWithShadow(s, i2, (j2 - 8), 16777215 + (l1 << 24));
+                                    }
+                                } else {
+                                    this.mc.fontRendererObj.drawStringWithShadow(s, i2, (j2 - 8), 16777215 + (l1 << 24));
+                                }
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
                             }
@@ -96,7 +108,16 @@ public class GuiNewChat extends Gui
 
                 if (flag)
                 {
-                    int k2 = this.mc.fontRendererObj.FONT_HEIGHT;
+                    int k2;
+                    if (Access.getInstance().getModuleManager().isEnabled(CustomGuiNewChat.class)) {
+                        if (CustomGuiNewChat.font.getValue()) {
+                            k2 = CustomGuiNewChat.getCustomFont().getHeight();
+                        } else {
+                            k2 = mc.fontRendererObj.FONT_HEIGHT;
+                        }
+                    } else {
+                        k2 = mc.fontRendererObj.FONT_HEIGHT;
+                    }
                     GlStateManager.translate(-3.0F, 0.0F, 0.0F);
                     int l2 = k * k2 + k;
                     int i3 = j * k2 + j;
@@ -266,9 +287,20 @@ public class GuiNewChat extends Gui
             {
                 int l = Math.min(this.getLineCount(), this.drawnChatLines.size());
 
-                if (j <= MathHelper.floor_float(this.getChatWidth() / this.getChatScale()) && k < this.mc.fontRendererObj.FONT_HEIGHT * l + l)
+                int k2;
+                if (Access.getInstance().getModuleManager().isEnabled(CustomGuiNewChat.class)) {
+                    if (CustomGuiNewChat.font.getValue()) {
+                        k2 = CustomGuiNewChat.getCustomFont().getHeight();
+                    } else {
+                        k2 = mc.fontRendererObj.FONT_HEIGHT;
+                    }
+                } else {
+                    k2 = mc.fontRendererObj.FONT_HEIGHT;
+                }
+
+                if (j <= MathHelper.floor_float(this.getChatWidth() / this.getChatScale()) && k < k2 * l + l)
                 {
-                    int i1 = k / this.mc.fontRendererObj.FONT_HEIGHT + this.scrollPos;
+                    int i1 = k / k2+ this.scrollPos;
 
                     if (i1 >= 0 && i1 < this.drawnChatLines.size())
                     {
@@ -279,6 +311,15 @@ public class GuiNewChat extends Gui
                         {
                             if (ichatcomponent instanceof ChatComponentText)
                             {
+                                if (Access.getInstance().getModuleManager().isEnabled(CustomGuiNewChat.class)) {
+                                    if (CustomGuiNewChat.font.getValue()) {
+                                        j1 += CustomGuiNewChat.getCustomFont().getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText)ichatcomponent).getChatComponentText_TextValue(), false));
+                                    } else {
+                                        j1 += this.mc.fontRendererObj.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText)ichatcomponent).getChatComponentText_TextValue(), false));
+                                    }
+                                } else {
+                                    j1 += this.mc.fontRendererObj.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText)ichatcomponent).getChatComponentText_TextValue(), false));
+                                }
                                 j1 += this.mc.fontRendererObj.getStringWidth(GuiUtilRenderComponents.func_178909_a(((ChatComponentText)ichatcomponent).getChatComponentText_TextValue(), false));
 
                                 if (j1 > j)

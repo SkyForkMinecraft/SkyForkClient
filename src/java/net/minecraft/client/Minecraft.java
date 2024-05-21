@@ -1,5 +1,6 @@
 package net.minecraft.client;
 
+import cn.langya.modules.client.Cape;
 import cn.langya.modules.client.FakeFPS;
 import com.google.common.collect.*;
 import com.google.common.util.concurrent.Futures;
@@ -116,6 +117,9 @@ import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+
+import static org.union4dev.base.Access.CLIENT_NAME;
+import static org.union4dev.base.Access.CLIENT_VERSION;
 
 public class Minecraft implements IThreadListener, IPlayerUsage
 {
@@ -546,7 +550,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private void createDisplay() throws LWJGLException
     {
         Display.setResizable(true);
-        Display.setTitle("Minecraft 1.8.9");
+        Display.setTitle(CLIENT_NAME  + " - " + CLIENT_VERSION + " - 加载中...");
 
         try
         {
@@ -3068,7 +3072,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     public static int getDebugFPS()
     {
-        if(debugFPS > 60) return debugFPS + FakeFPS.fakefps.getValue().intValue(); else return debugFPS;
+        int fakefps;
+        if(Access.InstanceAccess.access.getModuleManager().isEnabled(FakeFPS.class))  fakefps = FakeFPS.fakefps.getValue().intValue(); else fakefps = 0;
+        if(debugFPS > 60) return debugFPS + fakefps; else return debugFPS;
     }
 
     /**

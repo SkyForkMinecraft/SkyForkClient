@@ -42,23 +42,26 @@ public final class ModuleManager {
         EventManager.register(this);
 
         // Register Movement
-        register(Sprint.class, "Sprint", Category.Movement);
+        register(Sprint.class, "自动疾跑", Category.Movement);
 
         // Register Render
-        register(HUD.class, "HUD", Category.Render);
-        register(ClickGui.class,"ClickGui",Category.Render);
-        register(CustomHotbar.class,"CustomHotbar",Category.Render);
-        register(CustomNameTags.class,"CustomNameTags",Category.Render);
-        register(KeyStore.class,"KeyStore",Category.Render);
-        register(TargetHUD.class,"TargetHUD",Category.Render);
+        register(KeyStore.class,"按键显示",Category.Render);
+        register(TargetHUD.class,"PVP信息",Category.Render);
 
+        // Register Misc
+        register(FakeFPS.class,"虚假帧率",Category.Misc);
 
         // Register Client
-        register(Cape.class,"Cape",Category.Client);
-        register(NoHurtCam.class,"NoHurtCam",Category.Client);
-        register(DragonWings.class,"DragonWings",Category.Client);
-        register(OldAnimation.class,"OldAnimation",Category.Client);
-        register(FakeFPS.class,"FakeFPS",Category.Client);
+        register(ClickGui.class,"功能管理页面",Category.Render);
+        register(HUD.class, "页面", Category.Client);
+        register(Cape.class,"自定义披风",Category.Client);
+        register(NoHurtCam.class,"无受伤抖动",Category.Client);
+        register(DragonWings.class,"龙翼",Category.Client);
+        register(OldAnimation.class,"1.7动画",Category.Client);
+        register(CustomGuiNewChat.class,"自定义聊天框",Category.Client);
+        register(CustomHotbar.class,"自定义快捷栏",Category.Client);
+        register(CustomNameTags.class,"自定义名称栏",Category.Client);
+        register(ItemPhysic.class,"物品物理掉落",Category.Client);
 
     }
 

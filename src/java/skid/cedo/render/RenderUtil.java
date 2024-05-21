@@ -268,47 +268,19 @@ public class RenderUtil implements Access.InstanceAccess {
     }
 
 
-    public static void drawBorder(double x, double y, double width, double height, float borderWidth, int color) {
-        resetColor();
-        setAlphaLimit(0);
-        GLUtil.setup2DRendering(true);
+    public static void drawTexture(int texture, float x, float y, float width, float height, float u, float v, int textureWidth, int textureHeight) {
+        float xTexel = 1.0F / textureWidth;
+        float yTexel = 1.0F / textureHeight;
 
+        GlStateManager.bindTexture(texture);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-
-        // Draw top border
-        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-        worldrenderer.pos(x, y, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x, y + borderWidth, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x + width, y + borderWidth, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x + width, y, 0.0D).color(color).endVertex();
+        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        worldrenderer.pos(x, y + height, 0.0).tex(u * xTexel, (v + height) * yTexel).endVertex();
+        worldrenderer.pos(x + width, y + height, 0.0).tex((u + width) * xTexel, (v + height) * yTexel).endVertex();
+        worldrenderer.pos(x + width, y, 0.0).tex((u + width) * xTexel, v * yTexel).endVertex();
+        worldrenderer.pos(x, y, 0.0).tex(u * xTexel, v * yTexel).endVertex();
         tessellator.draw();
-
-        // Draw bottom border
-        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-        worldrenderer.pos(x, y + height - borderWidth, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x, y + height, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x + width, y + height, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x + width, y + height - borderWidth, 0.0D).color(color).endVertex();
-        tessellator.draw();
-
-        // Draw left border
-        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-        worldrenderer.pos(x, y + borderWidth, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x, y + height - borderWidth, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x + borderWidth, y + height - borderWidth, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x + borderWidth, y + borderWidth, 0.0D).color(color).endVertex();
-        tessellator.draw();
-
-        // Draw right border
-        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-        worldrenderer.pos(x + width - borderWidth, y + borderWidth, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x + width - borderWidth, y + height - borderWidth, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x + width, y + height - borderWidth, 0.0D).color(color).endVertex();
-        worldrenderer.pos(x + width, y + borderWidth, 0.0D).color(color).endVertex();
-        tessellator.draw();
-
-        GLUtil.end2DRendering();
     }
 
     // liquidbounce

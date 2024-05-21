@@ -167,7 +167,7 @@ public class GuiMainMenu extends GuiScreen {
 
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options")));
         this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, I18n.format("menu.quit")));
-        this.buttonList.add(new GuiButton(114514, 5, 5, 50, 20, "Copy hwid"));
+        this.buttonList.add(new GuiButton(114514, 5, 5, FontManager.M18.getStringWidth("复制您的验证密钥"), 20, "复制您的验证密钥"));
         this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 72 + 12));
 
         synchronized (this.threadLock)
@@ -318,10 +318,7 @@ public class GuiMainMenu extends GuiScreen {
         String s = "Minecraft 1.8.9";
 
         FontManager.M18.drawStringWithShadow( s, 2, this.height - 10, -1);
-
-        String s2 = "Copyright Mojang AB. Do not distribute. || SkyforkClient Author : LangYa466";
-        FontManager.M18.drawStringWithShadow(s2, this.width - FontManager.M18.getStringWidth(s2) - 2, this.height - 11, -1);
-
+        
         if (this.openGLWarning1 != null && this.openGLWarning1.length() > 0)
         {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);
@@ -341,7 +338,7 @@ public class GuiMainMenu extends GuiScreen {
             this.modUpdateNotification.drawScreen(mouseX, mouseY, partialTicks);
         }
 
-        FontManager.M50.drawCenteredStringWithShadow("天空分支", width / 2.0,height / 4, -1);
+        FontManager.M50.drawCenteredStringWithShadow("天空分支", width / 2,height / 4, -1);
 
     }
 

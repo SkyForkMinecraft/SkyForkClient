@@ -69,7 +69,7 @@ public class Frame {
     public void renderFrame() {
         Gui.drawRect(this.x, this.y, this.x + this.width, this.y + this.barHeight, ClickGuiScreen.color);
         GL11.glPushMatrix();
-        FontManager.M18.drawStringWithShadow(this.category.name(), (this.x + 2)  + 5, (this.y + 2.5f) , 0xFFFFFFFF);
+        FontManager.M18.drawStringWithShadow(this.category.getName(), (this.x + 2)  + 5, (this.y + 2.5f) , 0xFFFFFFFF);
         FontManager.M18.drawStringWithShadow(this.open ? "-" : "+", (this.x + this.width - 10)  + 3, (this.y + 2.5f) , -1);
         GL11.glPopMatrix();
         if (this.open) {

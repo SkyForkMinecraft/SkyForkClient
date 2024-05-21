@@ -1,16 +1,26 @@
 package cn.langya.modules.render;
 
+import cn.langya.event.ShaderType;
 import cn.langya.utils.AnimationUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
+import org.union4dev.base.events.misc.AttackEvent;
 import org.union4dev.base.events.render.Render2DEvent;
 import cn.langya.font.FontManager;
+import org.union4dev.base.events.render.ShaderEvent;
+import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.NumberValue;
+import skid.cedo.render.RenderUtil;
 import skid.cedo.shader.RoundedUtil;
 
 import java.awt.*;
-
-import static cn.langya.elements.impls.TargetHUD.drawBigHead;
+import java.text.DecimalFormat;
 
 /**
  * @author LangYa466
@@ -19,21 +29,62 @@ import static cn.langya.elements.impls.TargetHUD.drawBigHead;
 
 public class TargetHUD implements Access.InstanceAccess {
 
-    public NumberValue x = new NumberValue("X",80,0,1020,10);
+    public NumberValue x1 = new NumberValue("X",80,0,1020,10);
     public NumberValue y = new NumberValue("Y",80,0,1980,10);
+    private DecimalFormat df = new DecimalFormat("0.0");
+    private final BooleanValue blur = new BooleanValue("模糊背景",true);
+    private int x;
+
+    private EntityPlayer target;
+    private float width;
+    @EventTarget
+    void onA(AttackEvent e) {
+        if (e.getTarget() instanceof EntityPlayer) target = (EntityPlayer) e.getTarget();
+    }
+
+    @EventTarget
+    void onS(ShaderEvent s) {
+        if (blur.getValue() && s.getType() == ShaderType.Blur && target != null)   RoundedUtil.drawRound(x, y.getValue().intValue(), width, 55, 5, new Color(0, 0, 0, 180));
+    }
 
     @EventTarget
     private void onRender2D(Render2DEvent event) {
-        int width = (int) (FontManager.M18.getStringWidth(mc.thePlayer.getDisplayName().getFormattedText()) + mc.thePlayer.getMaxHealth() * 5);
-        int height = 50;
-        setSuffix(String.valueOf( (int) mc.thePlayer.getHealth()), this);
-        RoundedUtil.drawRound(x.getValue().intValue(), y.getValue().intValue(), width, 50, 5, new Color(0, 0, 0, 80));
-        RoundedUtil.drawRound(x.getValue().intValue() + 50, y.getValue().intValue() + 35, AnimationUtil.animate(mc.thePlayer.getHealth() * 5, mc.thePlayer.getHealth() * 5, 0.2), 10, 5, new Color(231, 61, 61));
-        drawBigHead(x.getValue().intValue() + 2, y.getValue().intValue() + 2, 45, 45, mc.thePlayer);
+        if(mc.currentScreen instanceof GuiChat && target == null) target = mc.thePlayer;
+        if (target == null) {
+            setSuffix("无目标", this);
+            return;
+        }
+        if (target.isDead || target.getHealth() <= 0 || target.getDistanceToEntity(mc.thePlayer) > 5) {
+            target = null;
+            x = (int) AnimationUtil.animate(114514, x1.getValue().intValue(), 50);
+        } else {
+            x = x1.getValue().intValue();
+        }
+        if (mc.currentScreen instanceof GuiChat && target == mc.thePlayer) {
+            target = null;
+            return;
+        }
 
-        FontManager.M18.drawStringWithShadow(mc.thePlayer.getDisplayName().getFormattedText(), x.getValue().intValue() + 50, y.getValue().intValue() + 5, -1);
-        FontManager.M16.drawStringWithShadow(String.valueOf(((int) mc.thePlayer.getHealth())), x.getValue().intValue() + 50, y.getValue().intValue() + 35, -1);
+        width =  FontManager.M18.getStringWidth(target.getDisplayName().getUnformattedTextForChat()) + target.getMaxHealth() * 4;
 
+        setSuffix(String.format("剩余血量 : %s",df.format(target.getHealth())), this);
+        RoundedUtil.drawRound(x, y.getValue().intValue(), width, 55, 5, new Color(0, 0, 0, 180));
+        RoundedUtil.drawRound(x + 2, y.getValue().intValue() + 44.5F, target.getHealth() * 5, 8, 3, new Color(188, 43, 43));
+        FontManager.M20.drawStringWithShadow(target.getDisplayName().getUnformattedTextForChat(), x + 40, y.getValue().intValue() + 5, -1);
+        FontManager.M16.drawStringWithShadow(String.format("剩余血量 : %s",df.format(target.getHealth())), x + 40, y.getValue().intValue() + 20, -1);
+        FontManager.M16.drawStringWithShadow(String.format("目标距离 : %s",df.format(target.getDistanceToEntity(mc.thePlayer))), x + 40, y.getValue().intValue() + 30, -1);
+        drawBigHead(x + 2, y.getValue().intValue() + 4, 35, 35, (AbstractClientPlayer) target);
+    }
+
+    private void drawBigHead(float x, float y, float width, float height, AbstractClientPlayer player) {
+        double offset = -(player.hurtTime * 23);
+        RenderUtil.color(new Color(255, (int)(255.0 + offset), (int)(255.0 + offset)).getRGB());
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(770, 771);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(player.getLocationSkin());
+        Gui.drawScaledCustomSizeModalRect(x, y, 8.0f, 8.0f, 8, 8, width, height, 64.0f, 64.0f);
+        GlStateManager.disableBlend();
+        GlStateManager.resetColor();
     }
 
 }

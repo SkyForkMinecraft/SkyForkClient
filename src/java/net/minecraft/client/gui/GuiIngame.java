@@ -168,6 +168,8 @@ public class GuiIngame extends Gui
             this.renderTooltip(scaledresolution, partialTicks);
         }
 
+        HUD.blurScreen();
+
         Render2DEvent event = new Render2DEvent(scaledresolution, partialTicks);
         EventManager.call(event);
 
@@ -1183,6 +1185,7 @@ public class GuiIngame extends Gui
             }
 
             if (this.titlesTimer > 0)
+
             {
                 this.titlesTimer = this.titleFadeIn + this.titleDisplayTime + this.titleFadeOut;
             }

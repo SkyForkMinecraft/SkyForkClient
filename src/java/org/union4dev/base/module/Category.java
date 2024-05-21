@@ -1,23 +1,16 @@
 package org.union4dev.base.module;
 
-/**
- * Module Categories
- * Functions for classifying modules
- *
- * @author cubk
- */
+import lombok.Getter;
+
+@Getter
 public enum Category {
-    /**
-     * Modules for move faster or any changes of movement, like Fly, Strafe, Speed, etc.
-     */
-    Movement,
-    /**
-     * Modules for render, like ESP, HUD, GUI
-     */
-    Render,
-    /**
-     * Other Modules
-     */
-    Misc,
-    Client
+    Movement("玩家"),
+    Render("视觉"),
+    Misc("杂项"),
+    Client("客户端");
+    Category(String name) {
+        this.name = name;
+    }
+
+    private final String name;
 }

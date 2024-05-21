@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "1.7";
+    public static final String CLIENT_VERSION = "1.9";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -85,8 +85,6 @@ public final class Access {
     @SneakyThrows
     public Access() {
         INSTANCE = this;
-
-        Display.setTitle(CLIENT_NAME  + " - " + CLIENT_VERSION + " - 加载中...");
 
 //        Verify.verify();
 

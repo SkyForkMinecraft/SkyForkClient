@@ -21,7 +21,7 @@ import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
  */
 
 public class FontRenderer {
-    public static Font font = getFont(new ResourceLocation("client/fonts/misans.ttf"), 14);
+    public static Font font = getFont(new ResourceLocation("client/fonts/MiSans-Bold.ttf"), 14);
 
     private static Font getFont(ResourceLocation resourceLocation, float fontSize) {
         try {

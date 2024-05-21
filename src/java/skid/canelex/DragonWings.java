@@ -20,11 +20,11 @@ public class DragonWings extends ModelBase
 	private final ModelRenderer wing;
 	private final ModelRenderer wingTip;
 	private final boolean playerUsesFullHeight;
-	public BooleanValue fullHeight = new BooleanValue("FullHeight", false);
-	public BooleanValue colored = new BooleanValue("Colored", false);
-	private final BooleanValue chroma = new BooleanValue("Chroma", false);
-	public final NumberValue hue = new NumberValue("Hue", 100.0, 0.0, 100.0, 1.0);
-	public final NumberValue scaleValue = new NumberValue("Scale", 100.0, 0.0, 100.0, 1.0);
+	public BooleanValue fullHeight = new BooleanValue("自适应高度", false);
+	public BooleanValue colored = new BooleanValue("自定义颜色", false);
+	private final BooleanValue chroma = new BooleanValue("自定义颜色浓度", false);
+	public final NumberValue hue = new NumberValue("颜色浓度", 100.0, 0.0, 100.0, 1.0);
+	public final NumberValue scaleValue = new NumberValue("大小", 100.0, 0.0, 100.0, 1.0);
 
 	public DragonWings()
 	{
@@ -59,7 +59,7 @@ public class DragonWings extends ModelBase
 	{
 		EntityPlayer player = mc.thePlayer;
 
-		if ( !player.isInvisible() && mc.thePlayer.rotationPitch <= 52.499985) // Should render wings onto this player?
+		if ( !player.isInvisible() ) // Should render wings onto this player?
 		{
 			renderWings(player, event.getRenderPartialTicks());
 		}

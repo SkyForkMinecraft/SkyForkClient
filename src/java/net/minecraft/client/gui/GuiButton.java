@@ -62,27 +62,15 @@ public class GuiButton extends Gui
     {
         if (this.visible)
         {
-            int j = 14737632;
-
-            if (!this.enabled)
-            {
-                j = 10526880;
-            }
-            else if (this.hovered)
-            {
-                j = 16777120;
-            }
-            FontRenderer fontrenderer = mc.fontRendererObj;
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-            if(hovered)
-                RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 3.0F, new Color(0, 0, 0, 160));
+            if(hovered) RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 3.0F, new Color(0, 0, 0, 160));
             else RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 3.0F, new Color(0, 0, 0, 80));
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 
             this.mouseDragged(mc, mouseX, mouseY);
 
-            FontManager.M18.drawCenteredString(this.displayString, this.xPosition + this.width / 2, (float) (this.yPosition + (this.height - 8.0) / 2), j);
+            FontManager.M18.drawCenteredString(this.displayString, this.xPosition + this.width / 2, (float) (this.yPosition + (this.height - 8.0) / 2), -1);
         }
     }
 

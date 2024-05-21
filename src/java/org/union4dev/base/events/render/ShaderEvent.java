@@ -1,5 +1,6 @@
 package org.union4dev.base.events.render;
 
+import cn.langya.event.ShaderType;
 import lombok.Getter;
 import org.union4dev.base.events.base.Event;
 
@@ -10,10 +11,9 @@ import org.union4dev.base.events.base.Event;
 
 @Getter
 public class ShaderEvent implements Event {
-    private final boolean bloom;
-
-    public ShaderEvent(boolean bloom) {
-        this.bloom = bloom;
+    private final ShaderType type;
+    public ShaderEvent(ShaderType type) {
+        this.type = type;
     }
 
 }
