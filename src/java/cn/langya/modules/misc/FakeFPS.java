@@ -1,4 +1,4 @@
-package cn.langya.modules.client;
+package cn.langya.modules.misc;
 
 import org.union4dev.base.value.impl.NumberValue;
 

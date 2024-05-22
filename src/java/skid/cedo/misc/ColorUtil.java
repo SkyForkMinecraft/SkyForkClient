@@ -350,4 +350,10 @@ public class ColorUtil {
         return (a & 0xFF) << 24 | (r & 0xFF) << 16 | (g & 0xFF) << 8 | b & 0xFF;
     }
 
+    public static int getColor(float hueOffset, float saturation, float brightness) {
+        float speed = 4500f;
+        float hue = System.currentTimeMillis() % (int) speed / speed;
+        return Color.HSBtoRGB(hue - hueOffset / 54, saturation, brightness);
+    }
+
 }

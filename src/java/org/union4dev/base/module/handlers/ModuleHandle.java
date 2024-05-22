@@ -1,5 +1,7 @@
 package org.union4dev.base.module.handlers;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.lwjgl.input.Keyboard;
 import org.union4dev.base.annotations.module.Disable;
 import org.union4dev.base.annotations.module.Enable;
@@ -13,20 +15,30 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 public final class ModuleHandle {
 
+    @Getter
     private final String name;
 
+    @Getter
     private final Category category;
 
     private final Object object;
 
+    @Setter
+    @Getter
     private ArrayList<AbstractValue<?>> values;
 
     private boolean state;
 
+    @Getter
+    @Setter
     private boolean visible;
 
+    @Getter
+    @Setter
     private String suffix;
 
+    @Getter
+    @Setter
     private int key;
 
     public ModuleHandle(String name, Category category, Object object) {
@@ -39,40 +51,6 @@ public final class ModuleHandle {
         this.suffix = "";
         this.key = Keyboard.KEY_NONE;
     }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
-    public int getKey() {
-        return key;
-    }
-
-    public void setKey(int key) {
-        this.key = key;
-    }
-
-    public String getSuffix() {
-        return suffix;
-    }
-
-    public void setValues(ArrayList<AbstractValue<?>> values) {
-        this.values = values;
-    }
-
-    public void setSuffix(String suffix) {
-        this.suffix = suffix;
-    }
-
-    public ArrayList<AbstractValue<?>> getValues() {
-        return values;
-    }
-
-
 
     public void setEnable(boolean state) {
         if (state == this.state) return;
@@ -91,18 +69,10 @@ public final class ModuleHandle {
             if (method.isAnnotationPresent(anno)) {
                 try {
                     method.invoke(object);
-                } catch (IllegalAccessException | InvocationTargetException e) {
+                } catch (IllegalAccessException | InvocationTargetException ignored) {
                 }
             }
         }
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public boolean isEnabled() {

@@ -1,6 +1,10 @@
 package org.union4dev.base.module;
 
 import cn.langya.modules.client.*;
+import cn.langya.modules.misc.AttackParticles;
+import cn.langya.modules.misc.CustomWorldTime;
+import cn.langya.modules.misc.FakeFPS;
+import cn.langya.modules.misc.MoreParticles;
 import cn.langya.modules.render.*;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
@@ -50,6 +54,9 @@ public final class ModuleManager {
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
+        register(MoreParticles.class, "更多攻击粒子", Category.Misc);
+        register(CustomWorldTime.class, "自定义世界时间", Category.Misc);
+        register(AttackParticles.class, "自定义攻击粒子", Category.Misc);
 
         // Register Client
         register(ClickGui.class,"功能管理页面",Category.Render);
@@ -60,6 +67,7 @@ public final class ModuleManager {
         register(OldAnimation.class,"1.7动画",Category.Client);
         register(CustomGuiNewChat.class,"自定义聊天框",Category.Client);
         register(CustomHotbar.class,"自定义快捷栏",Category.Client);
+        register(CustomInventory.class,"自定义背包",Category.Client);
         register(CustomNameTags.class,"自定义名称栏",Category.Client);
         register(ItemPhysic.class,"物品物理掉落",Category.Client);
 

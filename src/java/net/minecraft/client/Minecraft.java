@@ -1,7 +1,6 @@
 package net.minecraft.client;
 
-import cn.langya.modules.client.Cape;
-import cn.langya.modules.client.FakeFPS;
+import cn.langya.modules.misc.FakeFPS;
 import com.google.common.collect.*;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
