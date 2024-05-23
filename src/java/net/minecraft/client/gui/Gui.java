@@ -12,7 +12,7 @@ public class Gui
     public static final ResourceLocation optionsBackground = new ResourceLocation("textures/gui/options_background.png");
     public static final ResourceLocation statIcons = new ResourceLocation("textures/gui/container/stats_icons.png");
     public static final ResourceLocation icons = new ResourceLocation("textures/gui/icons.png");
-    protected float zLevel;
+    protected static float zLevel;
 
     /**
      * Draw a 1 pixel wide horizontal line. Args: x1, x2, y, color
@@ -152,17 +152,17 @@ public class Gui
     /**
      * Draws a textured rectangle using the texture currently bound to the TextureManager
      */
-    public void drawTexturedModalRect(float xCoord, float yCoord, int minU, int minV, int maxU, int maxV)
+    public static void drawTexturedModalRect(float xCoord, float yCoord, int minU, int minV, int maxU, int maxV)
     {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldrenderer.pos((xCoord + 0.0F), (yCoord + maxV), this.zLevel).tex(((minU) * f), ((minV + maxV) * f1)).endVertex();
-        worldrenderer.pos((xCoord + maxU), (yCoord + maxV), this.zLevel).tex(((minU + maxU) * f), ((minV + maxV) * f1)).endVertex();
-        worldrenderer.pos((xCoord + maxU), (yCoord + 0.0F), this.zLevel).tex(((minU + maxU) * f), ((minV) * f1)).endVertex();
-        worldrenderer.pos((xCoord + 0.0F), (yCoord + 0.0F), this.zLevel).tex(((minU) * f), ((minV) * f1)).endVertex();
+        worldrenderer.pos((xCoord + 0.0F), (yCoord + maxV), zLevel).tex(((minU) * f), ((minV + maxV) * f1)).endVertex();
+        worldrenderer.pos((xCoord + maxU), (yCoord + maxV), zLevel).tex(((minU + maxU) * f), ((minV + maxV) * f1)).endVertex();
+        worldrenderer.pos((xCoord + maxU), (yCoord + 0.0F), zLevel).tex(((minU + maxU) * f), ((minV) * f1)).endVertex();
+        worldrenderer.pos((xCoord + 0.0F), (yCoord + 0.0F), zLevel).tex(((minU) * f), ((minV) * f1)).endVertex();
         tessellator.draw();
     }
 

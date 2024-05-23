@@ -8,5 +8,5 @@ import org.union4dev.base.value.impl.NumberValue;
  */
 
 public class FakeFPS {
-    public static NumberValue fakefps = new NumberValue("添加的帧率",50,1,3000,10);
+    public static NumberValue fakefps = new NumberValue("添加的帧率",50,1,99999,10);
 }

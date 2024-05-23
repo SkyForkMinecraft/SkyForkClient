@@ -1,5 +1,6 @@
 package org.union4dev.base;
 
+import cn.langya.elements.ElementManager;
 import cn.langya.files.ConfigManager;
 import cn.langya.verify.User;
 import cn.langya.verify.Verify;
@@ -7,6 +8,7 @@ import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
@@ -31,6 +33,7 @@ public final class Access {
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
     public static final Logger logger = LogManager.getLogger(CLIENT_NAME);
+    public static final ResourceLocation logo = new ResourceLocation("client/logo.png");
 
     /**
      * Client Instance, access managers with this
@@ -65,6 +68,10 @@ public final class Access {
     @Getter
     private final ClickGuiScreen clickGui;
 
+    @Getter
+    private final ElementManager elementManager;
+
+
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
         SystemTray tray = SystemTray.getSystemTray();
         Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
@@ -93,6 +100,7 @@ public final class Access {
         configManager = new ConfigManager();
         configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
         clickGui = new ClickGuiScreen();
+        elementManager = new ElementManager();
 
         // Init ViaMCP
         try {

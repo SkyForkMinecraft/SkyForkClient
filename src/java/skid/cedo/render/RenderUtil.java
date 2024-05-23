@@ -27,6 +27,50 @@ import static org.lwjgl.opengl.GL14.glBlendFuncSeparate;
 
 public class RenderUtil implements Access.InstanceAccess {
 
+
+    public static void drawBorder(double x, double y, double width, double height, float borderWidth, int color) {
+        resetColor();
+        setAlphaLimit(0);
+        GLUtil.setup2DRendering(true);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+
+        // Draw top border
+        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos(x, y, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x, y + borderWidth, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + width, y + borderWidth, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + width, y, 0.0D).color(color).endVertex();
+        tessellator.draw();
+
+        // Draw bottom border
+        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos(x, y + height - borderWidth, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x, y + height, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + width, y + height, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + width, y + height - borderWidth, 0.0D).color(color).endVertex();
+        tessellator.draw();
+
+        // Draw left border
+        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos(x, y + borderWidth, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x, y + height - borderWidth, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + borderWidth, y + height - borderWidth, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + borderWidth, y + borderWidth, 0.0D).color(color).endVertex();
+        tessellator.draw();
+
+        // Draw right border
+        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos(x + width - borderWidth, y + borderWidth, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + width - borderWidth, y + height - borderWidth, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + width, y + height - borderWidth, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + width, y + borderWidth, 0.0D).color(color).endVertex();
+        tessellator.draw();
+
+        GLUtil.end2DRendering();
+    }
+
     public static void setAlphaLimit(float limit) {
         GlStateManager.enableAlpha();
         GlStateManager.alphaFunc(GL_GREATER, (float) (limit * .01));

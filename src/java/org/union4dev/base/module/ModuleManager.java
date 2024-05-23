@@ -1,11 +1,14 @@
 package org.union4dev.base.module;
 
+import cn.langya.elements.impls.ClientLogo;
+import cn.langya.elements.impls.FPSInfo;
+import cn.langya.elements.impls.KeyStore;
+import cn.langya.elements.impls.TargetHUD;
 import cn.langya.modules.client.*;
 import cn.langya.modules.misc.AttackParticles;
 import cn.langya.modules.misc.CustomWorldTime;
 import cn.langya.modules.misc.FakeFPS;
 import cn.langya.modules.misc.MoreParticles;
-import cn.langya.modules.render.*;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.*;
@@ -49,8 +52,11 @@ public final class ModuleManager {
         register(Sprint.class, "自动疾跑", Category.Movement);
 
         // Register Render
-        register(KeyStore.class,"按键显示",Category.Render);
-        register(TargetHUD.class,"PVP信息",Category.Render);
+       // register(KeyStore.class,"按键显示",Category.Render);
+       //  register(TargetHUD.class,"PVP信息",Category.Render);
+        register(ClientLogo.class,"客户端标识",Category.Render);
+        register(cn.langya.elements.impls.ArrayList.class,"功能列表",Category.Render);
+        register(FPSInfo.class,"帧率显示",Category.Render);
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
@@ -59,16 +65,14 @@ public final class ModuleManager {
         register(AttackParticles.class, "自定义攻击粒子", Category.Misc);
 
         // Register Client
+        register(ClientSettings.class,"客户端设置",Category.Render);
         register(ClickGui.class,"功能管理页面",Category.Render);
         register(HUD.class, "页面", Category.Client);
+        register(CustomHotbar.class,"自定义背包",Category.Client);
         register(Cape.class,"自定义披风",Category.Client);
         register(NoHurtCam.class,"无受伤抖动",Category.Client);
         register(DragonWings.class,"龙翼",Category.Client);
         register(OldAnimation.class,"1.7动画",Category.Client);
-        register(CustomGuiNewChat.class,"自定义聊天框",Category.Client);
-        register(CustomHotbar.class,"自定义快捷栏",Category.Client);
-        register(CustomInventory.class,"自定义背包",Category.Client);
-        register(CustomNameTags.class,"自定义名称栏",Category.Client);
         register(ItemPhysic.class,"物品物理掉落",Category.Client);
 
     }

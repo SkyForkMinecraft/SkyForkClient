@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import cn.langya.modules.client.CustomNameTags;
+import cn.langya.modules.client.ClientSettings;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
@@ -22,7 +22,6 @@ import net.minecraft.world.World;
 import net.optifine.entity.model.IEntityRenderer;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
-import org.union4dev.base.Access;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.render.RenderNameTagEvent;
 import skid.cedo.shader.RoundedUtil;
@@ -400,7 +399,7 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
             }
 
             int j = fontrenderer.getStringWidth(str) / 2;
-            if (Access.InstanceAccess.access.getModuleManager().isEnabled(CustomNameTags.class)) {
+            if (ClientSettings.betterNameTags.getValue()) {
                 RoundedUtil.drawRound(-j,i,j * 2 + 3,fontrenderer.FONT_HEIGHT,2,new Color(0,0,0,80));
             } else {
                 GlStateManager.disableTexture2D();

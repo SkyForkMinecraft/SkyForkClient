@@ -5,6 +5,7 @@ import org.union4dev.base.Access;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
+import skid.cedo.misc.ColorUtil;
 import skid.cedo.shader.RoundedUtil;
 
 import java.awt.*;
@@ -27,7 +28,7 @@ public class CustomHotbar {
         switch (colorMode.getValue()) {
             case "客户端" : color = Access.CLIENT_COLOR; break;
             case "自定义" : color = new Color(customColorRed.getValue().intValue(), customColorGreen.getValue().intValue(), customColorBlue.getValue().intValue()); break;
-            case "彩虹" : color = new Color(Color.HSBtoRGB((float)(Access.InstanceAccess.mc.thePlayer.ticksExisted / 50.0 + Math.sin(0.032)) % 1.0f, 0.5f, 1.0f)); break;
+            case "彩虹": color = new Color(ColorUtil.getColor(-(1 + 5 * 1.7f), 0.7f, 1));
         }
 
         RoundedUtil.drawRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 22, 180, 20, 3, new Color(0, 0, 0, 80));

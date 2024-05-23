@@ -78,7 +78,7 @@ public class GuiSpectator extends Gui implements ISpectatorMenuRecipient
 
         if (p_175258_5_.func_178681_b() >= 0)
         {
-            this.drawTexturedModalRect((float)(p_175258_3_ - 91 - 1 + p_175258_5_.func_178681_b() * 20), p_175258_4_ - 1.0F, 0, 22, 24, 22);
+            drawTexturedModalRect((float)(p_175258_3_ - 91 - 1 + p_175258_5_.func_178681_b() * 20), p_175258_4_ - 1.0F, 0, 22, 24, 22);
         }
 
         RenderHelper.enableGUIStandardItemLighting();

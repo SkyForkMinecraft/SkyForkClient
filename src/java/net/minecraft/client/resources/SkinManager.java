@@ -51,15 +51,16 @@ public class SkinManager
      */
     public ResourceLocation loadSkin(MinecraftProfileTexture profileTexture, Type p_152792_2_)
     {
-        return this.loadSkin(profileTexture, p_152792_2_, (SkinManager.SkinAvailableCallback)null);
+        return this.loadSkin(profileTexture, p_152792_2_, (SkinAvailableCallback)null);
     }
 
     /**
      * May download the skin if its not in the cache, can be passed a SkinManager#SkinAvailableCallback for handling
      */
-    public ResourceLocation loadSkin(final MinecraftProfileTexture profileTexture, final Type p_152789_2_, final SkinManager.SkinAvailableCallback skinAvailableCallback)
+    public ResourceLocation loadSkin(final MinecraftProfileTexture profileTexture, final Type p_152789_2_, final SkinAvailableCallback skinAvailableCallback)
     {
-        final ResourceLocation resourcelocation = new ResourceLocation("skins/" + profileTexture.getHash());
+        final ResourceLocation resourcelocation = new ResourceLocation(p_152789_2_.name() + "/" + profileTexture.getHash());
+        /*Remove cache
         ITextureObject itextureobject = this.textureManager.getTexture(resourcelocation);
 
         if (itextureobject != null)
@@ -70,7 +71,7 @@ public class SkinManager
             }
         }
         else
-        {
+        {*/
             File file1 = new File(this.skinCacheDir, profileTexture.getHash().length() > 2 ? profileTexture.getHash().substring(0, 2) : "xx");
             File file2 = new File(file1, profileTexture.getHash());
             final IImageBuffer iimagebuffer = p_152789_2_ == Type.SKIN ? new ImageBufferDownload() : null;
@@ -99,12 +100,12 @@ public class SkinManager
                 }
             });
             this.textureManager.loadTexture(resourcelocation, threaddownloadimagedata);
-        }
+        //}
 
         return resourcelocation;
     }
 
-    public void loadProfileTextures(final GameProfile profile, final SkinManager.SkinAvailableCallback skinAvailableCallback, final boolean requireSecure)
+    public void loadProfileTextures(final GameProfile profile, final SkinAvailableCallback skinAvailableCallback, final boolean requireSecure)
     {
         THREAD_POOL.submit(new Runnable()
         {
@@ -124,9 +125,33 @@ public class SkinManager
                 if (map.isEmpty() && profile.getId().equals(Minecraft.getMinecraft().getSession().getProfile().getId()))
                 {
                     profile.getProperties().clear();
-                    profile.getProperties().putAll(Minecraft.getMinecraft().getProfileProperties());
+                    profile.getProperties().putAll(Minecraft.getMinecraft().func_181037_M());
                     map.putAll(SkinManager.this.sessionService.getTextures(profile, false));
                 }
+              //CustomSkinLoader Begin
+                Map<Type, MinecraftProfileTexture> var2 = Maps.<Type, MinecraftProfileTexture>newHashMap();
+                if (map.containsKey(Type.SKIN)){
+                    MinecraftProfileTexture var3=((MinecraftProfileTexture)map.get(Type.SKIN));
+                    String var4=var3.getMetadata("model");
+                    Map var5 = null;
+                    if(var4!=null){
+                        var5 = Maps.newHashMap();
+                        var5.put("model", var4);
+                     }
+                    var2.put(Type.SKIN, new MinecraftProfileTexture(var3.getUrl()+"?Skin="+profile.getName(),var5));
+                }else{
+                    Map var5 = Maps.newHashMap();
+                    //var5.put("model", "slim");
+                    var2.put(Type.SKIN,new MinecraftProfileTexture( "http://skins.minecraft.net/MinecraftSkins/"+profile.getName()+".png",var5));
+                }
+                if (map.containsKey(Type.CAPE)){
+                    var2.put(Type.CAPE, new MinecraftProfileTexture(((MinecraftProfileTexture)map.get(Type.CAPE)).getUrl()+"?Cloak="+profile.getName(),null));
+                }else{
+                    var2.put(Type.CAPE,new MinecraftProfileTexture( "http://skins.minecraft.net/MinecraftCloaks/"+profile.getName()+".png",null));
+                }
+                map.clear();
+                map.putAll(var2);
+                //CustomSkinLoader End
 
                 Minecraft.getMinecraft().addScheduledTask(new Runnable()
                 {

@@ -3,9 +3,8 @@ package cn.langya.modules.misc;
 import net.minecraft.network.play.server.S03PacketTimeUpdate;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
-import org.union4dev.base.events.network.PacketReceiveEvent;
 import org.union4dev.base.events.network.PacketSendEvent;
-import org.union4dev.base.events.update.TickEvent;
+import org.union4dev.base.events.update.UpdateEvent;
 import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
 
@@ -19,12 +18,7 @@ public class CustomWorldTime implements Access.InstanceAccess {
     }
 
     @EventTarget
-    private void onPr(PacketReceiveEvent e) {
-        if (e.getPacket() instanceof S03PacketTimeUpdate) e.setCancelled(true);
-    }
-
-    @EventTarget
-    private void onT(TickEvent event) {
+    private void onT(UpdateEvent event) {
         long time = 0;
         if (mc.theWorld != null) {
             switch (timeMode.getValue()) {

@@ -19,50 +19,41 @@ public class ImageBufferDownload implements IImageBuffer
         }
         else
         {
-            this.imageWidth = 64;
-            this.imageHeight = 64;
-            int i = image.getWidth();
-            int j = image.getHeight();
-            int k;
+        	int ratio=image.getWidth()/64;
+            this.imageWidth = 64 * ratio;
+            this.imageHeight = 64 * ratio;
+            BufferedImage var2 = new BufferedImage(this.imageWidth, this.imageHeight, 2);
+            Graphics var3 = var2.getGraphics();
+            var3.drawImage(image, 0, 0, (ImageObserver)null);
 
-            for (k = 1; this.imageWidth < i || this.imageHeight < j; k *= 2)
+            if (image.getHeight() == 32 * ratio)
             {
-                this.imageWidth *= 2;
-                this.imageHeight *= 2;
+                var3.drawImage(var2, 24 * ratio, 48 * ratio, 20 * ratio, 52 * ratio,  4 * ratio, 16 * ratio,  8 * ratio, 20 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 28 * ratio, 48 * ratio, 24 * ratio, 52 * ratio,  8 * ratio, 16 * ratio, 12 * ratio, 20 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 20 * ratio, 52 * ratio, 16 * ratio, 64 * ratio,  8 * ratio, 20 * ratio, 12 * ratio, 32 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 24 * ratio, 52 * ratio, 20 * ratio, 64 * ratio,  4 * ratio, 20 * ratio,  8 * ratio, 32 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 28 * ratio, 52 * ratio, 24 * ratio, 64 * ratio,  0 * ratio, 20 * ratio,  4 * ratio, 32 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 32 * ratio, 52 * ratio, 28 * ratio, 64 * ratio, 12 * ratio, 20 * ratio, 16 * ratio, 32 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 40 * ratio, 48 * ratio, 36 * ratio, 52 * ratio, 44 * ratio, 16 * ratio, 48 * ratio, 20 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 44 * ratio, 48 * ratio, 40 * ratio, 52 * ratio, 48 * ratio, 16 * ratio, 52 * ratio, 20 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 36 * ratio, 52 * ratio, 32 * ratio, 64 * ratio, 48 * ratio, 20 * ratio, 52 * ratio, 32 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 40 * ratio, 52 * ratio, 36 * ratio, 64 * ratio, 44 * ratio, 20 * ratio, 48 * ratio, 32 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 44 * ratio, 52 * ratio, 40 * ratio, 64 * ratio, 40 * ratio, 20 * ratio, 44 * ratio, 32 * ratio, (ImageObserver)null);
+                var3.drawImage(var2, 48 * ratio, 52 * ratio, 44 * ratio, 64 * ratio, 52 * ratio, 20 * ratio, 56 * ratio, 32 * ratio, (ImageObserver)null);
             }
 
-            BufferedImage bufferedimage = new BufferedImage(this.imageWidth, this.imageHeight, 2);
-            Graphics graphics = bufferedimage.getGraphics();
-            graphics.drawImage(image, 0, 0, (ImageObserver)null);
-
-            if (image.getHeight() == 32 * k)
-            {
-                graphics.drawImage(bufferedimage, 24 * k, 48 * k, 20 * k, 52 * k, 4 * k, 16 * k, 8 * k, 20 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 28 * k, 48 * k, 24 * k, 52 * k, 8 * k, 16 * k, 12 * k, 20 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 20 * k, 52 * k, 16 * k, 64 * k, 8 * k, 20 * k, 12 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 24 * k, 52 * k, 20 * k, 64 * k, 4 * k, 20 * k, 8 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 28 * k, 52 * k, 24 * k, 64 * k, 0 * k, 20 * k, 4 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 32 * k, 52 * k, 28 * k, 64 * k, 12 * k, 20 * k, 16 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 40 * k, 48 * k, 36 * k, 52 * k, 44 * k, 16 * k, 48 * k, 20 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 44 * k, 48 * k, 40 * k, 52 * k, 48 * k, 16 * k, 52 * k, 20 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 36 * k, 52 * k, 32 * k, 64 * k, 48 * k, 20 * k, 52 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 40 * k, 52 * k, 36 * k, 64 * k, 44 * k, 20 * k, 48 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 44 * k, 52 * k, 40 * k, 64 * k, 40 * k, 20 * k, 44 * k, 32 * k, (ImageObserver)null);
-                graphics.drawImage(bufferedimage, 48 * k, 52 * k, 44 * k, 64 * k, 52 * k, 20 * k, 56 * k, 32 * k, (ImageObserver)null);
-            }
-
-            graphics.dispose();
-            this.imageData = ((DataBufferInt)bufferedimage.getRaster().getDataBuffer()).getData();
-            this.setAreaOpaque(0 * k, 0 * k, 32 * k, 16 * k);
-            this.setAreaTransparent(32 * k, 0 * k, 64 * k, 32 * k);
-            this.setAreaOpaque(0 * k, 16 * k, 64 * k, 32 * k);
-            this.setAreaTransparent(0 * k, 32 * k, 16 * k, 48 * k);
-            this.setAreaTransparent(16 * k, 32 * k, 40 * k, 48 * k);
-            this.setAreaTransparent(40 * k, 32 * k, 56 * k, 48 * k);
-            this.setAreaTransparent(0 * k, 48 * k, 16 * k, 64 * k);
-            this.setAreaOpaque(16 * k, 48 * k, 48 * k, 64 * k);
-            this.setAreaTransparent(48 * k, 48 * k, 64 * k, 64 * k);
-            return bufferedimage;
+            var3.dispose();
+            this.imageData = ((DataBufferInt)var2.getRaster().getDataBuffer()).getData();
+            this.setAreaOpaque(0, 0, 32 * ratio, 16 * ratio);
+            this.setAreaTransparent(32 * ratio, 0, 64 * ratio, 32 * ratio);
+            this.setAreaOpaque(0, 16 * ratio, 64 * ratio, 32 * ratio);
+            this.setAreaTransparent(0, 32 * ratio, 16 * ratio, 48 * ratio);
+            this.setAreaTransparent(16 * ratio, 32 * ratio, 40 * ratio, 48 * ratio);
+            this.setAreaTransparent(40 * ratio, 32 * ratio, 56 * ratio, 48 * ratio);
+            this.setAreaTransparent(0, 48 * ratio, 16 * ratio, 64 * ratio);
+            this.setAreaOpaque(16 * ratio, 48 * ratio, 48 * ratio, 64 * ratio);
+            this.setAreaTransparent(48 * ratio, 48 * ratio, 64 * ratio, 64 * ratio);
+            return var2;
         }
     }
 

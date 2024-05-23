@@ -22,13 +22,4 @@ public class FontManager {
         }
         return new FontDrawer(font, true,true);
     }
-    public static Font getJFont(String name, int fontSize) {
-        try {
-            Font output = Font.createFont(Font.PLAIN, Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("client/fonts/" + name + ".ttf")).getInputStream());
-            output = output.deriveFont(fontSize);
-            return output;
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }
