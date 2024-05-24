@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.imageio.ImageIO;
+
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.SimpleTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -24,6 +26,7 @@ public class ThreadDownloadImageData extends SimpleTexture
     private static final AtomicInteger threadDownloadCounter = new AtomicInteger(0);
     private final File cacheFile;
     private final String imageUrl;
+    @Getter
     private final IImageBuffer imageBuffer;
     private BufferedImage bufferedImage;
     private Thread imageThread;

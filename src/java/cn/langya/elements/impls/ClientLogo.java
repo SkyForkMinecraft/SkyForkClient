@@ -15,7 +15,7 @@ import java.awt.*;
  */
 
 public class ClientLogo extends Element {
-    public ComboValue textMode = new ComboValue("显示文本", "英文", "中文", "英文");
+    public ComboValue textMode = new ComboValue("显示文本", "SkyFork", "天空分支", "SkyFork");
     private static final ComboValue colorMode = new ComboValue("颜色", "客户端", "客户端", "自定义", "彩虹");
     private static final NumberValue customColorRed = new NumberValue("自定义红色", 0, 0, 255, 5);
     private static final NumberValue customColorGreen = new NumberValue("自定义绿色", 0, 0, 255, 5);
@@ -32,7 +32,7 @@ public class ClientLogo extends Element {
             setHeight(0);
             return;
         }
-        String text = textMode.getValue().equals("中文") ? "天空分支" : "SkyFork";
+        String text = textMode.getValue();
         Color c = Access.CLIENT_COLOR;
         switch (colorMode.getValue()) {
             case "客户端":
