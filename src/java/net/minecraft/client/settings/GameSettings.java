@@ -2005,7 +2005,7 @@ public class GameSettings
                 return;
             }
 
-            this.ofFastRender = !this.ofFastRender;
+            this.ofFastRender = false;
 
             if (this.ofFastRender)
             {

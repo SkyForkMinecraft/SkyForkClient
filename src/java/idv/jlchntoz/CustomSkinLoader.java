@@ -40,12 +40,10 @@ public class CustomSkinLoader {
 	
 	public final static String[] DEFAULT_SKIN_URLS={
 			"http://skins.minecraft.net/MinecraftSkins/*.png",
-			"http://minecrack.fr.nf/mc/skinsminecrackd/*.png",
 			"http://www.skinme.cc/MinecraftSkins/*.png"};
 	public final static String[] DEFAULT_CAPE_URLS={
 			"http://skins.minecraft.net/MinecraftCloaks/*.png",
 			"http://s.optifine.net/capes/*.png",
-			"http://minecrack.fr.nf/mc/cloaksminecrackd/*.png",
 			"http://www.skinme.cc/MinecraftCloaks/*.png"};
 	
 	private static String[] cloakURLs = null, skinURLs = null;
