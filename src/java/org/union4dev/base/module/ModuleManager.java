@@ -4,6 +4,7 @@ import cn.imflowow.BlockOverlay;
 import cn.langya.elements.impls.*;
 import cn.langya.modules.client.*;
 import cn.langya.modules.misc.*;
+import cn.superskidder.modules.TNTTimer;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.*;
@@ -54,6 +55,7 @@ public final class ModuleManager {
         register(FPSInfo.class,"帧率显示",Category.Render);
         register(PotionInfo.class,"药水显示",Category.Render);
         register(BlockOverlay.class,"填充方块",Category.Render);
+        register(TNTTimer.class,"TNT时间",Category.Render);
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
