@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer;
 
+import cn.imflowow.BlockOverlayEvent;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -115,6 +116,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+import org.union4dev.base.events.EventManager;
 
 public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListener
 {
@@ -2641,7 +2643,11 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                     axisalignedbb = BlockModelUtils.getOffsetBoundingBox(axisalignedbb, block$enumoffsettype, blockpos);
                 }
 
-                drawSelectionBoundingBox(axisalignedbb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D).offset(-d0, -d1, -d2));
+                BlockOverlayEvent event = new BlockOverlayEvent(
+                        axisalignedbb.expand( 0.002F,  0.002F,  0.002F).offset(-d0, -d1, -d2));
+                EventManager.call(event);
+                if (!event.isCancelled())
+                    drawSelectionBoundingBox(event.getBB());
             }
 
             GlStateManager.depthMask(true);
@@ -2751,7 +2757,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
     public void playRecord(String recordName, BlockPos blockPosIn)
     {
-        ISound isound = (ISound)this.mapSoundPositions.get(blockPosIn);
+        ISound isound = this.mapSoundPositions.get(blockPosIn);
 
         if (isound != null)
         {
@@ -3076,7 +3082,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 }
                 else
                 {
-                    this.theWorld.playRecord(blockPosIn, (String)null);
+                    this.theWorld.playRecord(blockPosIn, null);
                 }
 
                 break;
@@ -3153,7 +3159,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                     double d19 = (double)i * d15 + random.nextGaussian() * 0.01D;
                     double d20 = -0.03D + random.nextGaussian() * 0.01D;
                     double d21 = (double)j * d15 + random.nextGaussian() * 0.01D;
-                    this.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d16, d17, d18, d19, d20, d21, new int[0]);
+                    this.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d16, d17, d18, d19, d20, d21);
                 }
 
                 return;
@@ -3170,13 +3176,13 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 break;
 
             case 2002:
-                double d3 = (double)blockPosIn.getX();
-                double d4 = (double)blockPosIn.getY();
-                double d5 = (double)blockPosIn.getZ();
+                double d3 = blockPosIn.getX();
+                double d4 = blockPosIn.getY();
+                double d5 = blockPosIn.getZ();
 
                 for (int k = 0; k < 8; ++k)
                 {
-                    this.spawnParticle(EnumParticleTypes.ITEM_CRACK, d3, d4, d5, random.nextGaussian() * 0.15D, random.nextDouble() * 0.2D, random.nextGaussian() * 0.15D, new int[] {Item.getIdFromItem(Items.potionitem), data});
+                    this.spawnParticle(EnumParticleTypes.ITEM_CRACK, d3, d4, d5, random.nextGaussian() * 0.15D, random.nextDouble() * 0.2D, random.nextGaussian() * 0.15D, Item.getIdFromItem(Items.potionitem), data);
                 }
 
                 int j1 = Items.potionitem.getColorFromDamage(data);
@@ -3197,7 +3203,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                     double d11 = Math.cos(d9) * d7;
                     double d23 = 0.01D + random.nextDouble() * 0.5D;
                     double d24 = Math.sin(d9) * d7;
-                    EntityFX entityfx = this.spawnEntityFX(enumparticletypes.getParticleID(), enumparticletypes.getShouldIgnoreRange(), d3 + d11 * 0.1D, d4 + 0.3D, d5 + d24 * 0.1D, d11, d23, d24, new int[0]);
+                    EntityFX entityfx = this.spawnEntityFX(enumparticletypes.getParticleID(), enumparticletypes.getShouldIgnoreRange(), d3 + d11 * 0.1D, d4 + 0.3D, d5 + d24 * 0.1D, d11, d23, d24);
 
                     if (entityfx != null)
                     {
@@ -3212,18 +3218,18 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
             case 2003:
                 double d6 = (double)blockPosIn.getX() + 0.5D;
-                double d8 = (double)blockPosIn.getY();
+                double d8 = blockPosIn.getY();
                 double d10 = (double)blockPosIn.getZ() + 0.5D;
 
                 for (int l1 = 0; l1 < 8; ++l1)
                 {
-                    this.spawnParticle(EnumParticleTypes.ITEM_CRACK, d6, d8, d10, random.nextGaussian() * 0.15D, random.nextDouble() * 0.2D, random.nextGaussian() * 0.15D, new int[] {Item.getIdFromItem(Items.ender_eye)});
+                    this.spawnParticle(EnumParticleTypes.ITEM_CRACK, d6, d8, d10, random.nextGaussian() * 0.15D, random.nextDouble() * 0.2D, random.nextGaussian() * 0.15D, Item.getIdFromItem(Items.ender_eye));
                 }
 
                 for (double d22 = 0.0D; d22 < (Math.PI * 2D); d22 += 0.15707963267948966D)
                 {
-                    this.spawnParticle(EnumParticleTypes.PORTAL, d6 + Math.cos(d22) * 5.0D, d8 - 0.4D, d10 + Math.sin(d22) * 5.0D, Math.cos(d22) * -5.0D, 0.0D, Math.sin(d22) * -5.0D, new int[0]);
-                    this.spawnParticle(EnumParticleTypes.PORTAL, d6 + Math.cos(d22) * 5.0D, d8 - 0.4D, d10 + Math.sin(d22) * 5.0D, Math.cos(d22) * -7.0D, 0.0D, Math.sin(d22) * -7.0D, new int[0]);
+                    this.spawnParticle(EnumParticleTypes.PORTAL, d6 + Math.cos(d22) * 5.0D, d8 - 0.4D, d10 + Math.sin(d22) * 5.0D, Math.cos(d22) * -5.0D, 0.0D, Math.sin(d22) * -5.0D);
+                    this.spawnParticle(EnumParticleTypes.PORTAL, d6 + Math.cos(d22) * 5.0D, d8 - 0.4D, d10 + Math.sin(d22) * 5.0D, Math.cos(d22) * -7.0D, 0.0D, Math.sin(d22) * -7.0D);
                 }
 
                 return;
@@ -3234,8 +3240,8 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                     double d12 = (double)blockPosIn.getX() + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
                     double d13 = (double)blockPosIn.getY() + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
                     double d14 = (double)blockPosIn.getZ() + 0.5D + ((double)this.theWorld.rand.nextFloat() - 0.5D) * 2.0D;
-                    this.theWorld.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d12, d13, d14, 0.0D, 0.0D, 0.0D, new int[0]);
-                    this.theWorld.spawnParticle(EnumParticleTypes.FLAME, d12, d13, d14, 0.0D, 0.0D, 0.0D, new int[0]);
+                    this.theWorld.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d12, d13, d14, 0.0D, 0.0D, 0.0D);
+                    this.theWorld.spawnParticle(EnumParticleTypes.FLAME, d12, d13, d14, 0.0D, 0.0D, 0.0D);
                 }
 
                 return;
@@ -3249,7 +3255,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
     {
         if (progress >= 0 && progress < 10)
         {
-            DestroyBlockProgress destroyblockprogress = (DestroyBlockProgress)this.damagedBlocks.get(Integer.valueOf(breakerId));
+            DestroyBlockProgress destroyblockprogress = this.damagedBlocks.get(Integer.valueOf(breakerId));
 
             if (destroyblockprogress == null || destroyblockprogress.getPosition().getX() != pos.getX() || destroyblockprogress.getPosition().getY() != pos.getY() || destroyblockprogress.getPosition().getZ() != pos.getZ())
             {

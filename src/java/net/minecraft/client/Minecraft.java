@@ -1,5 +1,6 @@
 package net.minecraft.client;
 
+import cn.imflowow.LoadWorldEvent;
 import cn.langya.modules.misc.FakeFPS;
 import com.google.common.collect.*;
 import com.google.common.util.concurrent.Futures;
@@ -2288,6 +2289,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);
             this.playerController.setPlayerCapabilities(this.thePlayer);
             this.renderViewEntity = this.thePlayer;
+
+            LoadWorldEvent loadWorldEvent = new LoadWorldEvent(worldClientIn);
+            EventManager.call(loadWorldEvent);
         }
         else
         {

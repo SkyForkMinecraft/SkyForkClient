@@ -28,6 +28,7 @@ public class ElementManager {
         elements.add(new ClientLogo());
         elements.add(new ArrayList());
         elements.add(new FPSInfo());
+        elements.add(new PotionInfo());
     }
 
     @EventTarget

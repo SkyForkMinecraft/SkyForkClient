@@ -1,14 +1,9 @@
 package org.union4dev.base.module;
 
-import cn.langya.elements.impls.ClientLogo;
-import cn.langya.elements.impls.FPSInfo;
-import cn.langya.elements.impls.KeyStore;
-import cn.langya.elements.impls.TargetHUD;
+import cn.imflowow.BlockOverlay;
+import cn.langya.elements.impls.*;
 import cn.langya.modules.client.*;
-import cn.langya.modules.misc.AttackParticles;
-import cn.langya.modules.misc.CustomWorldTime;
-import cn.langya.modules.misc.FakeFPS;
-import cn.langya.modules.misc.MoreParticles;
+import cn.langya.modules.misc.*;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.*;
@@ -57,12 +52,15 @@ public final class ModuleManager {
         register(ClientLogo.class,"客户端标识",Category.Render);
         register(cn.langya.elements.impls.ArrayList.class,"功能列表",Category.Render);
         register(FPSInfo.class,"帧率显示",Category.Render);
+        register(PotionInfo.class,"药水显示",Category.Render);
+        register(BlockOverlay.class,"填充方块",Category.Render);
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
         register(CustomWorldTime.class, "自定义世界时间", Category.Misc);
         register(AttackParticles.class, "自定义攻击粒子", Category.Misc);
+        register(KillEffectsMod.class,"击杀特效",Category.Misc);
 
         // Register Client
         register(ClientSettings.class,"客户端设置",Category.Render);
