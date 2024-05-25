@@ -1,5 +1,6 @@
 package org.union4dev.base.module;
 
+import cn.dxg.CheaterDetector;
 import cn.imflowow.BlockOverlay;
 import cn.langya.elements.impls.*;
 import cn.langya.modules.client.*;
@@ -63,6 +64,7 @@ public final class ModuleManager {
         register(CustomWorldTime.class, "自定义世界时间", Category.Misc);
         register(AttackParticles.class, "自定义攻击粒子", Category.Misc);
         register(KillEffectsMod.class,"击杀特效",Category.Misc);
+        register(CheaterDetector.class,"黑客检测",Category.Misc);
 
         // Register Client
         register(ClientSettings.class,"客户端设置",Category.Render);
