@@ -1,17 +1,23 @@
 package org.union4dev.base.module.render;
 
+import cn.langya.FontRenderer;
+import cn.langya.RoundedRectTest;
 import cn.langya.event.ShaderType;
 import cn.superskidder.BloomUtil;
 import cn.superskidder.GaussianBlur;
 import cn.superskidder.KawaseBlur;
 import net.minecraft.client.shader.Framebuffer;
 import org.union4dev.base.Access;
+import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.Startup;
 import org.union4dev.base.events.EventManager;
+import org.union4dev.base.events.render.Render2DEvent;
 import org.union4dev.base.events.render.ShaderEvent;
 import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
 import skid.cedo.render.StencilUtil;
+
+import java.awt.*;
 
 import static cn.superskidder.GaussianBlur.createFrameBuffer;
 
@@ -27,6 +33,10 @@ public class HUD implements Access.InstanceAccess {
 
     private static Framebuffer bloomFramebuffer = new Framebuffer(1, 1, false);
 
+    @EventTarget
+    void onR2d(Render2DEvent e) {
+//        RoundedRectTest.drawG2DLogoTest(50,50,50,50,Color.WHITE);
+    }
 
     public static void blurScreen() {
 
