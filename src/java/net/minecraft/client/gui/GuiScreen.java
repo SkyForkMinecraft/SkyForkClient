@@ -667,16 +667,16 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     {
     }
 
-    public DynamicTexture d;
-    public String url = "https://uapis.cn/api/imgapi/furry/img4k.php";
-    {
-        try {
-            d = new DynamicTexture(ImageIO.read(new URL(url)));
-        } catch (IOException ignored) {
-        }
-    }
+    public static DynamicTexture d;
+    public static String url = "https://uapis.cn/api/imgapi/furry/img4k.php";
 
     public void drawClientBackground() {
+        {
+            try {
+                d = new DynamicTexture(ImageIO.read(new URL(url)));
+            } catch (IOException ignored) {
+            }
+        }
         try {
             GlStateManager.disableLighting();
             GlStateManager.disableFog();
