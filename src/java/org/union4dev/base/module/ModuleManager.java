@@ -61,6 +61,7 @@ public final class ModuleManager {
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
+        register(IRC.class, "客户端聊天", Category.Misc);
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
         register(CustomWorldTime.class, "自定义世界时间", Category.Misc);
         register(AttackParticles.class, "自定义攻击粒子", Category.Misc);

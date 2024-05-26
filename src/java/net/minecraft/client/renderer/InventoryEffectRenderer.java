@@ -145,12 +145,7 @@ public abstract class InventoryEffectRenderer extends GuiContainer
                 Potion potion = Potion.potionTypes[potioneffect.getPotionID()];
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 this.mc.getTextureManager().bindTexture(inventoryBackground);
-                if (bg) RoundedUtil.drawRound(i, j - 5,60, 28,rad,new Color(0,0,0,120));
 
-                if (potion.hasStatusIcon()) {
-                    int i1 = potion.getStatusIconIndex();
-                    this.drawTexturedModalRect(i + 6, j , 0 + i1 % 8 * 18, 198 + i1 / 8 * 18, 18, 18);
-                }
 
                 String s1 = I18n.format(potion.getName(), new Object[0]);
 
@@ -165,6 +160,13 @@ public abstract class InventoryEffectRenderer extends GuiContainer
                 else if (potioneffect.getAmplifier() == 3)
                 {
                     s1 = s1 + " " + I18n.format("enchantment.level.4", new Object[0]);
+                }
+
+                if (bg) RoundedUtil.drawRound(i, j - 5,45 + FontManager.M16.getStringWidth(s1), 28,rad,new Color(0,0,0,120));
+
+                if (potion.hasStatusIcon()) {
+                    int i1 = potion.getStatusIconIndex();
+                    this.drawTexturedModalRect(i + 6, j , 0 + i1 % 8 * 18, 198 + i1 / 8 * 18, 18, 18);
                 }
 
                 FontManager.M16.drawStringWithShadow(s1, (float)(i + 10 + 18), (float)(j), 16777215);

@@ -38,7 +38,8 @@ public class StringTranslate
         {
             InputStream inputstream = StringTranslate.class.getResourceAsStream("/assets/minecraft/lang/en_US.lang");
 
-            for (String s : IOUtils.readLines(inputstream, Charsets.UTF_8))
+            assert inputstream != null;
+            for (String s : IOUtils.readLines(inputstream, Charsets.UTF_8))//
             {
                 if (!s.isEmpty() && s.charAt(0) != 35)
                 {

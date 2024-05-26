@@ -26,6 +26,7 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import org.union4dev.base.Access;
 import org.union4dev.base.events.EventManager;
+import org.union4dev.base.events.misc.ChatEvent;
 import org.union4dev.base.events.movement.MotionUpdateEvent;
 import org.union4dev.base.events.movement.MoveEvent;
 import org.union4dev.base.events.movement.SlowdownEvent;
@@ -272,6 +273,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void sendChatMessage(String message)
     {
+        ChatEvent event = new ChatEvent(message);
+        EventManager.call(event);
+        if (event.isCancelled()) {
+            return;
+        }
         this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
     }
 

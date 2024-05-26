@@ -5,6 +5,9 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.Access;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+
 public class ChatUtil {
     public static final String PRIMARY_COLOR = EnumChatFormatting.BLUE.toString();
     public static final String SECONDARY_COLOR = EnumChatFormatting.GRAY.toString();

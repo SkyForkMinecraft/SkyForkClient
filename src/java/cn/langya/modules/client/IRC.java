@@ -1,14 +1,19 @@
 package cn.langya.modules.client;
 
 import cn.langya.utils.EncryptUtil;
+import com.alibaba.fastjson.JSONObject;
+import lol.tgformat.irc.ClientMain;
+import net.minecraft.client.Minecraft;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.Enable;
+import org.union4dev.base.events.misc.ChatEvent;
 import org.union4dev.base.events.update.UpdateEvent;
 import org.union4dev.base.util.ChatUtil;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 /**
  * @author LangYa466
@@ -16,50 +21,35 @@ import java.nio.charset.StandardCharsets;
  */
 
 public class IRC {
-    private static PrintWriter out;
-    private static boolean inited;
-
-    @Enable
-    static void enable() {
-        init();
+    private Minecraft mc = Minecraft.getMinecraft();
+    private String lastUserName = "";
+    @EventTarget
+    public void onUpdate(UpdateEvent event){
+        if (!Objects.equals(lastUserName, mc.thePlayer.getDisplayName().getUnformattedText())){
+            lastUserName = mc.thePlayer.getDisplayName().getUnformattedText();
+            JSONObject ign = new JSONObject();
+            ign.put("type", "IGN");
+            ign.put("data", lastUserName);
+            send(ign.toJSONString());
+        }
     }
-
-    public static void init() {
+    @EventTarget
+    public void onChat(ChatEvent event) {
+        if (event.getMessage().startsWith(".irc")) {
+            event.setCancelled(true);
+            JSONObject msg = new JSONObject();
+            msg.put("type", "msg");
+            msg.put("data", lastUserName + ": " + event.getMessage().substring(4));
+            send(msg.toJSONString());
+        }
+    }
+    private void send(Object obj) {
         try {
-            Socket socket = new Socket("127.0.0.1", 466);
-            ChatUtil.success(" [IRC] 连接成功");
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-            out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
-
-            new Thread(() -> {
-                try {
-                    String message;
-                    while ((message = in.readLine()) != null) {
-                        ChatUtil.info(" [IRC] 有新的消息: " + EncryptUtil.decrypt(message));
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-
-            socket.close();
+            ClientMain.sendObject(obj);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        inited = true;
-    }
-
-    public static boolean checkMessage(String message) {
-        if(!inited) init();
-
-        if(message.startsWith(".irc") && !message.replace(".irc ","").isEmpty()) {
-            out.println(EncryptUtil.encrypt(message.replace(".irc ","")));
-            ChatUtil.success(String.format(" [IRC] 消息 [%s] 发送成功 ",message.replace(".irc ","")));
-            return true;
-        } else {
-            return false;
+            ChatUtil.info(" ERROR: " + EncryptUtil.decrypt(e.getMessage()));
         }
     }
+
 
 }
