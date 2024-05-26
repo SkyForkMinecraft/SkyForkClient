@@ -5,6 +5,7 @@ import cn.langya.files.ConfigManager;
 import cn.langya.verify.User;
 import cn.langya.verify.Verify;
 import de.florianmichael.viamcp.ViaMCP;
+import lol.tgformat.irc.ClientMain;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
@@ -101,7 +102,7 @@ public final class Access {
         configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
         clickGui = new ClickGuiScreen();
         elementManager = new ElementManager();
-
+        new ClientMain("127.0.0.1", 11451).start();
         // Init ViaMCP
         try {
             ViaMCP.create();
