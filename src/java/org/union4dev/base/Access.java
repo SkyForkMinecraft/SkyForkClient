@@ -8,6 +8,8 @@ import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +17,9 @@ import org.lwjgl.opengl.Display;
 import org.union4dev.base.gui.click.ClickGuiScreen;
 import org.union4dev.base.module.ModuleManager;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -120,6 +124,8 @@ public final class Access {
         } else {
             Display.setTitle(CLIENT_NAME  + " - " + CLIENT_VERSION);
         }
+
+        GuiScreen.d = new DynamicTexture(ImageIO.read(new URL(GuiScreen.url)));
 
         loaded = true;
     }
