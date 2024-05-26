@@ -1,4 +1,4 @@
-package cn.langya.modules.client;
+package cn.superskidder.modules;
 
 import org.union4dev.base.value.impl.BooleanValue;
 

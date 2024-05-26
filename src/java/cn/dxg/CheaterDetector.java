@@ -33,16 +33,16 @@ public class CheaterDetector implements Access.InstanceAccess {
     public void onPacket(PacketReceiveEvent event) {
         if (mc.thePlayer.ticksExisted % 6 == 0) {
             S19PacketEntityStatus s19;
-            if (event.getPacket() instanceof S19PacketEntityStatus && reachValue.getValue() && (s19 = (S19PacketEntityStatus)event.getPacket()).getOpCode() == 2) {
+            if (event.getPacket() instanceof S19PacketEntityStatus && reachValue.getValue() && (s19 = (S19PacketEntityStatus) event.getPacket()).getOpCode() == 2) {
                 new Thread(() -> checkCombatHurt(s19.getEntity(mc.theWorld))).start();
             }
             if (event.getPacket() instanceof S14PacketEntity && noslowAValue.getValue()) {
-                S14PacketEntity packet = (S14PacketEntity)event.getPacket();
+                S14PacketEntity packet = (S14PacketEntity) event.getPacket();
                 Entity entity = packet.getEntity(mc.theWorld);
                 if (!(entity instanceof EntityPlayer)) {
                     return;
                 }
-                new Thread(() -> checkPlayer((EntityPlayer)entity)).start();
+                new Thread(() -> checkPlayer((EntityPlayer) entity)).start();
             }
         }
     }
@@ -54,7 +54,8 @@ public class CheaterDetector implements Access.InstanceAccess {
         Entity attacker = null;
         int attackerCount = 0;
         for (Entity worldEntity : mc.theWorld.getLoadedEntityList()) {
-            if (!(worldEntity instanceof EntityPlayer) || worldEntity.getDistanceToEntity(entity) > 7.0f || ((Object)worldEntity).equals(entity)) continue;
+            if (!(worldEntity instanceof EntityPlayer) || worldEntity.getDistanceToEntity(entity) > 7.0f || ((Object) worldEntity).equals(entity))
+                continue;
             ++attackerCount;
             attacker = worldEntity;
         }

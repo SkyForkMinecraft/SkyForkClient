@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import cn.langya.modules.client.OldAnimation;
+import cn.superskidder.modules.OldAnimation;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

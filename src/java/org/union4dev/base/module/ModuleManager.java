@@ -5,6 +5,7 @@ import cn.imflowow.BlockOverlay;
 import cn.langya.elements.impls.*;
 import cn.langya.modules.client.*;
 import cn.langya.modules.misc.*;
+import cn.superskidder.modules.OldAnimation;
 import cn.superskidder.modules.TNTTimer;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
