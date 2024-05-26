@@ -54,6 +54,7 @@ public class CheaterDetector implements Access.InstanceAccess {
         Entity attacker = null;
         int attackerCount = 0;
         for (Entity worldEntity : mc.theWorld.getLoadedEntityList()) {
+            if (worldEntity == mc.thePlayer) return;
             if (!(worldEntity instanceof EntityPlayer) || worldEntity.getDistanceToEntity(entity) > 7.0f || ((Object) worldEntity).equals(entity))
                 continue;
             ++attackerCount;
