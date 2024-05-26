@@ -668,7 +668,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     }
 
     public static DynamicTexture d;
-    public static String url = "https://uapis.cn/api/imgapi/furry/img4k.php";
+    public static String url = "https://imgapi.xl0408.top/index.php";
 
     public void drawClientBackground() {
         try {
