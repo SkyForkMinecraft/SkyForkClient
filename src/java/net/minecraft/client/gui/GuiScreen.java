@@ -7,10 +7,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.stream.GuiTwitchUserMode;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.entity.EntityList;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
@@ -36,6 +34,7 @@ import org.union4dev.base.events.misc.GuiClickEvent;
 import skid.cedo.render.RenderUtil;
 import tv.twitch.chat.ChatUserInfo;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -45,6 +44,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -667,6 +667,28 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     {
     }
 
+    public DynamicTexture d;
+    public String url = "https://uapis.cn/api/imgapi/furry/img4k.php";
+    {
+        try {
+            d = new DynamicTexture(ImageIO.read(new URL(url)));
+        } catch (IOException ignored) {
+        }
+    }
+
+    public void drawClientBackground() {
+        try {
+            GlStateManager.disableLighting();
+            GlStateManager.disableFog();
+            mc.getTextureManager().loadTexture(new ResourceLocation("ubg"), d);
+            mc.getTextureManager().bindTexture(new ResourceLocation("ubg"));
+            GlStateManager.color(1F, 1F, 1F, 1F);
+            Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, width, height, width, height, width, height);
+
+        } catch(final Exception ignored) {
+        }
+    }
+
     /**
      * Draws either a gradient over the background screen (when it exists) or a flat gradient over background.png
      */
@@ -694,7 +716,8 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public void drawBackground(int tint)
     {
-        RenderUtil.drawImage(new ResourceLocation("client/background.png"), 0, 0, width, height);
+        drawClientBackground();
+        // RenderUtil.drawImage(new ResourceLocation("client/background.png"), 0, 0, width, height);
         /*
         GlStateManager.disableLighting();
         GlStateManager.disableFog();

@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import cn.langya.screen.GuiCustomBackground;
 import cn.langya.verify.Verify;
 import com.google.common.collect.Lists;
 
@@ -201,6 +202,11 @@ public class GuiMainMenu extends GuiScreen {
         if (button.id == 0)
         {
             this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
+        }
+
+        if (button.id == 3)
+        {
+            this.mc.displayGuiScreen(new GuiCustomBackground());
         }
 
         if (button.id == 5)
