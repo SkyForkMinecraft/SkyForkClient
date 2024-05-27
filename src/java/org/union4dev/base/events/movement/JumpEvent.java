@@ -1,10 +1,12 @@
 package org.union4dev.base.events.movement;
 
+import lombok.Setter;
 import org.union4dev.base.events.base.Event;
 
 public class JumpEvent extends Event.EventCancellable {
     private double jumpMotion;
-    private final float yaw;
+    @Setter
+    private float yaw;
 
     public JumpEvent(double jumpMotion, float yaw) {
         this.jumpMotion = jumpMotion;

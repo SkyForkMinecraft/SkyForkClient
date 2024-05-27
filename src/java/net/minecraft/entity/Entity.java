@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
+import cn.tenacity.PlayerMoveUpdateEvent;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
@@ -14,6 +15,7 @@ import net.minecraft.block.BlockWall;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.block.state.pattern.BlockPattern;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReport;
@@ -48,6 +50,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import org.union4dev.base.events.EventManager;
 
 public abstract class Entity implements ICommandSender
 {
@@ -1225,6 +1228,18 @@ public abstract class Entity implements ICommandSender
      */
     public void moveFlying(float strafe, float forward, float friction)
     {
+        PlayerMoveUpdateEvent playerMovementEvent = new PlayerMoveUpdateEvent(strafe, forward, friction, this.rotationYaw, this.rotationPitch);
+        if (this instanceof EntityPlayerSP) {
+            EventManager.call(playerMovementEvent);
+        }
+
+        if (playerMovementEvent.isCancelled()) return;
+
+        strafe = playerMovementEvent.getStrafe();
+        forward = playerMovementEvent.getForward();
+        friction = playerMovementEvent.getFriction();
+
+
         float f = strafe * strafe + forward * forward;
 
         if (f >= 1.0E-4F)
