@@ -3,8 +3,10 @@ package cn.langya.hack.modules;
 import cn.langya.modules.misc.particles.TimerUtils;
 import cn.tenacity.PlayerMoveUpdateEvent;
 import de.florianmichael.viamcp.fixes.AttackOrder;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.events.movement.JumpEvent;
@@ -34,6 +36,103 @@ public class KillAura implements Access.InstanceAccess {
         return new float[]{yaw, pitch};
     }
 
+    // LiquidBounce
+    public void applyStrafeToPlayer(PlayerMoveUpdateEvent event) {
+        EntityPlayerSP player = mc.thePlayer;
+        float yaw = getRotations(target)[0];
+        float dif = ((MathHelper.wrapAngleTo180_float(player.rotationYaw - yaw - 23.5f - 135) + 180) / 45);
+        int difInt = (int) dif;
+
+        float strafe = event.getStrafe();
+        float forward = event.getForward();
+        float friction = event.getFriction();
+
+        float calcForward = 0f;
+        float calcStrafe = 0f;
+
+        switch (difInt) {
+            case 0: {
+                calcForward = forward;
+                calcStrafe = strafe;
+                break;
+            }
+            case 1: {
+                calcForward += forward;
+                calcStrafe -= forward;
+                calcForward += strafe;
+                calcStrafe += strafe;
+                break;
+            }
+            case 2: {
+                calcForward = strafe;
+                calcStrafe = -forward;
+                break;
+            }
+            case 3: {
+                calcForward -= forward;
+                calcStrafe -= forward;
+                calcForward += strafe;
+                calcStrafe -= strafe;
+                break;
+            }
+            case 4: {
+                calcForward = -forward;
+                calcStrafe = -strafe;
+                break;
+            }
+            case 5: {
+                calcForward -= forward;
+                calcStrafe += forward;
+                calcForward -= strafe;
+                calcStrafe -= strafe;
+                break;
+            }
+            case 6: {
+                calcForward = -strafe;
+                calcStrafe = forward;
+                break;
+            }
+            case 7: {
+                calcForward += forward;
+                calcStrafe += forward;
+                calcForward -= strafe;
+                calcStrafe += strafe;
+                break;
+            }
+        }
+
+        if (calcForward > 1f || (calcForward < 0.9f && calcForward > 0.3f) || calcForward < -1f ||
+                (calcForward > -0.9f && calcForward < -0.3f)) {
+            calcForward *= 0.5f;
+        }
+
+        if (calcStrafe > 1f || (calcStrafe < 0.9f && calcStrafe > 0.3f) || calcStrafe < -1f ||
+                (calcStrafe > -0.9f && calcStrafe < -0.3f)) {
+            calcStrafe *= 0.5f;
+        }
+
+        float d = calcStrafe * calcStrafe + calcForward * calcForward;
+
+        if (d >= 1.0E-4f) {
+            d = MathHelper.sqrt_float(d);
+
+            if (d < 1.0f) {
+                d = 1.0f;
+            }
+
+            d = friction / d;
+            calcStrafe *= d;
+            calcForward *= d;
+
+            float yawSin = MathHelper.sin((float) (yaw * Math.PI / 180f));
+            float yawCos = MathHelper.cos((float) (yaw * Math.PI / 180f));
+
+            player.motionX += calcStrafe * yawCos - calcForward * yawSin;
+            player.motionZ += calcForward * yawCos + calcStrafe * yawSin;
+        }
+    }
+
+
     @EventTarget
     private void onMu(MotionUpdateEvent e) {
         for (Entity entity : mc.theWorld.loadedEntityList) {
@@ -57,8 +156,10 @@ public class KillAura implements Access.InstanceAccess {
         }
 
          */
+        if (target.isDead || target.getDistanceToEntity(mc.thePlayer) > range.getValue()) target = null;
 
-        // 如果targets列表是空的且target不为空
+
+            // 如果targets列表是空的且target不为空
         if (target != null) {
             float[] rotations = getRotations(target);
             float yaw = rotations[0];
@@ -81,8 +182,41 @@ public class KillAura implements Access.InstanceAccess {
 
     @EventTarget
     private void onPlayerMoveUpdateEvent(PlayerMoveUpdateEvent event) {
-        if (moveFix.getValue() && target != null) {
+        if (target == null) return;
+
+        if (moveFix.getValue()) {
             event.setYaw(getRotations(target)[0]);
+        }
+
+        if (event.getForward() != 0f) {
+            float yaw = getRotations(target)[0];
+            float strafe = event.getStrafe();
+            float forward = event.getForward();
+            float friction = event.getFriction();
+
+            float f = strafe * strafe + forward * forward;
+
+            if (f >= 1.0E-4F) {
+                f = MathHelper.sqrt_float(f);
+
+                if (f < 1.0F) {
+                    f = 1.0F;
+                }
+
+                f = friction / f;
+                strafe *= f;
+                forward *= f;
+
+                float yawSin = MathHelper.sin((float) (yaw * Math.PI / 180F));
+                float yawCos = MathHelper.cos((float) (yaw * Math.PI / 180F));
+
+                mc.thePlayer.motionX += strafe * yawCos - forward * yawSin;
+                mc.thePlayer.motionZ += forward * yawCos + strafe * yawSin;
+            }
+            event.setCancel(true);
+        } else if (event.getStrafe() != 0f) {
+            applyStrafeToPlayer(event);
+            event.setCancel(true);
         }
     }
 
