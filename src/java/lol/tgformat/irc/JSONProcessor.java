@@ -8,7 +8,7 @@ import org.union4dev.base.util.ChatUtil;
  * @since 2024/5/25 14:16
  */
 public class JSONProcessor {
-    private ReceiveData data;
+    private final ReceiveData data;
     public JSONProcessor(ReceiveData data) {
         this.data = data;
     }

@@ -18,7 +18,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class KillAura implements Access.InstanceAccess {
     private final NumberValue cps = new NumberValue("CPS", 12, 1, 20, 1);
     private final NumberValue range = new NumberValue("Range", 3.2, 3.0, 6, 0.1);
-    private final BooleanValue legit = new BooleanValue("Legit", true);
     private final BooleanValue moveFix = new BooleanValue("MoveFIx", true);
     private final List<Entity> targets = new CopyOnWriteArrayList<>();
     private Entity target;
@@ -65,10 +64,6 @@ public class KillAura implements Access.InstanceAccess {
             float yaw = rotations[0];
             e.setYaw(yaw);
             e.setPitch(rotations[1]);
-            if (legit.getValue()) {
-                mc.thePlayer.rotationYaw = yaw;
-                mc.thePlayer.rotationPitch = rotations[1];
-            }
             // 视觉
             mc.thePlayer.prevRenderYawOffset = yaw;
             mc.thePlayer.renderYawOffset = yaw;
@@ -87,13 +82,13 @@ public class KillAura implements Access.InstanceAccess {
     @EventTarget
     private void onPlayerMoveUpdateEvent(PlayerMoveUpdateEvent event) {
         if (moveFix.getValue() && target != null) {
-            mc.thePlayer.rotationYaw = getRotations(target)[0];
+            event.setYaw(getRotations(target)[0]);
         }
     }
 
     @EventTarget
     private void onJumpFixEvent(JumpEvent event) {
-        if (moveFix.getValue() && target != null) mc.thePlayer.rotationYaw = getRotations(target)[0];
+        event.setYaw(getRotations(target)[0]);
     }
 
 }

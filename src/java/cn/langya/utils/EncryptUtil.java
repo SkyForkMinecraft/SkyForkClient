@@ -15,12 +15,12 @@ public class EncryptUtil  {
 
 	public static String key = "别破解了哥";
 
-	/***
-	 * @param orignal 原文
+	/**
+	 * @param text 加密前的字符
 	 * @return 加密后的字符
 	 */
-	public static String encrypt(String orignal) {
-		char[] chars = orignal.toCharArray();
+	public static String encrypt(String text) {
+		char[] chars = text.toCharArray();
 		StringBuilder buffer = new StringBuilder();
 		for(char aChar : chars) {
 			int asciiCode = aChar;
@@ -34,12 +34,11 @@ public class EncryptUtil  {
 	}
 	
 	/**
-	 *
-	 * @param encryptedData :密文
-	 * @return : 源数据
+	 * @param text 加密后的字符
+	 * @return : 加密前的字符
 	 */
-	public static String decrypt(String encryptedData) {
-	    char[] chars = encryptedData.toCharArray();
+	public static String decrypt(String text) {
+	    char[] chars = text.toCharArray();
 	    StringBuilder sb = new StringBuilder();
 	    for (char aChar : chars) {
 	        int asciiCode = aChar;

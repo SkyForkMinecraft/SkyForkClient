@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 
 public class IRC {
-    private Minecraft mc = Minecraft.getMinecraft();
+    private final Minecraft mc = Minecraft.getMinecraft();
     private String lastUserName = "";
     @EventTarget
     public void onUpdate(UpdateEvent event){
