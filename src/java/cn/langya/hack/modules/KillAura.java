@@ -139,7 +139,7 @@ public class KillAura implements Access.InstanceAccess {
             // 判断类型，等等打弓箭，物品就尴尬了
             if (!(entity instanceof EntityLivingBase)) continue;
             // 实体是当前玩家 或 实体死亡 或 实体和当前玩家的距离大于 range 就不进行下面的操作
-            if (entity == mc.thePlayer || entity.isDead || entity.getDistanceToEntity(mc.thePlayer) > range.getValue())
+            if (entity == mc.thePlayer || entity.isDead || ((EntityLivingBase) entity).getHealth() == 0 || entity.getDistanceToEntity(mc.thePlayer) > range.getValue())
                 continue;
             // 给targets列表加进去
             //    targets.add(entity);
