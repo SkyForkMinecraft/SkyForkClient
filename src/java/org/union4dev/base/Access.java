@@ -123,7 +123,7 @@ public final class Access {
             e.printStackTrace();
         }
 
-        clientMode = ClientMode.Hack;
+        clientMode =ClientMode.Legit;
         // Finished Initialization
         Display.setTitle(CLIENT_NAME + " - " + Verify.user.getDisplayName());
 

@@ -61,7 +61,7 @@ public final class ModuleManager {
         register(PotionInfo.class,"药水显示",Category.Render);
         register(BlockOverlay.class,"填充方块",Category.Render);
         register(TNTTimer.class,"TNT时间",Category.Render);
-        if(Access.getInstance().getClientMode() == ClientMode.Hack)register(KillAura.class,"杀人气质",Category.Render);
+       // if(Access.getInstance().getClientMode() == ClientMode.Hack)register(KillAura.class,"杀人气质",Category.Render);
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
