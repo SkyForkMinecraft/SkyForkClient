@@ -1,5 +1,6 @@
 package org.union4dev.base;
 
+import cn.langya.ClientMode;
 import cn.langya.elements.ElementManager;
 import cn.langya.files.ConfigManager;
 import cn.langya.verify.User;
@@ -76,6 +77,9 @@ public final class Access {
     @Getter
     private final ElementManager elementManager;
 
+    @Getter
+    private ClientMode clientMode;
+
 
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
         SystemTray tray = SystemTray.getSystemTray();
@@ -119,15 +123,11 @@ public final class Access {
             e.printStackTrace();
         }
 
+        clientMode = ClientMode.Hack;
         // Finished Initialization
-        if(Verify.user == User.User) {
-            Display.setTitle(CLIENT_NAME + " - " + Verify.user.getDisplayName());
-        } else {
-            Display.setTitle(CLIENT_NAME  + " - " + CLIENT_VERSION);
-        }
+        Display.setTitle(CLIENT_NAME + " - " + Verify.user.getDisplayName());
 
         GuiScreen.d = new DynamicTexture(ImageIO.read(new URL(GuiScreen.url)));
-
 
         loaded = true;
     }
