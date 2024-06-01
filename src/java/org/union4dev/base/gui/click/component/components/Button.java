@@ -71,7 +71,7 @@ public class Button extends Component {
     public void renderComponent() {
         Gui.drawRect(parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset, this.isHovered ? (Access.getInstance().getModuleManager().isEnabled(this.mod) ? new Color(0xFF222222).darker().getRGB() : 0xFF222222) : (Access.getInstance().getModuleManager().isEnabled(this.mod) ? new Color(14, 14, 14).getRGB() : 0xFF111111));
         GL11.glPushMatrix();
-        FontManager.M18.drawStringWithShadow(Access.getInstance().getModuleManager().getName(this.mod), (parent.getX() + 2) , (parent.getY() + offset + 2)  , Access.getInstance().getModuleManager().isEnabled(this.mod) ? ClickGuiScreen.color : -1);
+        FontManager.M18.drawStringWithShadow(Access.getInstance().getModuleManager().getName(this.mod), (parent.getX() + 2) , (parent.getY() + offset + 2)  , Access.getInstance().getModuleManager().isEnabled(this.mod) ? Access.CLIENT_COLOR.getRGB() : -1);
         if (this.subcomponents.size() > 2)
             FontManager.M18.drawStringWithShadow(this.open ? "-" : "+", (parent.getX() + parent.getWidth() - 10) , (parent.getY() + offset + 2)  , -1);
         GL11.glPopMatrix();

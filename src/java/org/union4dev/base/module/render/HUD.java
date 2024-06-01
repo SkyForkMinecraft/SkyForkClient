@@ -3,6 +3,7 @@ package org.union4dev.base.module.render;
 import cn.langya.FontRenderer;
 import cn.langya.RoundedRectTest;
 import cn.langya.event.ShaderType;
+import cn.langya.font.FontManager;
 import cn.superskidder.BloomUtil;
 import cn.superskidder.GaussianBlur;
 import cn.superskidder.KawaseBlur;
@@ -36,6 +37,7 @@ public class HUD implements Access.InstanceAccess {
     @EventTarget
     void onR2d(Render2DEvent e) {
 //        RoundedRectTest.drawG2DLogoTest(50,50,50,50,Color.WHITE);
+        FontManager.M16.drawStringWithShadow(Access.CLIENT_VERSION,0,e.getScaledResolution().getScaledHeight() - 10,-1);
     }
 
     public static void blurScreen() {

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ClickGuiScreen extends GuiScreen {
 
     public static ArrayList<Frame> frames;
-    public static int color = new Color(62, 175, 255).getRGB();
+    public static int color = new Color(27, 30, 30).getRGB();
 
     public ClickGuiScreen() {
         frames = new ArrayList<>();

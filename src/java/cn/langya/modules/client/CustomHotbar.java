@@ -31,7 +31,7 @@ public class CustomHotbar {
             case "彩虹": color = new Color(ColorUtil.getColor(-(1 + 5 * 1.7f), 0.7f, 1));
         }
 
-        RoundedUtil.drawRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 22, 180, 20, 3, new Color(0, 0, 0, 80));
+        RoundedUtil.drawRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 21.5F, 180, 20, 3, new Color(0, 0, 0, 80));
         RoundedUtil.drawRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 22F, 180, 1, hotbarRadius.getValue().intValue(), color);
     }
 }

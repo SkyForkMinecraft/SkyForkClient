@@ -1,10 +1,12 @@
 package net.minecraft.client.gui;
 
 import cn.langya.screen.GuiCustomBackground;
+import cn.langya.utils.BufferImageUtil;
 import cn.langya.verify.Verify;
 import com.google.common.collect.Lists;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -281,6 +283,7 @@ public class GuiMainMenu extends GuiScreen {
     {
         GlStateManager.disableAlpha();
         drawBackground(0);
+        // BufferImageUtil.drawMP4(new File("C:\\Users\\LangYa\\Downloads\\Earth\\Earth.mp4"),0,0,width,height);
         GlStateManager.enableAlpha();
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();

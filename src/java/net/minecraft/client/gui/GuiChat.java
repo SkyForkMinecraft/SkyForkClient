@@ -5,6 +5,8 @@ import cn.langya.elements.Element;
 import cn.langya.font.FontManager;
 import cn.langya.utils.MouseUtil;
 import com.google.common.collect.Lists;
+
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.union4dev.base.Access;
 import skid.cedo.render.RenderUtil;
+import skid.cedo.shader.RoundedUtil;
 
 public class GuiChat extends GuiScreen
 {
@@ -286,7 +289,7 @@ public class GuiChat extends GuiScreen
     }
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
+        RoundedUtil.drawRound(0, this.height - 14, this.width, this.height - 4,5, new Color(0,0,0,150));
         this.inputField.drawTextBox();
         IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
