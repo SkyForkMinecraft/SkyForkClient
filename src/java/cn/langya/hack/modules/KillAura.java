@@ -1,7 +1,7 @@
 package cn.langya.hack.modules;
 
 import cn.langya.modules.misc.particles.TimerUtils;
-import cn.tenacity.PlayerMoveUpdateEvent;
+import cn.cedo.PlayerMoveUpdateEvent;
 import de.florianmichael.viamcp.fixes.AttackOrder;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;

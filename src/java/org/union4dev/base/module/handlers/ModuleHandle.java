@@ -9,6 +9,7 @@ import org.union4dev.base.events.EventManager;
 import org.union4dev.base.module.Category;
 import org.union4dev.base.value.AbstractValue;
 
+import javax.swing.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -74,6 +75,7 @@ public final class ModuleHandle {
             }
         }
     }
+
 
     public boolean isEnabled() {
         return state;

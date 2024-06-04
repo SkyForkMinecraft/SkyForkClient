@@ -24,7 +24,7 @@ import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.render.RenderNameTagEvent;
-import skid.cedo.shader.RoundedUtil;
+import cn.cedo.shader.RoundedUtil;
 
 import java.awt.*;
 

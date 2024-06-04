@@ -1,8 +1,12 @@
 package net.minecraft.client.gui.inventory;
 
+import cn.langya.font.FontManager;
 import com.google.common.collect.Sets;
+
 import java.io.IOException;
 import java.util.Set;
+
+import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -18,6 +22,10 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
+
+import static cn.langya.FontRenderer.loadTexture;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBindTexture;
 
 public abstract class GuiContainer extends GuiScreen
 {
@@ -96,9 +104,13 @@ public abstract class GuiContainer extends GuiScreen
     /**
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
+    @SneakyThrows
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
+        FontManager.MB30.drawString("Sky",width - 75,height - 20,-1);
+        FontManager.MB30.drawString("Sky",width - 75.3,height - 20,-1);
+        FontManager.M30.drawStringWithShadow("Sky Fork",width - 75,height - 20,-1);
         int i = this.guiLeft;
         int j = this.guiTop;
         this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);

@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL12;
-import skid.cedo.render.GLUtil;
+import cn.cedo.render.GLUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -16,7 +16,7 @@ import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.events.render.Render3DEvent;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.ComboValue;
-import skid.cedo.misc.ColorUtil;
+import cn.cedo.misc.ColorUtil;
 
 import java.awt.*;
 import java.text.DecimalFormat;

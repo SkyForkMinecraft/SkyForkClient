@@ -2,21 +2,17 @@ package cn.langya.utils;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.ResourceLocation;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL12;
-import skid.cedo.render.GLUtil;
+import cn.cedo.render.GLUtil;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.union4dev.base.Access.InstanceAccess.mc;
 
 /**
  * @author LangYa

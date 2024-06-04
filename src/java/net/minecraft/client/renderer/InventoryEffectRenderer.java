@@ -11,8 +11,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import org.union4dev.base.module.render.HUD;
-import skid.cedo.shader.RoundedUtil;
+import cn.cedo.shader.RoundedUtil;
 
 @Getter
 public abstract class InventoryEffectRenderer extends GuiContainer

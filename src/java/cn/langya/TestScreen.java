@@ -3,7 +3,7 @@ package cn.langya;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import cn.langya.font.FontManager;
-import skid.cedo.render.RenderUtil;
+import cn.cedo.render.RenderUtil;
 
 import javax.swing.*;
 

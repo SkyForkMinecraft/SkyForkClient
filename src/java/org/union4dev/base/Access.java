@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "2.2";
+    public static final String CLIENT_VERSION = "2.4";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -125,7 +125,7 @@ public final class Access {
 
         clientMode =ClientMode.Legit;
         // Finished Initialization
-        Display.setTitle(CLIENT_NAME + " - " + Verify.user.getDisplayName());
+        Display.setTitle(CLIENT_NAME + " " + CLIENT_VERSION + " - " + Verify.user.getDisplayName());
 
         GuiScreen.d = new DynamicTexture(ImageIO.read(new URL(GuiScreen.url)));
 

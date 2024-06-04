@@ -1,4 +1,4 @@
-package cn.tenacity;
+package cn.cedo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

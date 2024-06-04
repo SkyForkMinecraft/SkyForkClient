@@ -1,9 +1,9 @@
-package skid.cedo.shader;
+package cn.cedo.shader;
 
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 import org.union4dev.base.Access;
-import skid.cedo.misc.FileUtils;
+import cn.cedo.misc.FileUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

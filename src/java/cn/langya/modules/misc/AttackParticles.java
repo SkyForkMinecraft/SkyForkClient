@@ -18,7 +18,7 @@ import org.union4dev.base.events.update.UpdateEvent;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
-import skid.cedo.misc.ColorUtil;
+import cn.cedo.misc.ColorUtil;
 
 import java.awt.*;
 import java.util.ConcurrentModificationException;

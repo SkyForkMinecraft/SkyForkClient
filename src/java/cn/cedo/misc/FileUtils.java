@@ -1,4 +1,4 @@
-package skid.cedo.misc;
+package cn.cedo.misc;
 
 import java.io.*;
 

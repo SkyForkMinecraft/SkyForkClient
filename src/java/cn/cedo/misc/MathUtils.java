@@ -1,4 +1,4 @@
-package skid.cedo.misc;
+package cn.cedo.misc;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.MathHelper;

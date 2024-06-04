@@ -2,15 +2,12 @@ package org.union4dev.base.module;
 
 import cn.dxg.CheaterDetector;
 import cn.imflowow.BlockOverlay;
-import cn.langya.ClientMode;
 import cn.langya.elements.impls.*;
-import cn.langya.hack.modules.KillAura;
 import cn.langya.modules.client.*;
 import cn.langya.modules.misc.*;
 import cn.superskidder.modules.OldAnimation;
 import cn.superskidder.modules.TNTTimer;
 import net.minecraft.util.EnumChatFormatting;
-import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.*;
 import org.union4dev.base.events.EventManager;
@@ -20,7 +17,7 @@ import org.union4dev.base.module.movement.*;
 import org.union4dev.base.module.render.*;
 import org.union4dev.base.value.AbstractValue;
 import org.union4dev.base.value.impl.*;
-import skid.canelex.DragonWings;
+import cn.langya.canelex.DragonWings;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -53,15 +50,15 @@ public final class ModuleManager {
         register(Sprint.class, "自动疾跑", Category.Movement);
 
         // Register Render
-       // register(KeyStore.class,"按键显示",Category.Render);
-       //  register(TargetHUD.class,"PVP信息",Category.Render);
+        // register(KeyStore.class,"按键显示",Category.Render);
+        //  register(TargetHUD.class,"PVP信息",Category.Render);
         register(ClientLogo.class,"客户端标识",Category.Render);
         register(cn.langya.elements.impls.ArrayList.class,"功能列表",Category.Render);
         register(FPSInfo.class,"帧率显示",Category.Render);
         register(PotionInfo.class,"药水显示",Category.Render);
         register(BlockOverlay.class,"填充方块",Category.Render);
         register(TNTTimer.class,"TNT时间",Category.Render);
-       // if(Access.getInstance().getClientMode() == ClientMode.Hack)register(KillAura.class,"杀人气质",Category.Render);
+        // if(Access.getInstance().getClientMode() == ClientMode.Hack)register(KillAura.class,"杀人气质",Category.Render);
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
@@ -71,6 +68,7 @@ public final class ModuleManager {
         register(AttackParticles.class, "自定义攻击粒子", Category.Misc);
         register(KillEffectsMod.class,"击杀特效",Category.Misc);
         register(CheaterDetector.class,"黑客检测",Category.Misc);
+        register(Fulbright.class,"夜视",Category.Misc);
 
         // Register Client
         register(ClientSettings.class,"客户端设置",Category.Render);

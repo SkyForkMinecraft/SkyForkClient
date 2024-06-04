@@ -1,10 +1,10 @@
-package skid.cedo.shader;
+package cn.cedo.shader;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import skid.cedo.misc.ColorUtil;
-import skid.cedo.render.GLUtil;
-import skid.cedo.render.RenderUtil;
+import cn.cedo.misc.ColorUtil;
+import cn.cedo.render.GLUtil;
+import cn.cedo.render.RenderUtil;
 
 import java.awt.*;
 

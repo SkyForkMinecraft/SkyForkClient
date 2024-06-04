@@ -1,10 +1,10 @@
-package skid.cedo.misc;
+package cn.cedo.misc;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import static skid.cedo.misc.MathUtils.interpolateFloat;
-import static skid.cedo.misc.MathUtils.interpolateInt;
+import static cn.cedo.misc.MathUtils.interpolateFloat;
+import static cn.cedo.misc.MathUtils.interpolateInt;
 
 public class ColorUtil {
     public static Color getIColor(int color) {

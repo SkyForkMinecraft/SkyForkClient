@@ -2,17 +2,14 @@ package cn.langya;
 
 import com.jhlabs.image.GaussianFilter;
 import lombok.SneakyThrows;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
-import skid.cedo.render.GLUtil;
+import cn.cedo.render.GLUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.File;
 
 import static cn.langya.FontRenderer.loadTexture;

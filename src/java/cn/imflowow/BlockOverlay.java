@@ -17,7 +17,7 @@ import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
-import skid.cedo.misc.ColorUtil;
+import cn.cedo.misc.ColorUtil;
 
 public class BlockOverlay implements Access.InstanceAccess{
     private final ComboValue mode = new ComboValue("模式", "边框", "边框", "填充");

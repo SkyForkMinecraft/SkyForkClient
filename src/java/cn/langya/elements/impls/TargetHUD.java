@@ -15,8 +15,8 @@ import org.union4dev.base.events.render.Render2DEvent;
 import cn.langya.font.FontManager;
 import org.union4dev.base.events.render.ShaderEvent;
 import org.union4dev.base.value.impl.BooleanValue;
-import skid.cedo.render.RenderUtil;
-import skid.cedo.shader.RoundedUtil;
+import cn.cedo.render.RenderUtil;
+import cn.cedo.shader.RoundedUtil;
 
 import java.awt.*;
 import java.text.DecimalFormat;

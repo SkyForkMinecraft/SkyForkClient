@@ -1,14 +1,14 @@
-package skid.cedo.shader.blur;
+package cn.cedo.shader.blur;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
 import org.union4dev.base.Access;
-import skid.cedo.misc.MathUtils;
-import skid.cedo.render.RenderUtil;
-import skid.cedo.render.StencilUtil;
-import skid.cedo.shader.ShaderUtil;
+import cn.cedo.misc.MathUtils;
+import cn.cedo.render.RenderUtil;
+import cn.cedo.render.StencilUtil;
+import cn.cedo.shader.ShaderUtil;
 
 import java.nio.FloatBuffer;
 

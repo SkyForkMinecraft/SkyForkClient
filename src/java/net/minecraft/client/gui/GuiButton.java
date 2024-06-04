@@ -6,7 +6,7 @@ import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import cn.langya.font.FontManager;
-import skid.cedo.shader.RoundedUtil;
+import cn.cedo.shader.RoundedUtil;
 
 import java.awt.*;
 

@@ -1,4 +1,4 @@
-package skid.cedo.render;
+package cn.cedo.render;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;

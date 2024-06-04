@@ -1,4 +1,4 @@
-package skid.cedo.render;
+package cn.cedo.render;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
@@ -8,10 +8,8 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
 import org.union4dev.base.Access;
-import skid.cedo.misc.ColorUtil;
+import cn.cedo.misc.ColorUtil;
 
 import java.awt.*;
 

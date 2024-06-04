@@ -31,10 +31,8 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.misc.GuiClickEvent;
-import skid.cedo.render.RenderUtil;
 import tv.twitch.chat.ChatUserInfo;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -44,7 +42,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

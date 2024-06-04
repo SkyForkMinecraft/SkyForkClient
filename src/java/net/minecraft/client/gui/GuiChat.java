@@ -20,8 +20,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.union4dev.base.Access;
-import skid.cedo.render.RenderUtil;
-import skid.cedo.shader.RoundedUtil;
+import cn.cedo.render.RenderUtil;
+import cn.cedo.shader.RoundedUtil;
 
 public class GuiChat extends GuiScreen
 {

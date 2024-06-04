@@ -6,9 +6,9 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
-import skid.cedo.misc.ColorUtil;
-import skid.cedo.render.GLUtils;
-import skid.cedo.render.RenderUtil;
+import cn.cedo.misc.ColorUtil;
+import cn.cedo.render.GLUtils;
+import cn.cedo.render.RenderUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
