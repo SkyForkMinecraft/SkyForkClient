@@ -1,7 +1,5 @@
 package cn.langya.event;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.union4dev.base.events.base.Cancellable;
 import org.union4dev.base.events.base.Event;
 
@@ -12,9 +10,7 @@ import org.union4dev.base.events.base.Event;
 
 public class TextEvent implements Cancellable, Event {
     private boolean cancel;
-    @Getter
-    @Setter
-    private String text;
+    public String text;
 
     public TextEvent(String text) {
         this.text = text;

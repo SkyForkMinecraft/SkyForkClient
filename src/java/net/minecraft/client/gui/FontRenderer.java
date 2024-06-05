@@ -380,7 +380,7 @@ public class FontRenderer implements IResourceManagerReloadListener {
         TextEvent textEvent = new TextEvent(text);
         EventManager.call(textEvent);
         if (textEvent.isCancelled()) return 0;
-        text  = textEvent.getText();
+        text  = textEvent.text;
 
         this.enableAlpha();
 
@@ -623,7 +623,7 @@ public class FontRenderer implements IResourceManagerReloadListener {
         TextEvent textEvent = new TextEvent(text);
         EventManager.call(textEvent);
         if (textEvent.isCancelled()) return 0;
-        text = textEvent.getText();
+        text = textEvent.text;
 
         if (text == null) {
             return 0;

@@ -147,7 +147,7 @@ public class FontDrawer {
         TextEvent textEvent = new TextEvent(s);
         EventManager.call(textEvent);
         if (textEvent.isCancelled()) return 0;
-        s  = textEvent.getText();
+        s  = textEvent.text;
         if (s != null && !s.isEmpty()) {
 //            s = EnumChatFormatting.getTextWithoutFormattingCodes(s);
             int ret = 0;
@@ -259,7 +259,7 @@ public class FontDrawer {
         TextEvent textEvent = new TextEvent(s);
         EventManager.call(textEvent);
         if (textEvent.isCancelled()) return;
-        s  = textEvent.getText();
+        s  = textEvent.text;
 
         if ((color & -67108864) == 0) {
             color |= -16777216;
