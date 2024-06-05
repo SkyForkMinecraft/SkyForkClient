@@ -224,6 +224,8 @@ public class ColorUtil {
                 alpha);
     }
 
+
+
     /**
      * This method gets the average color of an image
      * performance of this goes as O((width * height) / step)

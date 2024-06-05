@@ -7,12 +7,10 @@ package cn.langya.verify;
 
 public enum User {
     User,
-    Free,
-    Hack;
+    Free;
 
     public String getDisplayName() {
         if (this == User) return "赞助用户";
-        else if (this == Hack)  return "黑客用户";
         return "普通用户";
     }
 }

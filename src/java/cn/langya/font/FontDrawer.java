@@ -1,5 +1,6 @@
 package cn.langya.font;
 
+import cn.langya.event.TextEvent;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -9,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import cn.cedo.misc.ColorUtil;
 import cn.cedo.render.GLUtils;
 import cn.cedo.render.RenderUtil;
+import org.union4dev.base.events.EventManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -142,6 +144,10 @@ public class FontDrawer {
     }
 
     public int getStringWidth(String s) {
+        TextEvent textEvent = new TextEvent(s);
+        EventManager.call(textEvent);
+        if (textEvent.isCancelled()) return 0;
+        s  = textEvent.getText();
         if (s != null && !s.isEmpty()) {
 //            s = EnumChatFormatting.getTextWithoutFormattingCodes(s);
             int ret = 0;
@@ -187,6 +193,14 @@ public class FontDrawer {
 
     public void drawCenteredString(String s, double x, double y, int color) {
         drawString(s, x - getStringWidth(s) / 2.0, y, color);
+    }
+
+    public void drawRightAlignedString(String s, double x, double y, int color) {
+        drawString(s, x - getStringWidth(s), y, color);
+    }
+
+    public void drawRightAlignedStringWithShadow(String s, double x, double y, int color) {
+        drawStringWithShadow(s, x - getStringWidth(s), y, color);
     }
 
     public void drawStringWithShadowDirectly(String s, double x, double y, int color) {
@@ -241,6 +255,11 @@ public class FontDrawer {
 
     public void drawString(String s, double x, double y, int color, boolean shadow) {
         if (s == null || s.isEmpty()) return;
+
+        TextEvent textEvent = new TextEvent(s);
+        EventManager.call(textEvent);
+        if (textEvent.isCancelled()) return;
+        s  = textEvent.getText();
 
         if ((color & -67108864) == 0) {
             color |= -16777216;

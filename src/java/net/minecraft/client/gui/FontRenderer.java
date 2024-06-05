@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import cn.langya.event.TextEvent;
 import com.ibm.icu.text.ArabicShaping;
 import com.ibm.icu.text.ArabicShapingException;
 import com.ibm.icu.text.Bidi;
@@ -29,6 +30,7 @@ import net.optifine.render.GlBlendState;
 import net.optifine.util.FontUtils;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.opengl.GL11;
+import org.union4dev.base.events.EventManager;
 
 public class FontRenderer implements IResourceManagerReloadListener {
     private static final ResourceLocation[] unicodePageLocations = new ResourceLocation[256];
@@ -375,6 +377,11 @@ public class FontRenderer implements IResourceManagerReloadListener {
      */
     public int drawString(String text, float x, float y, int color, boolean dropShadow) {
 
+        TextEvent textEvent = new TextEvent(text);
+        EventManager.call(textEvent);
+        if (textEvent.isCancelled()) return 0;
+        text  = textEvent.getText();
+
         this.enableAlpha();
 
         if (this.blend) {
@@ -613,7 +620,10 @@ public class FontRenderer implements IResourceManagerReloadListener {
      * Returns the width of this string. Equivalent of FontMetrics.stringWidth(String s).
      */
     public int getStringWidth(String text) {
-
+        TextEvent textEvent = new TextEvent(text);
+        EventManager.call(textEvent);
+        if (textEvent.isCancelled()) return 0;
+        text = textEvent.getText();
 
         if (text == null) {
             return 0;

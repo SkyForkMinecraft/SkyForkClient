@@ -8,6 +8,8 @@ import org.union4dev.base.value.impl.NumberValue;
 import cn.cedo.misc.ColorUtil;
 
 import java.awt.*;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ArrayList extends Element {
     public ArrayList() {
@@ -32,9 +34,12 @@ public class ArrayList extends Element {
         setWidth(50);
         java.util.ArrayList<Class<?>> enabledModules = new java.util.ArrayList<>();
         for (Class<?> m : access.getModuleManager().getModules()) {
-            if (access.getModuleManager().isEnabled(m) && access.getModuleManager().isVisible(m)) enabledModules.add(m);
+            if (access.getModuleManager().isEnabled(m) && access.getModuleManager().isVisible(m)) {
+                enabledModules.add(m);
+            }
         }
         enabledModules.sort((o1, o2) -> FontManager.M18.getStringWidth(access.getModuleManager().format(o2)) - FontManager.M18.getStringWidth(access.getModuleManager().format(o1)));
+
         for (Class<?> module : enabledModules) {
             Color c = Access.CLIENT_COLOR;
             switch (colorMode.getValue()) {
@@ -47,9 +52,10 @@ public class ArrayList extends Element {
                 case "彩虹":
                     c = new Color(ColorUtil.getColor(-(1 + 5 * 1.7f), 0.7f, 1));
             }
-            FontManager.M18.drawStringWithShadow(access.getModuleManager().format(module), x - 4, y1, c.getRGB());
+            FontManager.M18.drawRightAlignedStringWithShadow(access.getModuleManager().format(module), x , y + y1, c.getRGB());
             y1 += FontManager.M18.getHeight() + spacing.getValue().intValue();
         }
-
     }
+
+
 }

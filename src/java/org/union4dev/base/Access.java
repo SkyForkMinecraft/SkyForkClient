@@ -1,6 +1,6 @@
 package org.union4dev.base;
 
-import cn.langya.ClientMode;
+import cn.langya.canelex.RankManager;
 import cn.langya.elements.ElementManager;
 import cn.langya.files.ConfigManager;
 import cn.langya.verify.User;
@@ -16,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.Display;
+import org.union4dev.base.events.EventManager;
 import org.union4dev.base.gui.click.ClickGuiScreen;
 import org.union4dev.base.module.ModuleManager;
 
@@ -34,7 +35,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "2.3";
+    public static final String CLIENT_VERSION = "2.4";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -76,9 +77,6 @@ public final class Access {
 
     @Getter
     private final ElementManager elementManager;
-
-    @Getter
-    private ClientMode clientMode;
 
 
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
@@ -123,11 +121,12 @@ public final class Access {
             e.printStackTrace();
         }
 
-        clientMode =ClientMode.Legit;
         // Finished Initialization
         Display.setTitle(CLIENT_NAME + " " + CLIENT_VERSION + " - " + Verify.user.getDisplayName());
 
         GuiScreen.d = new DynamicTexture(ImageIO.read(new URL(GuiScreen.url)));
+
+        EventManager.register(new RankManager());
 
         loaded = true;
     }

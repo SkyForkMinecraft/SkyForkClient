@@ -1,5 +1,7 @@
 package org.union4dev.base.module.render;
 
+import cn.cedo.render.RenderUtil;
+import cn.cedo.shader.GradientUtil;
 import cn.langya.event.ShaderType;
 import cn.langya.font.FontManager;
 import cn.superskidder.BloomUtil;
@@ -15,6 +17,8 @@ import org.union4dev.base.events.render.ShaderEvent;
 import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
 import cn.cedo.render.StencilUtil;
+
+import java.awt.*;
 
 import static cn.superskidder.GaussianBlur.createFrameBuffer;
 
@@ -33,7 +37,6 @@ public class HUD implements Access.InstanceAccess {
     @EventTarget
     void onR2d(Render2DEvent e) {
 //        RoundedRectTest.drawG2DLogoTest(50,50,50,50,Color.WHITE);
-        FontManager.M16.drawStringWithShadow(Access.CLIENT_VERSION,0,e.getScaledResolution().getScaledHeight() - 10,-1);
     }
 
     public static void blurScreen() {
