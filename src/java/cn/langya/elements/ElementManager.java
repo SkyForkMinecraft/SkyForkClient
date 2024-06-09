@@ -29,6 +29,7 @@ public class ElementManager {
         elements.add(new ArrayList());
         elements.add(new FPSInfo());
         elements.add(new PotionInfo());
+        elements.add(new KeyStore());
     }
 
     @EventTarget

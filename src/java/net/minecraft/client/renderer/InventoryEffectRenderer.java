@@ -161,7 +161,8 @@ public abstract class InventoryEffectRenderer extends GuiContainer
                     s1 = s1 + " " + I18n.format("enchantment.level.4", new Object[0]);
                 }
 
-                if (bg) RoundedUtil.drawRound(i, j - 5,45 + FontManager.M16.getStringWidth(s1), 28,rad,new Color(0,0,0,120));
+                String s = Potion.getDurationString(potioneffect);
+                if (bg) RoundedUtil.drawRound(i, j - 5,45 + FontManager.M16.getStringWidth(s) + FontManager.M16.getStringWidth(s1), 28,rad,new Color(0,0,0,120));
 
                 if (potion.hasStatusIcon()) {
                     int i1 = potion.getStatusIconIndex();
@@ -169,7 +170,6 @@ public abstract class InventoryEffectRenderer extends GuiContainer
                 }
 
                 FontManager.M16.drawStringWithShadow(s1, (float)(i + 10 + 18), (float)(j), 16777215);
-                String s = Potion.getDurationString(potioneffect);
                 FontManager.M14.drawStringWithShadow(s, (float)(i + 10 + 18), (float)(j + 10), 8355711);
                 j += l;
             }

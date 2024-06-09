@@ -1,9 +1,7 @@
-package cn.langya.canelex;
+package cn.langya;
 
 import cn.langya.event.TextEvent;
-import lombok.val;
 import net.minecraft.util.EnumChatFormatting;
-import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 
 /**
@@ -27,6 +25,8 @@ public class RankManager {
         // 3109983896 high ping hyp group admin
         set(e,"f_lyx","Frisk++");
         set(e,"lyx_frisk","Frisk++");
+
+        set(e,"mao_ling_feng","Staff");
 
         // langya
         set(e,"Lang7a","Admin");

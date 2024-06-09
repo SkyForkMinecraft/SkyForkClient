@@ -20,6 +20,7 @@ import org.union4dev.base.value.impl.BooleanValue;
 public class CheaterDetector implements Access.InstanceAccess {
     public BooleanValue reachValue = new BooleanValue("长臂猿检测", true);
     public BooleanValue noslowAValue = new BooleanValue("无减速检测", true);
+
     public static final DecimalFormat DF_1 = new DecimalFormat("0.000000");
     int vl;
 

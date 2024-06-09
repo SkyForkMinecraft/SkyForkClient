@@ -1,4 +1,4 @@
-package cn.langya.canelex;
+package canelex;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;

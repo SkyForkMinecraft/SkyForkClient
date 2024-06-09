@@ -51,11 +51,11 @@ public class RenderEntityItem extends Render<EntityItem>
                     GlStateManager.translate(p_177077_2_,p_177077_4_ + 0.2F,p_177077_6_);
                 }
 
-                float pitch = itemIn.onGround? 90 : itemIn.rotationPitch;
+                float pitch = itemIn.onGround ? 90 : itemIn.rotationPitch;
                 itemIn.rotationPitch++;
                 if (itemIn.rotationPitch > 180) itemIn.rotationPitch = -180;
-                GlStateManager.rotate(pitch,1,0,0);
-                GlStateManager.rotate(itemIn.rotationYaw,0,0,1);
+                GlStateManager.rotate(pitch, 1, 0, 0);
+                GlStateManager.rotate(itemIn.rotationYaw, 0, 0, 1);
 
             } else {
                 GlStateManager.translate((float)p_177077_2_, (float)p_177077_4_ + f1 + 0.25F * f2, (float)p_177077_6_);
@@ -79,6 +79,7 @@ public class RenderEntityItem extends Render<EntityItem>
             return i;
         }
     }
+
 
     private int func_177078_a(ItemStack stack)
     {

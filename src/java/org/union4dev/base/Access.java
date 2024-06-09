@@ -1,12 +1,11 @@
 package org.union4dev.base;
 
-import cn.langya.canelex.RankManager;
+import cn.langya.RankManager;
 import cn.langya.elements.ElementManager;
 import cn.langya.files.ConfigManager;
-import cn.langya.verify.User;
+import cn.langya.font.FontManager;
 import cn.langya.verify.Verify;
 import de.florianmichael.viamcp.ViaMCP;
-import lol.tgformat.irc.ClientMain;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
@@ -106,6 +105,7 @@ public final class Access {
         moduleManager = new ModuleManager();
         configManager = new ConfigManager();
         configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
+        FontManager.init();
         clickGui = new ClickGuiScreen();
         elementManager = new ElementManager();
         // new ClientMain("38.12.30.171", 11451).start();

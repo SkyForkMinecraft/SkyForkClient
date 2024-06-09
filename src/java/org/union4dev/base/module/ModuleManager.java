@@ -17,7 +17,7 @@ import org.union4dev.base.module.movement.*;
 import org.union4dev.base.module.render.*;
 import org.union4dev.base.value.AbstractValue;
 import org.union4dev.base.value.impl.*;
-import cn.langya.canelex.DragonWings;
+import canelex.DragonWings;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public final class ModuleManager {
         register(Sprint.class, "自动疾跑", Category.Movement);
 
         // Register Render
-        // register(KeyStore.class,"按键显示",Category.Render);
+        register(KeyStore.class,"按键显示",Category.Render);
         //  register(TargetHUD.class,"PVP信息",Category.Render);
         register(ClientLogo.class,"客户端标识",Category.Render);
         register(cn.langya.elements.impls.ArrayList.class,"功能列表",Category.Render);
@@ -62,7 +62,6 @@ public final class ModuleManager {
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
-        register(IRC.class, "客户端聊天", Category.Misc);
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
         register(CustomWorldTime.class, "自定义世界时间", Category.Misc);
         register(AttackParticles.class, "自定义攻击粒子", Category.Misc);
@@ -80,6 +79,7 @@ public final class ModuleManager {
         register(DragonWings.class,"龙翼",Category.Client);
         register(OldAnimation.class,"1.7动画",Category.Client);
         register(ItemPhysic.class,"物品物理掉落",Category.Client);
+        register(cn.langya.irc.IRC.class,"客户端聊天",Category.Client);
 
     }
 
