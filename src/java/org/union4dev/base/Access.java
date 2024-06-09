@@ -105,7 +105,6 @@ public final class Access {
         moduleManager = new ModuleManager();
         configManager = new ConfigManager();
         configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
-        FontManager.init();
         clickGui = new ClickGuiScreen();
         elementManager = new ElementManager();
         // new ClientMain("38.12.30.171", 11451).start();
