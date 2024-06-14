@@ -108,9 +108,9 @@ public abstract class GuiContainer extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        FontManager.MB30.drawString("Sky",width - 75,height - 20,-1);
-        FontManager.MB30.drawString("Sky",width - 75.3,height - 20,-1);
-        FontManager.M30.drawStringWithShadow("Sky Fork",width - 75,height - 20,-1);
+        FontManager.M30.drawStringWithShadow("Sky",width - 75,height - 20,-1);
+        FontManager.MB30.drawStringWithShadow("Sky Fork",width - 75,height - 20,-1);
+
         int i = this.guiLeft;
         int j = this.guiTop;
         this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);

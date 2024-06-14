@@ -2,6 +2,7 @@ package org.union4dev.base.module.render;
 
 import cn.cedo.render.RenderUtil;
 import cn.cedo.shader.GradientUtil;
+import cn.cedo.shader.RoundedUtil;
 import cn.langya.event.ShaderType;
 import cn.langya.font.FontManager;
 import cn.superskidder.BloomUtil;
@@ -14,6 +15,7 @@ import org.union4dev.base.annotations.module.Startup;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.render.Render2DEvent;
 import org.union4dev.base.events.render.ShaderEvent;
+import org.union4dev.base.value.impl.ColorValue;
 import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
 import cn.cedo.render.StencilUtil;
@@ -31,6 +33,8 @@ public class HUD implements Access.InstanceAccess {
     public static NumberValue offset = new NumberValue("模糊偏移", 3, 1, 15, 1);
     public static NumberValue shadowOffset = new NumberValue("阴影偏移", 2, 0, 15, 1);
     public static ComboValue blurMode = new ComboValue("模糊方式", "高斯模糊", "高斯模糊", "川濑模糊");
+    public static final ColorValue color1 = new ColorValue("Color 1", new Color(0x4A4DAC));
+    public static final ColorValue color2 = new ColorValue("Color 2", new Color(0xFFFFFF));
 
     private static Framebuffer bloomFramebuffer = new Framebuffer(1, 1, false);
 

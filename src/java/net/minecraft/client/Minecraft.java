@@ -101,6 +101,7 @@ import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.misc.KeyInputEvent;
 import org.union4dev.base.events.misc.MiddleClickEvent;
 import org.union4dev.base.events.update.TickEvent;
+import superblaubeere27.CPSCounter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -1430,6 +1431,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     private void clickMouse()
     {
+        CPSCounter.registerClick(CPSCounter.MouseButton.LEFT);
+
         if (this.leftClickCounter <= 0)
         {
             AttackOrder.sendConditionalSwing(this.objectMouseOver);
@@ -1477,6 +1480,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     @SuppressWarnings("incomplete-switch")
     private void rightClickMouse()
     {
+        CPSCounter.registerClick(CPSCounter.MouseButton.RIGHT);
+
         if (!this.playerController.getIsHittingBlock())
         {
             this.rightClickDelayTimer = 4;

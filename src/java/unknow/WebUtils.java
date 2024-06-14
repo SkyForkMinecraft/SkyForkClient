@@ -1,11 +1,14 @@
 package unknow;
 
+import com.yumegod.obfuscation.Native;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+@Native
 public class WebUtils {
 
     public static String get(String url) throws IOException {

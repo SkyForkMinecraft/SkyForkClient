@@ -1,5 +1,8 @@
 package org.union4dev.base.gui.click.component.components;
 
+import cn.cedo.misc.ColorUtil;
+import cn.cedo.shader.RoundedUtil;
+import cn.langya.font.FontDrawer;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 import org.union4dev.base.Access;
@@ -9,6 +12,7 @@ import org.union4dev.base.gui.click.component.Frame;
 import org.union4dev.base.gui.click.component.components.sub.Checkbox;
 import org.union4dev.base.gui.click.component.components.sub.*;
 import cn.langya.font.FontManager;
+import org.union4dev.base.module.render.HUD;
 import org.union4dev.base.value.AbstractValue;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.ComboValue;
@@ -26,11 +30,13 @@ public class Button extends Component {
     private final ArrayList<Component> subcomponents;
     public boolean open;
     private final int height;
+    private boolean end;
 
-    public Button(Class<?> mod, Frame parent, int offset) {
+    public Button(Class<?> mod, Frame parent, int offset,boolean end) {
         this.mod = mod;
         this.parent = parent;
         this.offset = offset;
+        this.end = end;
         this.subcomponents = new ArrayList<>();
         this.open = false;
         height = 12;
@@ -69,12 +75,30 @@ public class Button extends Component {
 
     @Override
     public void renderComponent() {
-        Gui.drawRect(parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset, this.isHovered ? (Access.getInstance().getModuleManager().isEnabled(this.mod) ? new Color(0xFF222222).darker().getRGB() : 0xFF222222) : (Access.getInstance().getModuleManager().isEnabled(this.mod) ? new Color(14, 14, 14).getRGB() : 0xFF111111));
+
         GL11.glPushMatrix();
-        FontManager.M18.drawStringWithShadow(Access.getInstance().getModuleManager().getName(this.mod), (parent.getX() + 2) , (parent.getY() + offset + 2)  , Access.getInstance().getModuleManager().isEnabled(this.mod) ? Access.CLIENT_COLOR.getRGB() : -1);
-        if (this.subcomponents.size() > 2)
-            FontManager.M18.drawStringWithShadow(this.open ? "-" : "+", (parent.getX() + parent.getWidth() - 10) , (parent.getY() + offset + 2)  , -1);
+
+        if (Access.getInstance().getModuleManager().isEnabled(this.mod)) {
+            RoundedUtil.drawGradientRound(parent.getX() + 1, end ? this.parent.getY() + this.offset - 2.2F : this.parent.getY() + this.offset + 1F, 86,end ? 14 : 11,
+                    end ? 3 : 0, HUD.color1.getValue().brighter(),HUD.color1.getValue().brighter(),
+                    HUD.color1.getValue().darker(), HUD.color1.getValue().darker());
+
+        } else {
+            Gui.drawRect(parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset,
+                    this.isHovered ? (Access.getInstance().getModuleManager().isEnabled(this.mod) ?
+                    new Color(0xFF222222).darker().getRGB() : 0xFF222222) : (Access.getInstance().getModuleManager().isEnabled(this.mod) ? new Color(14, 14, 14).getRGB() : 0xFF111111));
+        }
+
+        GL11.glTranslated(0,end ? -2 : 0,0);
+        if (Access.getInstance().getModuleManager().isEnabled(this.mod)) {
+            FontManager.MB18.drawStringWithShadow(Access.getInstance().getModuleManager().getName(this.mod), (parent.getX() + 2) , (parent.getY() + offset + 2)  , -1);
+        } else {
+            FontManager.M18.drawStringWithShadow(Access.getInstance().getModuleManager().getName(this.mod), (parent.getX() + 2) , (parent.getY() + offset + 2)  , -1);
+        }
+
+        if (this.subcomponents.size() > 2) FontManager.M18.drawStringWithShadow(this.open ? "-" : "+", (parent.getX() + parent.getWidth() - 10) , (parent.getY() + offset + 2)  , -1);
         GL11.glPopMatrix();
+
         if (this.open) {
             if (!this.subcomponents.isEmpty()) {
                 for (Component comp : this.subcomponents) {

@@ -17,7 +17,7 @@ import java.util.Objects;
 
 /**
  * @author LangYa466
- * @date 2024/5/6 19:58
+ * @since 2024/5/6 19:58
  */
 
 public class IRC {

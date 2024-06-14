@@ -2,7 +2,7 @@ package cn.langya.utils;
 
 /**
  * @author LangYa466
- * @date 2024/4/11 18:44
+ * @since 2024/4/11 18:44
  */
 
 public class MouseUtil {

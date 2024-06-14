@@ -32,6 +32,12 @@ public class ColorUtil {
         return new Color(Color.HSBtoRGB(hue, 1.0f, 1.0f));
     }
 
+    public static Color rainbow() {
+        final Color currentColor = new Color(Color.HSBtoRGB((System.nanoTime() + 400000L) / 1.0E10f % 1.0f, 1.0f, 1.0f));
+        return new Color(currentColor.getRed() / 255.0f, currentColor.getGreen() / 255.0f, currentColor.getBlue() / 255.0f, currentColor.getAlpha() / 255.0f);
+    }
+
+
     public static Color tripleColor(int rgbValue) {
         return tripleColor(rgbValue, 1);
     }
@@ -263,6 +269,11 @@ public class ColorUtil {
         return interpolateColorC(color1, color2, amount).getRGB();
     }
 
+    public static Color interpolateCColor(Color color1, Color color2, float amount) {
+        amount = Math.min(1, Math.max(0, amount));
+        return interpolateColorC(color1, color2, amount);
+    }
+
     public static int interpolateColor(int color1, int color2, float amount) {
         amount = Math.min(1, Math.max(0, amount));
         Color cColor1 = new Color(color1);
@@ -356,6 +367,11 @@ public class ColorUtil {
         float speed = 4500f;
         float hue = System.currentTimeMillis() % (int) speed / speed;
         return Color.HSBtoRGB(hue - hueOffset / 54, saturation, brightness);
+    }
+
+    public static Color intToColor(int color) {
+        Color c1 = new Color(color);
+        return new Color(c1.getRed(), c1.getGreen(), c1.getBlue(), color >> 24 & 255);
     }
 
 }

@@ -23,7 +23,7 @@ import java.text.DecimalFormat;
 
 /**
  * @author LangYa466
- * @date 2024/4/25 20:29
+ * @since 2024/4/25 20:29
  */
 
 public class TargetHUD extends Element implements Access.InstanceAccess {

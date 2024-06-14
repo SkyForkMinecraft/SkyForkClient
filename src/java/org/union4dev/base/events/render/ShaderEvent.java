@@ -6,7 +6,7 @@ import org.union4dev.base.events.base.Event;
 
 /**
  * @author LangYa466
- * @date 2024/5/10 21:39
+ * @since 2024/5/10 21:39
  */
 
 @Getter

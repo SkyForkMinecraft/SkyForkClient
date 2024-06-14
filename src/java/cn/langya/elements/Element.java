@@ -6,7 +6,7 @@ import org.union4dev.base.Access;
 
 /**
  * @author LangYa466
- * @date 2024/4/11 18:16
+ * @since 2024/4/11 18:16
  */
 
 @Getter
@@ -19,6 +19,11 @@ public class Element implements Access.InstanceAccess {
     public Element(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void setWH(float width,float height) {
+        this.width = width;
+        this.height = height;
     }
 
     public void update() {

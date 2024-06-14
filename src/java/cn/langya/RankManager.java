@@ -1,17 +1,23 @@
 package cn.langya;
 
 import cn.langya.event.TextEvent;
+import com.yumegod.obfuscation.Native;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author LangYa
  * @since 2024/6/5 下午9:25
  */
 
+@Native
 public class RankManager {
     public static final String PRIMARY_COLOR = EnumChatFormatting.RED.toString();
     public static final String SECONDARY_COLOR = EnumChatFormatting.GRAY.toString();
+    public static final List<String> adminList = new CopyOnWriteArrayList<>();
 
     @EventTarget
     public void onT(TextEvent e) {
@@ -41,6 +47,7 @@ public class RankManager {
         boolean set = false;
         if (e.text.contains(playerName) && !set) {
             if (rank.equals("Admin")) {
+                adminList.add(playerName);
                 e.text = String.format("%s ", getRank(rank,PRIMARY_COLOR)) + e.text;
             }  else {
                 e.text = String.format("%s ", getRank(rank,EnumChatFormatting.BLUE.toString())) + e.text;

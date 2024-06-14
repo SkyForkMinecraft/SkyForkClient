@@ -1,5 +1,7 @@
 package net.minecraft.client.gui;
 
+import cn.cedo.misc.ColorUtil;
+import cn.langya.font.FontManager;
 import cn.langya.modules.client.CustomHotbar;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -39,6 +41,7 @@ import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.render.Render2DEvent;
 import org.union4dev.base.module.render.HUD;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -1084,7 +1087,18 @@ public class GuiIngame extends Gui
                 GlStateManager.popMatrix();
             }
 
-            this.itemRenderer.renderItemOverlays(this.mc.fontRendererObj, itemstack, xPos, yPos);
+            if (Access.InstanceAccess.access.getModuleManager().isEnabled(CustomHotbar.class)) {
+                if (CustomHotbar.mcHotbar.getValue())  {
+                    this.itemRenderer.renderItemOverlays(this.mc.fontRendererObj, itemstack, xPos, yPos);
+                    this.itemRenderer.renderItemOverlays(this.mc.fontRendererObj, itemstack, xPos, yPos);
+                } else {
+                    this.itemRenderer.renderItemOverlays(this.mc.fontRendererObj, itemstack, xPos, yPos);
+                    // FontManager.M14.drawStringWithShadow(String.valueOf(index), xPos, yPos + 9, ColorUtil.applyOpacity(new Color(-1),.85f).getRGB());
+                }
+            } else {
+                this.itemRenderer.renderItemOverlays(this.mc.fontRendererObj, itemstack, xPos, yPos);
+                this.itemRenderer.renderItemOverlays(this.mc.fontRendererObj, itemstack, xPos, yPos);
+            }
         }
     }
 

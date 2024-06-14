@@ -50,7 +50,7 @@ public class ArrayList extends Element {
                     c = new Color(customColorRed.getValue().intValue(), customColorGreen.getValue().intValue(), customColorBlue.getValue().intValue());
                     break;
                 case "彩虹":
-                    c = new Color(ColorUtil.getColor(-(1 + 5 * 1.7f), 0.7f, 1));
+                    c = ColorUtil.rainbow();
             }
             FontManager.M18.drawRightAlignedStringWithShadow(access.getModuleManager().format(module), x , y + y1, c.getRGB());
             y1 += FontManager.M18.getHeight() + spacing.getValue().intValue();

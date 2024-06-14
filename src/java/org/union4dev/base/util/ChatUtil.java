@@ -14,6 +14,7 @@ public class ChatUtil {
     private static final String PREFIX = PRIMARY_COLOR + "[" + SECONDARY_COLOR + Access.CLIENT_NAME + PRIMARY_COLOR + "] ";
 
     private static void send(final String message) {
+        if (Minecraft.getMinecraft().thePlayer == null) return;
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
     }
 

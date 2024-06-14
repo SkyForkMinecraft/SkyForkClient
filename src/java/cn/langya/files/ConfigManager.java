@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author LangYa
  * @ClassName ConfigManager
- * @date 2024/1/7 下午 03:28
+ * @since 2024/1/7 下午 03:28
  * @Version 1.0
  */
 
@@ -31,9 +31,12 @@ public class ConfigManager {
     public static final File fold = new File(Minecraft.getMinecraft().mcDataDir, "Skyfork");
     public File dir = new File(fold, "config");
     public ModuleConfig moduleConfig;
+    @Getter
+    public boolean friststart;
 
     public ConfigManager() {
         if (!fold.exists()) {
+            friststart = true;
             fold.mkdir();
         }
         if (!dir.exists()) {

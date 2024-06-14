@@ -17,7 +17,7 @@ import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
 
 /**
  * @author LangYa466
- * @date 2024/5/10 22:47
+ * @since 2024/5/10 22:47
  */
 
 public class FontRenderer {

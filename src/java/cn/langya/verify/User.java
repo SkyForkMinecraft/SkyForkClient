@@ -2,7 +2,7 @@ package cn.langya.verify;
 
 /**
  * @author LangYa466
- * @date 2024/5/6 20:19
+ * @since 2024/5/6 20:19
  */
 
 public enum User {

@@ -34,7 +34,7 @@ public class ClickGuiScreen extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawRect(0,0,width,height,new Color(0,0,0,80).getRGB());
+        // drawRect(0,0,width,height,new Color(0,0,0,80).getRGB());
         for (Frame frame : frames) {
             frame.renderFrame();
             frame.updatePosition(mouseX, mouseY);

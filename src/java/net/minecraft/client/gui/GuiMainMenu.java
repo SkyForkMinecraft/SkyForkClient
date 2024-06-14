@@ -168,8 +168,8 @@ public class GuiMainMenu extends GuiScreen {
 
         this.addSingleplayerMultiplayerButtons(j, 24);
 
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, I18n.format("menu.options")));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, I18n.format("menu.quit")));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, "设置"));
+        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, "退出"));
         this.buttonList.add(new GuiButton(114514, 5, 5, FontManager.M18.getStringWidth("复制您的验证密钥"), 20, "复制您的验证密钥"));
         this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 72 + 12));
 
@@ -194,9 +194,9 @@ public class GuiMainMenu extends GuiScreen {
 
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
     {
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_,"SinglePlayer"));
-        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_, "MultiPlayer"));
-        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, p_73969_1_ + p_73969_2_ + p_73969_2_, "CustomBackground"));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_,"单人游戏"));
+        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_, "多人游戏"));
+        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, p_73969_1_ + p_73969_2_ + p_73969_2_, "自定义壁纸"));
     }
 
     protected void actionPerformed(GuiButton button) throws IOException

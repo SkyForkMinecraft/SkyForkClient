@@ -4,6 +4,7 @@ import cn.langya.RankManager;
 import cn.langya.elements.ElementManager;
 import cn.langya.files.ConfigManager;
 import cn.langya.font.FontManager;
+import cn.langya.irc.IRCManager;
 import cn.langya.verify.Verify;
 import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
@@ -34,7 +35,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "2.5";
+    public static final String CLIENT_VERSION = "2.6";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -76,6 +77,8 @@ public final class Access {
 
     @Getter
     private final ElementManager elementManager;
+    @Getter
+    private final IRCManager ircManager;
 
 
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
@@ -102,11 +105,13 @@ public final class Access {
        Verify.verify();
 
         // Initialize managers
+        ircManager = new IRCManager();
         moduleManager = new ModuleManager();
         configManager = new ConfigManager();
         configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
         clickGui = new ClickGuiScreen();
         elementManager = new ElementManager();
+
         // new ClientMain("38.12.30.171", 11451).start();
         // Init ViaMCP
         try {

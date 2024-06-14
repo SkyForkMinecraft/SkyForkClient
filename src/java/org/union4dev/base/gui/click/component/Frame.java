@@ -1,5 +1,7 @@
 package org.union4dev.base.gui.click.component;
 
+import cn.cedo.render.StencilUtil;
+import cn.cedo.shader.RoundedUtil;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 import org.union4dev.base.Access;
@@ -8,6 +10,7 @@ import org.union4dev.base.gui.click.component.components.Button;
 import cn.langya.font.FontManager;
 import org.union4dev.base.module.Category;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -36,8 +39,14 @@ public class Frame {
         this.isDragging = false;
         int tY = this.barHeight;
         for (Class<?> mod : Access.getInstance().getModuleManager().getModulesByCategory(category)) {
-            Button modButton = new Button(mod, this, tY);
-            this.components.add(modButton);
+            if (Access.getInstance().getModuleManager().getModulesByCategory(category).get(Access.getInstance().getModuleManager().getModulesByCategory(category).size() - 1) == mod) {
+                //应该是true但是render有问题暂时false
+                Button modButton = new Button(mod, this, tY,false);
+                this.components.add(modButton);
+            } else {
+                Button modButton = new Button(mod, this, tY,false);
+                this.components.add(modButton);
+            }
             tY += 12;
         }
     }
@@ -67,11 +76,11 @@ public class Frame {
     }
 
     public void renderFrame() {
-        Gui.drawRect(this.x, this.y, this.x + this.width, this.y + this.barHeight, ClickGuiScreen.color);
-        GL11.glPushMatrix();
-        FontManager.M18.drawStringWithShadow(this.category.getName(), (this.x + 2)  + 5, (this.y + 2.5f) , 0xFFFFFFFF);
-        FontManager.M18.drawStringWithShadow(this.open ? "-" : "+", (this.x + this.width - 10)  + 3, (this.y + 2.5f) , -1);
-        GL11.glPopMatrix();
+
+        RoundedUtil.drawRound(x + 0.7F, this.y + 3.9F, 86.5F, 11,3, new Color(27, 30, 30));
+
+        FontManager.M18.drawStringWithShadow(this.category.getName(), (this.x + 2)  + 4, (this.y + 4f) , 0xFFFFFFFF);
+        FontManager.M18.drawStringWithShadow(this.open ? "-" : "+", (this.x + this.width - 10)  + 3, (this.y + 4.5f) , -1);
         if (this.open) {
             if (!this.components.isEmpty()) {
                 for (Component component : components) {
@@ -79,6 +88,7 @@ public class Frame {
                 }
             }
         }
+
     }
 
     public void refresh() {

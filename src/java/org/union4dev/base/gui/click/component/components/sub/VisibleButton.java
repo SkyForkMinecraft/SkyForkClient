@@ -35,7 +35,8 @@ public class VisibleButton extends Component {
         Gui.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + 2, parent.parent.getY() + offset + 12, 0xFF111111);
         GL11.glPushMatrix();
 
-        FontManager.M18.drawStringWithShadow("功能列表可见: " + Access.getInstance().getModuleManager().isVisible(mod), (parent.parent.getX() + 7) , (parent.parent.getY() + offset + 2)  +1, -1);
+        String s = Access.getInstance().getModuleManager().isVisible(mod) ? "可见" : "不可见";
+        FontManager.M18.drawStringWithShadow("列表显示: " + s, (parent.parent.getX() + 7) , (parent.parent.getY() + offset + 2)  +1, -1);
         GL11.glPopMatrix();
     }
 

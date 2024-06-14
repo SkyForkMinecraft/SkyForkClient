@@ -35,7 +35,9 @@ public class Keybind extends Component {
         Gui.drawRect(parent.parent.getX(), parent.parent.getY() + offset, parent.parent.getX() + 2, parent.parent.getY() + offset + 12, 0xFF111111);
         GL11.glPushMatrix();
 
-        FontManager.M18.drawStringWithShadow(binding ? "按你要绑定的按键..." : ("按键: " + Keyboard.getKeyName(Access.getInstance().getModuleManager().getKey(this.parent.mod))), (parent.parent.getX() + 7) , (parent.parent.getY() + offset + 2)  + 1, -1);
+        String s = Keyboard.getKeyName(Access.getInstance().getModuleManager().getKey(this.parent.mod));
+        String s1 = s.equals("NONE") ? "未绑定" : s;
+        FontManager.M18.drawStringWithShadow(binding ? "按你要绑定的按键..." : ("按键: " + s1), (parent.parent.getX() + 7) , (parent.parent.getY() + offset + 2)  + 1, -1);
         GL11.glPopMatrix();
     }
 

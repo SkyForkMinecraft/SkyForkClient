@@ -11,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author LangYa466
- * @date 2024/4/11 18:32
+ * @since 2024/4/11 18:32
  */
 
 @Getter
@@ -29,7 +29,7 @@ public class ElementManager {
         elements.add(new ArrayList());
         elements.add(new FPSInfo());
         elements.add(new PotionInfo());
-        elements.add(new KeyStore());
+        elements.add(new CPSInfo());
     }
 
     @EventTarget

@@ -13,12 +13,11 @@ import java.awt.*;
 
 /**
  * @author LangYa466
- * @date 2024/4/11 19:05
+ * @since 2024/4/11 19:05
  */
 
 public class ClientLogo extends Element {
     public ComboValue textMode = new ComboValue("显示文本", "SkyFork", "天空分支", "SkyFork");
-    private final String text = textMode.getValue();
     public ClientLogo() {
         super(50, 50);
     }
@@ -33,18 +32,18 @@ public class ClientLogo extends Element {
 
         float xVal = x;
         float yVal = y;
-        float width = FontManager.M50.getStringWidth(text);
-        float versionX = xVal + FontManager.M50.getStringWidth(text);
+        float width = FontManager.M50.getStringWidth(textMode.getValue());
+        float versionX = xVal + FontManager.M50.getStringWidth(textMode.getValue());
         float versionWidth = FontManager.M16.getStringWidth(Access.CLIENT_VERSION);
 
-        FontManager.M50.drawStringWithShadow(text, xVal, yVal, -1);
+        FontManager.M50.drawStringWithShadow(textMode.getValue(), xVal, yVal, -1);
         RenderUtil.resetColor();
         GradientUtil.applyGradientHorizontal(xVal, yVal, width, 20, 1,new Color(236, 133, 209),  new Color(28, 167, 222), () -> {
             RenderUtil.setAlphaLimit(0);
-            FontManager.M50.drawString(text, xVal, yVal, 0);
+            FontManager.M50.drawString(textMode.getValue(), xVal, yVal, 0);
         });
         FontManager.M16.drawStringWithShadow(Access.CLIENT_VERSION, versionX, yVal, -1);
-        this.setWidth(FontManager.M50.getStringWidth(text) + versionWidth);
+        this.setWidth(FontManager.M50.getStringWidth(textMode.getValue()) + versionWidth);
         this.setHeight(FontManager.M50.getHeight());
     }
 

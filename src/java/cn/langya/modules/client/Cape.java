@@ -8,11 +8,11 @@ import org.union4dev.base.value.impl.ComboValue;
 
 /**
  * @author LangYa466
- * @date 2024/5/6 20:42
+ * @since 2024/5/6 20:42
  */
 
 public class Cape implements Access.InstanceAccess {
-    public static final ComboValue capeMode = new ComboValue("Cape Mode", "MINECON", "MINECON", "MIGRATOR","None");
+    public static final ComboValue capeMode = new ComboValue("披风模式", "MINECON", "MINECON", "MIGRATOR","None");
 
     public static ResourceLocation getCape() {
         if(capeMode.getValue() == null) return null;

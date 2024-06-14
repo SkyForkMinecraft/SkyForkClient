@@ -1,5 +1,6 @@
 package cn.langya.modules.misc;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.EnumParticleTypes;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
@@ -13,6 +14,7 @@ public class MoreParticles implements Access.InstanceAccess {
 
     @EventTarget
     void onA(AttackEvent e) {
+        if (e.getTarget().isDead || !(e.getTarget() instanceof EntityLiving) || ((EntityLiving) e.getTarget()).getHealth() == 0) return;
         for (int index = 0; index < this.crackSize.getValue().intValue(); ++index) {
             switch (particleMode.getValue()) {
                 case "暴击粒子": mc.effectRenderer.emitParticleAtEntity(e.getTarget(), EnumParticleTypes.CRIT);

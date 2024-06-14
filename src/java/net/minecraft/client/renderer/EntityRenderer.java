@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer;
 
+import cn.superskidder.BlockOverlay;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.gson.JsonSyntaxException;
@@ -73,6 +74,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
+import org.union4dev.base.Access;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.render.HurtCamEvent;
 import org.union4dev.base.events.render.Render3DEvent;
@@ -1746,15 +1748,14 @@ public class EntityRenderer implements IResourceManagerReloadListener
         GlStateManager.matrixMode(5888);
         GlStateManager.popMatrix();
 
-        if (flag1 && this.mc.objectMouseOver != null && !entity.isInsideOfMaterial(Material.water))
-        {
-            EntityPlayer entityplayer1 = (EntityPlayer)entity;
+        if (this.mc.objectMouseOver != null && entity.isInsideOfMaterial(Material.water) && flag1 && !Access.getInstance().getModuleManager().isEnabled(BlockOverlay.class)) {
+            EntityPlayer entityplayer1 = (EntityPlayer) entity;
             GlStateManager.disableAlpha();
             this.mc.mcProfiler.endStartSection("outline");
-
-            if ((!Reflector.ForgeHooksClient_onDrawBlockHighlight.exists() || !Reflector.callBoolean(Reflector.ForgeHooksClient_onDrawBlockHighlight, new Object[] {renderglobal, entityplayer1, this.mc.objectMouseOver, Integer.valueOf(0), entityplayer1.getHeldItem(), Float.valueOf(partialTicks)})) && !this.mc.gameSettings.hideGUI)
-            {
-                renderglobal.drawSelectionBox(entityplayer1, this.mc.objectMouseOver, 0, partialTicks);
+            if (!Access.getInstance().getModuleManager().isEnabled(BlockOverlay.class)) {
+                if ((!Reflector.ForgeHooksClient_onDrawBlockHighlight.exists() || !Reflector.callBoolean(Reflector.ForgeHooksClient_onDrawBlockHighlight, renderglobal, entityplayer1, this.mc.objectMouseOver, Integer.valueOf(0), entityplayer1.getHeldItem(), Float.valueOf(partialTicks))) && !this.mc.gameSettings.hideGUI) {
+                    renderglobal.drawSelectionBox(entityplayer1, this.mc.objectMouseOver, 0, partialTicks);
+                }
             }
             GlStateManager.enableAlpha();
         }

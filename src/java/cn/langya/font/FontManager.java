@@ -13,7 +13,10 @@ public class FontManager {
     public static FontDrawer M30 = getFont("MiSans-Bold", 30);
     public static FontDrawer M50 = getFont("MiSans-Bold", 50);
 
-    public static FontDrawer MB30 = getFont("MiSans-Bold", 30);
+    public static FontDrawer MB14 = getBoldFont("MiSans-Bold", 14);
+    public static FontDrawer MB16 = getBoldFont("MiSans-Bold", 16);
+    public static FontDrawer MB18 = getBoldFont("MiSans-Bold", 18);
+    public static FontDrawer MB30 = getBoldFont("MiSans-Bold", 30);
 
     public static FontDrawer getFont(String name, int size) {
         Font font;

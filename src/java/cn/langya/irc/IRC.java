@@ -1,47 +1,46 @@
 package cn.langya.irc;
 
-import com.yumegod.simpleirc.IRCClient;
-import com.yumegod.simpleirc.IRCEvent;
+import com.yumegod.obfuscation.Native;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.Startup;
 import org.union4dev.base.events.misc.ChatEvent;
 import org.union4dev.base.util.ChatUtil;
 
+import java.io.*;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+@Native
 @Startup
 public class IRC implements Access.InstanceAccess {
 
-	private static boolean init;
+	public static List<String> userList = new CopyOnWriteArrayList<>();
 
-	@IRCEvent
-	public static void onMessage(String message) {
-		ChatUtil.info(String.format("[IRC] %s",message));
-	}
 
 	@EventTarget
-	public static void onChatSendMessage(ChatEvent e) {
-		IRCClient client = null;
-		if (!init) {
-			client = new IRCClient("ws://218.93.206.109:79", "skyffffffffffffffffork");;
-			IRCClient.registerClass(IRC.class);
-			init = true;
-		}
-
-		if (client == null) {
-			ChatUtil.info("[IRC] 连接失败!!!");
-			return;
-		}
+	private void onCC(ChatEvent e) {
+		/*
+		if (e.getMessage().startsWith("/")) return;
 
 		if (e.getMessage().startsWith("-")) {
+			if (e.getMessage().replace("-","") == "") return;
 			e.setCancelled(true);
-			ChatUtil.success("[IRC] 消息发送成功!");
-			client.sendMessage(mc.thePlayer.getDisplayName() + e.getMessage().replace("-"," : "));
-		}
+			try (Socket socket = new Socket("61.147.247.11",11451)) {
+				OutputStream output = socket.getOutputStream();
+				PrintWriter writer = new PrintWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8), true);
 
-	}
+				writer.println("SkyForkIIIRRRCCC___" + mc.thePlayer.getDisplayName().getFormattedText() + e.getMessage().replace("-", " : "));
+				// ChatUtil.success("[IRC]" + mc.thePlayer.getDisplayName().getFormattedText() + e.getMessage().replace("-", " : "));
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
 
-	public IRC() {
-		init = false;
+
+		 */
+
 	}
 
 
