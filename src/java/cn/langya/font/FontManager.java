@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 public class FontManager {
+    public static FontDrawer M13 = getFont("MiSans-Bold", 13);
     public static FontDrawer M14 = getFont("MiSans-Bold", 14);
     public static FontDrawer M16 = getFont("MiSans-Bold", 16);
     public static FontDrawer M18 = getFont("MiSans-Bold", 18);
@@ -16,6 +17,8 @@ public class FontManager {
     public static FontDrawer MB14 = getBoldFont("MiSans-Bold", 14);
     public static FontDrawer MB16 = getBoldFont("MiSans-Bold", 16);
     public static FontDrawer MB18 = getBoldFont("MiSans-Bold", 18);
+    public static FontDrawer MB20 = getBoldFont("MiSans-Bold", 20);
+    public static FontDrawer MB26 = getBoldFont("MiSans-Bold", 26);
     public static FontDrawer MB30 = getBoldFont("MiSans-Bold", 30);
 
     public static FontDrawer getFont(String name, int size) {

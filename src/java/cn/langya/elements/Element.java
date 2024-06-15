@@ -26,15 +26,18 @@ public class Element implements Access.InstanceAccess {
         this.height = height;
     }
 
-    public void update() {
+    public void update(boolean shader) {
         if (dragging) {
             this.setX(this.mouseX - this.moveX);
             this.setY(this.mouseY - this.moveY);
         }
 
-        this.draw();
+        if (!shader) this.draw();
+
+        this.draw(shader);
     }
 
+    public void draw(boolean shader) { }
     public void draw() { }
 
     public void updateMousePos(int mouseX, int mouseY) {

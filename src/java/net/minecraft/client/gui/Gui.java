@@ -1,11 +1,15 @@
 package net.minecraft.client.gui;
 
+import cn.cedo.render.GLUtil;
+import cn.cedo.render.RenderUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+
+import static net.minecraft.client.renderer.OpenGlHelper.GL_QUADS;
 
 public class Gui
 {
@@ -242,5 +246,54 @@ public class Gui
         tessellator.draw();
 
     }
+
+    public static void drawRect2(double x, double y, double width, double height, int color) {
+        RenderUtil.resetColor();
+        RenderUtil.setAlphaLimit(0);
+        GLUtil.setup2DRendering(true);
+
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+
+        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos(x, y, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x, y + height, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + width, y + height, 0.0D).color(color).endVertex();
+        worldrenderer.pos(x + width, y, 0.0D).color(color).endVertex();
+        tessellator.draw();
+
+        GLUtil.end2DRendering();
+    }
+
+    /**
+     * Draws a solid color rectangle with the specified coordinates and color (ARGB format). Args: x1, y1, x2, y2, color
+     */
+    public static void drawRect(double left, double top, double right, double bottom, int color) {
+        if (left < right) {
+            double i = left;
+            left = right;
+            right = i;
+        }
+
+        if (top < bottom) {
+            double j = top;
+            top = bottom;
+            bottom = j;
+        }
+        RenderUtil.resetColor();
+        RenderUtil.setAlphaLimit(0);
+        GLUtil.setup2DRendering(true);
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+
+        worldrenderer.begin(GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+        worldrenderer.pos(left, bottom, 0.0D).color(color).endVertex();
+        worldrenderer.pos(right, bottom, 0.0D).color(color).endVertex();
+        worldrenderer.pos(right, top, 0.0D).color(color).endVertex();
+        worldrenderer.pos(left, top, 0.0D).color(color).endVertex();
+        tessellator.draw();
+        GLUtil.end2DRendering();
+    }
+
 
 }

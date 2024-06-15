@@ -28,6 +28,7 @@ public class FPSInfo extends Element {
             setHeight(0);
             return;
         }
+
         String logoText = textMode.getValue();
         String text = String.format("[%s: %s]",logoText, Minecraft.getDebugFPS());
         Color c = Access.CLIENT_COLOR;

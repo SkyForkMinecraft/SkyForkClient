@@ -1,12 +1,16 @@
 package cn.cedo.render;
 
+import cn.langya.font.FontManager;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
 import org.union4dev.base.Access;
@@ -449,4 +453,178 @@ public class RenderUtil implements Access.InstanceAccess {
         worldRenderer.pos(aa.minX, aa.maxY, aa.maxZ).endVertex();
         tessellator.draw();
     }
+
+
+    public static void circleNoSmoothRGB(double x, double y, double radius, int color) {
+        radius /= 2;
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_CULL_FACE);
+        color(color);
+        glBegin(GL_TRIANGLE_FAN);
+
+        for (double i = 0; i <= 360; i++) {
+            double angle = (i * (Math.PI * 2)) / 360;
+            glVertex2d(x + (radius * Math.cos(angle)) + radius, y + (radius * Math.sin(angle)) + radius);
+        }
+
+        glEnd();
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_TEXTURE_2D);
+    }
+
+    // Bad rounded rect method but the shader one requires scaling that sucks
+    public static void renderRoundedRect(float x, float y, float width, float height, float radius, int color) {
+        RenderUtil.drawGoodCircle(x + radius, y + radius, radius, color);
+        RenderUtil.drawGoodCircle(x + width - radius, y + radius, radius, color);
+        RenderUtil.drawGoodCircle(x + radius, y + height - radius, radius, color);
+        RenderUtil.drawGoodCircle(x + width - radius, y + height - radius, radius, color);
+
+        Gui.drawRect2(x + radius, y, width - radius * 2, height, color);
+        Gui.drawRect2(x, y + radius, width, height - radius * 2, color);
+    }
+
+
+    // TODO: Replace this with a shader as GL_POINTS is not consistent with gui scales
+    public static void drawGoodCircle(double x, double y, float radius, int color) {
+        color(color);
+        GLUtil.setup2DRendering();
+
+        glEnable(GL_POINT_SMOOTH);
+        glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
+        glPointSize(radius * (2 * mc.gameSettings.guiScale));
+
+        glBegin(GL_POINTS);
+        glVertex2d(x, y);
+        glEnd();
+
+        GLUtil.end2DRendering();
+    }
+
+
+    public static void drawGradientRect(double left, double top, double right, double bottom, int startColor, int endColor) {
+        GLUtil.setup2DRendering();
+        glEnable(GL_LINE_SMOOTH);
+        glShadeModel(GL_SMOOTH);
+        glPushMatrix();
+        glBegin(GL_QUADS);
+        color(startColor);
+        glVertex2d(left, top);
+        glVertex2d(left, bottom);
+        color(endColor);
+        glVertex2d(right, bottom);
+        glVertex2d(right, top);
+        glEnd();
+        glPopMatrix();
+        glDisable(GL_LINE_SMOOTH);
+        GLUtil.end2DRendering();
+        resetColor();
+    }
+
+    public static void drawGradientRectBordered(double left, double top, double right, double bottom, double width, int startColor, int endColor, int borderStartColor, int borderEndColor) {
+        drawGradientRect(left + width, top + width, right - width, bottom - width, startColor, endColor);
+        drawGradientRect(left + width, top, right - width, top + width, borderStartColor, borderEndColor);
+        drawGradientRect(left, top, left + width, bottom, borderStartColor, borderEndColor);
+        drawGradientRect(right - width, top, right, bottom, borderStartColor, borderEndColor);
+        drawGradientRect(left + width, bottom - width, right - width, bottom, borderStartColor, borderEndColor);
+    }
+
+    private static float drawExhiOutlined(String text, float x, float y, int borderColor, int mainColor) {
+        FontManager.MB14.drawString(text, x, y - (float) 0.35, borderColor);
+        FontManager.MB14.drawString(text, x, y + (float) 0.35, borderColor);
+        FontManager.MB14.drawString(text, x - (float) 0.35, y, borderColor);
+        FontManager.MB14.drawString(text, x + (float) 0.35, y, borderColor);
+        FontManager.MB14.drawString(text, x, y, mainColor);
+        return x + FontManager.MB14.getStringWidth(text) - 2F;
+    }
+
+    public static void drawExhiEnchants(ItemStack stack, float x, float y) {
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.disableDepth();
+        disableBlend();
+        GlStateManager.resetColor();
+        final int darkBorder = 0xFF000000;
+        if (stack.getItem() instanceof ItemArmor) {
+            int prot = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, stack);
+            int unb = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack);
+            int thorn = EnchantmentHelper.getEnchantmentLevel(Enchantment.thorns.effectId, stack);
+            if (prot > 0) {
+                drawExhiOutlined(prot + "", drawExhiOutlined("P", x, y, darkBorder, -1) + 2, y, getBorderColor(prot), getMainColor(prot));
+                y += 5;
+            }
+            if (unb > 0) {
+                drawExhiOutlined(unb + "", drawExhiOutlined("U", x, y, darkBorder, -1) + 2, y, getBorderColor(unb), getMainColor(unb));
+                y += 5;
+            }
+            if (thorn > 0) {
+                drawExhiOutlined(thorn + "", drawExhiOutlined("T", x, y, darkBorder, -1) + 2, y, getBorderColor(thorn), getMainColor(thorn));
+                y += 5;
+            }
+        }
+        if (stack.getItem() instanceof ItemBow) {
+            int power = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
+            int punch = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);
+            int flame = EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack);
+            int unb = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack);
+            if (power > 0) {
+                drawExhiOutlined(power + "", drawExhiOutlined("Pow", x, y, darkBorder, -1) + 2, y, getBorderColor(power), getMainColor(power));
+                y += 5;
+            }
+            if (punch > 0) {
+                drawExhiOutlined(punch + "", drawExhiOutlined("Pun", x, y, darkBorder, -1) + 2, y, getBorderColor(punch), getMainColor(punch));
+                y += 5;
+            }
+            if (flame > 0) {
+                drawExhiOutlined(flame + "", drawExhiOutlined("F", x, y, darkBorder, -1) + 2, y, getBorderColor(flame), getMainColor(flame));
+                y += 5;
+            }
+            if (unb > 0) {
+                drawExhiOutlined(unb + "", drawExhiOutlined("U", x, y, darkBorder, -1) + 2, y, getBorderColor(unb), getMainColor(unb));
+                y += 5;
+            }
+        }
+        if (stack.getItem() instanceof ItemSword) {
+            int sharp = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, stack);
+            int kb = EnchantmentHelper.getEnchantmentLevel(Enchantment.knockback.effectId, stack);
+            int fire = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, stack);
+            int unb = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, stack);
+            if (sharp > 0) {
+                drawExhiOutlined(sharp + "", drawExhiOutlined("S", x, y, darkBorder, -1) + 2, y, getBorderColor(sharp), getMainColor(sharp));
+                y += 5;
+            }
+            if (kb > 0) {
+                drawExhiOutlined(kb + "", drawExhiOutlined("K", x, y, darkBorder, -1) + 2, y, getBorderColor(kb), getMainColor(kb));
+                y += 5;
+            }
+            if (fire > 0) {
+                drawExhiOutlined(fire + "", drawExhiOutlined("F", x, y, darkBorder, -1) + 2, y, getBorderColor(fire), getMainColor(fire));
+                y += 5;
+            }
+            if (unb > 0) {
+                drawExhiOutlined(unb + "", drawExhiOutlined("U", x, y, darkBorder, -1) + 2, y, getBorderColor(unb), getMainColor(unb));
+            }
+        }
+        GlStateManager.enableDepth();
+        RenderHelper.enableGUIStandardItemLighting();
+    }
+
+    private static int getMainColor(int level) {
+        if (level == 4)
+            return 0xFFAA0000;
+        return -1;
+    }
+
+    private static int getBorderColor(int level) {
+        if (level == 2)
+            return 0x7055FF55;
+        if (level == 3)
+            return 0x7000AAAA;
+        if (level == 4)
+            return 0x70AA0000;
+        if (level >= 5)
+            return 0x70FFAA00;
+        return 0x70FFFFFF;
+    }
+
+
 }

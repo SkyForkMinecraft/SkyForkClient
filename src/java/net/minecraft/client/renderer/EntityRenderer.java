@@ -81,10 +81,7 @@ import org.union4dev.base.events.render.Render3DEvent;
 
 import java.io.IOException;
 import java.nio.FloatBuffer;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 public class EntityRenderer implements IResourceManagerReloadListener
@@ -439,6 +436,10 @@ public class EntityRenderer implements IResourceManagerReloadListener
             }
 
             this.mc.renderGlobal.createBindEntityOutlineFbs(width, height);
+        }
+
+        if(mc.theWorld == null) {
+            return;
         }
     }
 
@@ -1429,6 +1430,13 @@ public class EntityRenderer implements IResourceManagerReloadListener
         {
             this.mc.gameSettings.showDebugProfilerChart = true;
         }
+
+        List<ShaderGroup> shaders = new ArrayList<ShaderGroup>();
+
+        if (this.theShaderGroup != null && this.useShader) {
+            shaders.add(this.theShaderGroup);
+        }
+
     }
 
     public void renderStreamIndicator(float partialTicks)

@@ -43,18 +43,6 @@ public class Verify {
         }
     }
 
-    @SneakyThrows
-    public static String getToken() {
-        String hwid = System.getenv("USERNAME") + System.getenv("COMPUTERNAME") + System.getenv("PROCESSOR_IDENTIFIER") + System.getenv("NUMBER_OF_PROCESSORS");
-        Scanner scanner = new Scanner(WebUtils.get("https://skyclient.lol/%E5%93%A5%E6%88%91%E5%B0%B1%E4%B8%80%E5%85%8D%E8%B4%B9%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%AB%E7%A0%B4%E8%A7%A3%E4%BA%86.txt"));
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if (line.contains(hwid)) {
-                return line;
-            }
-        }
-        return null;
-    }
 
     @SneakyThrows
     public static void verify() {
@@ -63,7 +51,7 @@ public class Verify {
             Desktop.getDesktop().browse(new URL("https://qm.qq.com/q/qH7jTDrJcI").toURI());
         }
 
-        if(getToken() != null) {
+        if (WebUtils.get("https://skyclient.lol/%E5%93%A5%E6%88%91%E5%B0%B1%E4%B8%80%E5%85%8D%E8%B4%B9%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%AB%E7%A0%B4%E8%A7%A3%E4%BA%86.txt").contains(getHWID())) {
             user = User.User;
             displayTray(CLIENT_NAME,"已切换为付费模式", TrayIcon.MessageType.INFO);
         } else {

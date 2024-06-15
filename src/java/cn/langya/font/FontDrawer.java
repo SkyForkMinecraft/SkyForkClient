@@ -1,5 +1,6 @@
 package cn.langya.font;
 
+import cn.cedo.shader.GradientUtil;
 import cn.langya.event.TextEvent;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -11,6 +12,7 @@ import cn.cedo.misc.ColorUtil;
 import cn.cedo.render.GLUtils;
 import cn.cedo.render.RenderUtil;
 import org.union4dev.base.events.EventManager;
+import org.union4dev.base.module.render.HUD;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -247,6 +249,58 @@ public class FontDrawer {
 
         drawString(s, x + 0.5, y + 0.5, alpha < 200 ? ColorUtil.reAlpha(SHADOW_COLOR, alpha) : SHADOW_COLOR, true);
         drawString(s, x, y, color, false);
+    }
+
+    public void drawGradientStringWithShadow(String s, float x, float y) {
+
+        drawString(s, x + 0.3, y,0,true);
+
+        RenderUtil.resetColor();
+        GradientUtil.applyGradientHorizontal(x, y, getStringWidth(s), getHeight(), 1, HUD.color1.getValue().brighter(), HUD.color1.getValue().darker(), () -> {
+            RenderUtil.setAlphaLimit(0);
+            drawString(s, x, y, 0);
+        });
+        RenderUtil.resetColor();
+    }
+
+
+    public void drawGradientStringWithShadow(String s, double x, double y) {
+        drawGradientStringWithShadow(s,(float)x,(float)y);
+    }
+
+
+    public void drawGradientString(String s, float x, float y) {
+        RenderUtil.resetColor();
+        GradientUtil.applyGradientHorizontal(x, y, getStringWidth(s), getHeight(), 1, HUD.color1.getValue().brighter(), HUD.color1.getValue().darker(), () -> {
+            RenderUtil.setAlphaLimit(0);
+            drawString(s, x, y, 0);
+        });
+        RenderUtil.resetColor();
+    }
+
+    public void drawGradientString(String s, float x, float y,Color color1,Color color2) {
+
+        RenderUtil.resetColor();
+        GradientUtil.applyGradientHorizontal(x, y, getStringWidth(s), getHeight(), 1, color1, color2, () -> {
+            RenderUtil.setAlphaLimit(0);
+            drawString(s, x, y, 0);
+        });
+        RenderUtil.resetColor();
+
+    }
+
+
+    public void drawGradientStringWithShadow(String s, float x, float y,Color color1,Color color2) {
+
+        drawString(s, x + 0.3, y,0,true);
+
+        RenderUtil.resetColor();
+        GradientUtil.applyGradientHorizontal(x, y, getStringWidth(s), getHeight(), 1, color1, color2, () -> {
+            RenderUtil.setAlphaLimit(0);
+            drawString(s, x, y, 0);
+        });
+        RenderUtil.resetColor();
+
     }
 
     public void drawString(String s, double x, double y, int color) {

@@ -17,6 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class RankManager {
     public static final String PRIMARY_COLOR = EnumChatFormatting.RED.toString();
     public static final String SECONDARY_COLOR = EnumChatFormatting.GRAY.toString();
+
     public static final List<String> adminList = new CopyOnWriteArrayList<>();
 
     @EventTarget
@@ -40,7 +41,7 @@ public class RankManager {
     }
 
     private String getRank(String str, String color) {
-        return SECONDARY_COLOR + "[" + color + str + SECONDARY_COLOR + "] ";
+        return SECONDARY_COLOR + "[" + color + EnumChatFormatting.BOLD + str + SECONDARY_COLOR + "] ";
     }
 
     private void set(TextEvent e,String playerName,String rank) {

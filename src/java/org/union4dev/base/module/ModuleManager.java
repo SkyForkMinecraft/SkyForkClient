@@ -1,6 +1,8 @@
 package org.union4dev.base.module;
 
+import cn.cedo.render.targethud.TargetHUDMod;
 import cn.dxg.CheaterDetector;
+import cn.langya.modules.render.MotionBlur;
 import cn.superskidder.BlockOverlay;
 import cn.langya.elements.impls.*;
 import cn.langya.modules.client.*;
@@ -51,7 +53,7 @@ public final class ModuleManager {
 
         // Register Render
         register(KeyStore.class,"按键显示",Category.Render);
-        //  register(TargetHUD.class,"PVP信息",Category.Render);
+       // register(TargetHUDMod.class,"PVP信息",Category.Render);
         register(ClientLogo.class,"客户端标识",Category.Render);
         register(cn.langya.elements.impls.ArrayList.class,"功能列表",Category.Render);
         register(FPSInfo.class,"帧率显示",Category.Render);
@@ -59,6 +61,7 @@ public final class ModuleManager {
         register(BlockOverlay.class,"填充方块",Category.Render);
         register(TNTTimer.class,"TNT时间",Category.Render);
         register(CPSInfo.class,"CPS显示",Category.Render);
+        register(MotionBlur.class,"动态模糊",Category.Render);
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);

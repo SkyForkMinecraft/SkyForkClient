@@ -1,8 +1,12 @@
 
 package net.minecraft.client.gui;
 
+import cn.cedo.animations.Animation;
+import cn.cedo.animations.Direction;
+import cn.cedo.animations.impl.DecelerateAnimation;
 import cn.langya.elements.Element;
 import cn.langya.font.FontManager;
+import cn.langya.utils.AnimationUtil;
 import cn.langya.utils.MouseUtil;
 import com.google.common.collect.Lists;
 
@@ -46,6 +50,7 @@ public class GuiChat extends GuiScreen
 
     public void initGui()
     {
+        openingAnimation = new DecelerateAnimation(175, 1);
         Keyboard.enableRepeatEvents(true);
         this.sentHistoryCursor = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
         this.inputField = new GuiTextField(0, this.fontRendererObj, 4, this.height - 12, this.width - 4, 12);
@@ -288,8 +293,16 @@ public class GuiChat extends GuiScreen
         }
     }
 
+    public static Animation openingAnimation = new DecelerateAnimation(175, 1, Direction.BACKWARDS);
+
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        RoundedUtil.drawRound(0, this.height - 14, this.width, this.height - 4,5, new Color(0,0,0,150));
+        if (openingAnimation.finished(Direction.BACKWARDS)) {
+            mc.displayGuiScreen((GuiScreen) null);
+            return;
+        }
+        RoundedUtil.drawRound(0,  this.height - (14 * openingAnimation.getOutput().floatValue()), this.width, this.height - 4,5, new Color(0,0,0,150));
+
+        inputField.yPosition = this.height - (12 * openingAnimation.getOutput().intValue());
         this.inputField.drawTextBox();
         IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 

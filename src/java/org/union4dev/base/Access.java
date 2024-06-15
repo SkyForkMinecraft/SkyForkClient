@@ -1,10 +1,12 @@
 package org.union4dev.base;
 
 import cn.langya.RankManager;
+import cn.langya.TargetManager;
 import cn.langya.elements.ElementManager;
 import cn.langya.files.ConfigManager;
 import cn.langya.font.FontManager;
 import cn.langya.irc.IRCManager;
+import cn.langya.notification.NotificationManager;
 import cn.langya.verify.Verify;
 import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
@@ -35,7 +37,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "2.6";
+    public static final String CLIENT_VERSION = "2.7";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -79,7 +81,8 @@ public final class Access {
     private final ElementManager elementManager;
     @Getter
     private final IRCManager ircManager;
-
+    @Getter
+    private final NotificationManager notificationManager;
 
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
         SystemTray tray = SystemTray.getSystemTray();
@@ -102,7 +105,7 @@ public final class Access {
     public Access() {
         INSTANCE = this;
 
-       Verify.verify();
+        // Verify.verify();
 
         // Initialize managers
         ircManager = new IRCManager();
@@ -111,6 +114,7 @@ public final class Access {
         configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
         clickGui = new ClickGuiScreen();
         elementManager = new ElementManager();
+        notificationManager = new NotificationManager();
 
         // new ClientMain("38.12.30.171", 11451).start();
         // Init ViaMCP
@@ -131,6 +135,7 @@ public final class Access {
         GuiScreen.d = new DynamicTexture(ImageIO.read(new URL(GuiScreen.url)));
 
         EventManager.register(new RankManager());
+        EventManager.register(new TargetManager());
 
         loaded = true;
     }

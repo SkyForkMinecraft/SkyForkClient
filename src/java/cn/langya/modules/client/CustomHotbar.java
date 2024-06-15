@@ -2,6 +2,7 @@ package cn.langya.modules.client;
 
 import net.minecraft.client.gui.ScaledResolution;
 import org.union4dev.base.Access;
+import org.union4dev.base.module.render.HUD;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
@@ -26,12 +27,17 @@ public class CustomHotbar {
     public static void drawCustomHotbar(ScaledResolution sr) {
 
         switch (colorMode.getValue()) {
-            case "客户端" : color = Access.CLIENT_COLOR; break;
             case "自定义" : color = new Color(customColorRed.getValue().intValue(), customColorGreen.getValue().intValue(), customColorBlue.getValue().intValue()); break;
             case "彩虹": color = new Color(ColorUtil.getColor(-(1 + 5 * 1.7f), 0.7f, 1));
         }
 
         RoundedUtil.drawRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 21.5F, 180, 20, 3, new Color(0, 0, 0, 80));
-        RoundedUtil.drawRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 22F, 180, 1, hotbarRadius.getValue().intValue(), color);
+        if (colorMode.getValue() == "客户端") {
+            RoundedUtil.drawGradientRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 22F, 180, 1,
+                   hotbarRadius.getValue().intValue(), HUD.color1.getValue().brighter(),HUD.color1.getValue().brighter(),
+                    HUD.color1.getValue().darker(), HUD.color1.getValue().darker());
+        } else {
+            RoundedUtil.drawRound(sr.getScaledWidth() / 2f - 90, sr.getScaledHeight() - 22F, 180, 1, hotbarRadius.getValue().intValue(), color);
+        }
     }
 }
