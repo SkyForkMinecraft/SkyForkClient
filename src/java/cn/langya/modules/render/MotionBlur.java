@@ -8,7 +8,7 @@ import org.union4dev.base.events.update.TickEvent;
 import org.union4dev.base.value.impl.NumberValue;
 
 public class MotionBlur implements Access.InstanceAccess {
-    public static final NumberValue amount = new NumberValue("模糊度", 6, 1, 0,1);
+    public static final NumberValue amount = new NumberValue("模糊度", 6, 1, 10,1);
 
     @Disable
     public void onDisable() {
