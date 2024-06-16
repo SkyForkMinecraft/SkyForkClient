@@ -1,5 +1,6 @@
 package org.union4dev.base;
 
+import cn.langya.MemoryManager;
 import cn.langya.RankManager;
 import cn.langya.TargetManager;
 import cn.langya.elements.ElementManager;
@@ -136,6 +137,7 @@ public final class Access {
 
         EventManager.register(new RankManager());
         EventManager.register(new TargetManager());
+        EventManager.register(new MemoryManager());
 
         loaded = true;
     }
