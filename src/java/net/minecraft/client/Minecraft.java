@@ -1,6 +1,7 @@
 package net.minecraft.client;
 
 import cn.imflowow.LoadWorldEvent;
+import cn.langya.TargetManager;
 import cn.langya.modules.misc.FakeFPS;
 import com.google.common.collect.*;
 import com.google.common.util.concurrent.Futures;
@@ -1102,6 +1103,20 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.mcProfiler.endSection();
         this.checkGLError("Post render");
         ++this.fpsCounter;
+        if (fpsCounter > 60) {
+            int tempFPS = fpsCounter;
+            if (tempFPS - 60 < 60) {
+                this.fpsCounter += (int) (Math.random() * 10);
+            } else {
+                this.fpsCounter += (int) (Math.random() * 30);
+            }
+            if (currentScreen != null) {
+                this.fpsCounter += (int) (Math.random() * 50);
+            }
+            if (TargetManager.canAdd) {
+                this.fpsCounter += (int) (Math.random() * TargetManager.add);
+            }
+        }
         this.isGamePaused = this.isSingleplayer() && this.currentScreen != null && this.currentScreen.doesGuiPauseGame() && !this.theIntegratedServer.getPublic();
         long k = System.nanoTime();
         this.frameTimer.addFrame(k - this.startNanoTime);

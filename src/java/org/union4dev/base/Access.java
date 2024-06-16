@@ -1,6 +1,7 @@
 package org.union4dev.base;
 
 import cn.langya.MemoryManager;
+import cn.langya.PacketManager;
 import cn.langya.RankManager;
 import cn.langya.TargetManager;
 import cn.langya.elements.ElementManager;
@@ -38,7 +39,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "2.7";
+    public static final String CLIENT_VERSION = "2.";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -138,6 +139,7 @@ public final class Access {
         EventManager.register(new RankManager());
         EventManager.register(new TargetManager());
         EventManager.register(new MemoryManager());
+        EventManager.register(new PacketManager());
 
         loaded = true;
     }
