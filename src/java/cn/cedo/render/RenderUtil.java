@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 import org.union4dev.base.Access;
 import cn.cedo.misc.ColorUtil;
 
@@ -81,6 +82,10 @@ public class RenderUtil implements Access.InstanceAccess {
 
     public static void resetColor() {
         GlStateManager.color(1, 1, 1, 1);
+    }
+
+    public static void resetColor(Color color) {
+        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F,color.getBlue() / 255F, color.getAlpha() / 255F);
     }
 
     public static Framebuffer createFrameBuffer(Framebuffer framebuffer) {

@@ -71,6 +71,7 @@ public final class ModuleManager {
         register(KillEffectsMod.class,"击杀特效",Category.Misc);
         register(CheaterDetector.class,"黑客检测",Category.Misc);
         register(Fulbright.class,"夜视",Category.Misc);
+        register(AttackCircle.class,"攻击距离光环",Category.Misc);
 
         // Register Client
         register(ClientSettings.class,"客户端设置",Category.Render);

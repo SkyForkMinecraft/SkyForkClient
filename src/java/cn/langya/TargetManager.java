@@ -17,4 +17,14 @@ public class TargetManager implements Access.InstanceAccess {
             }
         }
     }
+
+    public static EntityLivingBase getTarget(float range) {
+        EntityLivingBase t = null;
+        for (Entity entity : mc.theWorld.loadedEntityList) {
+            if (entity != mc.thePlayer && entity instanceof EntityLivingBase && ((EntityLivingBase) entity).getHealth() > 0 && !entity.isDead && mc.thePlayer.getDistanceToEntity(entity) < range) {
+                t = (EntityLivingBase) entity;
+            }
+        }
+        return t;
+    }
 }
