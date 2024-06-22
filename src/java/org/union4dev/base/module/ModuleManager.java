@@ -81,7 +81,7 @@ public final class ModuleManager {
         register(Cape.class,"自定义披风",Category.Client);
         register(NoHurtCam.class,"无受伤抖动",Category.Client);
         register(DragonWings.class,"龙翼",Category.Client);
-        register(OldAnimation.class,"1.7动画",Category.Client);
+        register(OldAnimation.class,"自定义动画",Category.Client);
         register(ItemPhysic.class,"物品物理掉落",Category.Client);
         register(cn.langya.irc.IRC.class,"客户端聊天",Category.Client);
 

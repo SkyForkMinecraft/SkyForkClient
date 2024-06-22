@@ -1,5 +1,6 @@
 package cn.cedo.shader.blur;
 
+import cn.cedo.shader.RoundedUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.shader.Framebuffer;
 import org.lwjgl.BufferUtils;
@@ -10,6 +11,7 @@ import cn.cedo.render.RenderUtil;
 import cn.cedo.render.StencilUtil;
 import cn.cedo.shader.ShaderUtil;
 
+import java.awt.*;
 import java.nio.FloatBuffer;
 
 /**
@@ -18,7 +20,7 @@ import java.nio.FloatBuffer;
  */
 public class GaussianBlur implements Access.InstanceAccess {
 
-    private static final ShaderUtil gaussianBlur = new ShaderUtil("shaders/gaussian-blur.frag");
+    private static final ShaderUtil gaussianBlur = new ShaderUtil("client/shaders/gaussian.frag");
 
     private static Framebuffer framebuffer = new Framebuffer(1, 1, false);
 
@@ -37,6 +39,11 @@ public class GaussianBlur implements Access.InstanceAccess {
         GL20.glUniform1(gaussianBlur.getUniform("weights"), weightBuffer);
     }
 
+    public static void render(float x,float y,float width,float height,float rectRadius,int blurRadius) {
+        startBlur();
+        RoundedUtil.drawRound(x,y,width,height,rectRadius, Color.white);
+        endBlur(blurRadius,2);
+    }
     public static void startBlur() {
         StencilUtil.initStencilToWrite();
     }

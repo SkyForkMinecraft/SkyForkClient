@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import cn.cedo.shader.blur.GaussianBlur;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -7,8 +8,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.stream.GuiTwitchUserMode;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityList;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
@@ -706,9 +710,6 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
      */
     public void drawBackground(int tint)
     {
-        drawClientBackground();
-        // RenderUtil.drawImage(new ResourceLocation("client/background.png"), 0, 0, width, height);
-        /*
         GlStateManager.disableLighting();
         GlStateManager.disableFog();
         Tessellator tessellator = Tessellator.getInstance();
@@ -723,7 +724,6 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         worldrenderer.pos(0.0D, 0.0D, 0.0D).tex(0.0D, (double)tint).color(64, 64, 64, 255).endVertex();
         tessellator.draw();
 
-         */
     }
 
     /**

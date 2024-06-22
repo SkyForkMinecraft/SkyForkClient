@@ -13,5 +13,6 @@
     <orderEntry type="library" name="client" level="project" />
     <orderEntry type="library" name="minecraft" level="project" />
     <orderEntry type="library" name="obfannotations" level="project" />
+    <orderEntry type="library" name="Ambien-1.5.0-lib" level="project" />
   </component>
 </module>

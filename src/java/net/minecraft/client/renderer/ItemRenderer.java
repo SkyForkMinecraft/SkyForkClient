@@ -29,6 +29,7 @@ import net.optifine.DynamicLights;
 import net.optifine.reflect.Reflector;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
+import org.union4dev.base.Access;
 
 public class ItemRenderer
 {
@@ -390,6 +391,9 @@ public class ItemRenderer
                     this.renderItemMap(this.mc.thePlayer, f2, f, f1);
                 } else if (this.mc.thePlayer.getItemInUseCount() > 0) {
                     EnumAction enumaction = this.itemToRender.getItemUseAction();
+                    float swingProgress = f1;
+                    float var15 = MathHelper.sin(swingProgress * swingProgress * 3.1415927F);
+                    float var16 = MathHelper.sin(MathHelper.sqrt_float(swingProgress) * 3.1415927F);
                     switch (enumaction) {
                         case NONE:
                             this.transformFirstPersonItem(f, 0.0F);
@@ -401,12 +405,89 @@ public class ItemRenderer
                             break;
 
                         case BLOCK:
-                            if (OldAnimation.blockHit.getValue()) {
-                                this.transformFirstPersonItem(f, f1);
+                            if (Access.getInstance().getModuleManager().isEnabled(OldAnimation.class)) {
+                                switch (OldAnimation.mode.getValue()) {
+                                    case "Stella":
+                                        this.transformFirstPersonItem(-0.1F, swingProgress);
+                                        GlStateManager.translate(-0.5F, 0.4F, -0.2F);
+                                        GlStateManager.rotate(32, 0, 1, 0);
+                                        GlStateManager.rotate(-70, 1, 0, 0);
+                                        GlStateManager.rotate(40, 0, 1, 0);
+                                        break;
+                                    case "Middle":
+                                        GlStateManager.popMatrix();
+                                        GL11.glRotated(25, 0, 0.2, 0);
+                                        this.transformFirstPersonItem(0.0f, swingProgress);
+                                        GlStateManager.scale(0.9F, 0.9F, 0.9F);
+                                        this.doBlockTransformations();
+                                        GlStateManager.pushMatrix();
+                                        break;
+                                    case "1.7":
+                                        this.transformFirstPersonItem(f, swingProgress);
+                                        GlStateManager.translate(0, 0.3, 0);
+                                        this.doBlockTransformations();
+                                        break;
+                                    case "Smooth":
+                                        this.transformFirstPersonItem(swingProgress / 5, swingProgress);
+                                        GlStateManager.translate(0, 0.2, 0);
+                                        GlStateManager.rotate(-var15, 4, -0.8F, -1F);
+                                        this.doBlockTransformations();
+                                        break;
+                                    case "Exhi":
+                                        this.transformFirstPersonItem(f / 2, 0);
+                                        GlStateManager.rotate(-var16 * 40.0F / 2.0F, var16 / 2.0F, -0.0F, 9.0F);
+                                        GlStateManager.rotate(-var16 * 30.0F, 1.0F, var16 / 2.0F, -0.0F);
+                                        this.doBlockTransformations();
+                                        GL11.glTranslatef(-0.05F, this.mc.thePlayer.isSneaking() ? -0.2F : 0.0F, 0.1F);
+                                        break;
+                                    case "Exhi 2":
+                                        this.transformFirstPersonItem(f / 2, swingProgress);
+                                        GlStateManager.rotate(var16 * 30.0F, -var16, -0.0F, 9.0F);
+                                        GlStateManager.rotate(var16 * 40.0F, 1.0F, -var16, -0.0F);
+                                        GlStateManager.translate(0, 0.3F, 0);
+                                        this.doBlockTransformations();
+                                        GL11.glTranslatef(-0.05F, this.mc.thePlayer.isSneaking() ? -0.2F : 0.0F, 0.1F);
+                                        break;
+                                    case "Exhi 3":
+                                        this.transformFirstPersonItem(f / 2.0f, swingProgress);
+                                        this.doBlockTransformations();
+                                        GL11.glTranslatef(-0.05F, this.mc.thePlayer.isSneaking() ? -0.2F : 0F, 0.3F);
+                                        break;
+                                    case "Exhi 4":
+                                        this.transformFirstPersonItem(f / 2.0F, 0.0f);
+                                        GlStateManager.translate(0.0F, 0.3F, -0.0F);
+                                        GlStateManager.rotate(-var16 * 30.0F, 1, 0, 2.0F);
+                                        GlStateManager.rotate(-var16 * 44.0F, 1.5F, (float) (var16 / 1.2), 0F);
+                                        this.doBlockTransformations();
+                                        GL11.glTranslatef(-0.05F, this.mc.thePlayer.isSneaking() ? -0.2F : 0F, 0.3F);
+                                        break;
+                                    case "Exhi 5":
+                                        this.transformFirstPersonItem(f / 2.0F, swingProgress);
+                                        GlStateManager.rotate(var16 * 30.0F, -var16, 0.0F, 9.0F);
+                                        GlStateManager.rotate(var16 * 40.0F, 1.0F, -var16, -0.0F);
+                                        this.doBlockTransformations();
+                                        GL11.glTranslatef(-0.05F, this.mc.thePlayer.isSneaking() ? -0.2F : 0F, 0.3F);
+                                        break;
+                                    case "Shred":
+                                        this.transformFirstPersonItem(f / 2, swingProgress);
+                                        GlStateManager.rotate(var15 * 30.0F / 2.0F, -var15, -0.0F, 9.0F);
+                                        GlStateManager.rotate(var15 * 40.0F, 1.0F, -var15 / 2.0F, -0.0F);
+                                        this.doBlockTransformations();
+                                        GL11.glTranslatef(-0.05F, this.mc.thePlayer.isSneaking() ? -0.2F : 0.0F, 0.1F);
+                                        break;
+                                    case "Sigma":
+                                        this.transformFirstPersonItem(f * 0.5f, 0);
+                                        GlStateManager.rotate(-var15 * 55 / 2.0F, -8.0F, -0.0F, 9.0F);
+                                        GlStateManager.rotate(-var15 * 45, 1.0F, var15 / 2, -0.0F);
+                                        this.doBlockTransformations();
+                                        GL11.glTranslated(1.2, 0.3, 0.5);
+                                        GL11.glTranslatef(-1, this.mc.thePlayer.isSneaking() ? -0.1F : -0.2F, 0.2F);
+                                        break;
+                                }
                             } else {
                                 this.transformFirstPersonItem(f, 0.0F);
+                                this.doBlockTransformations();
                             }
-                            this.doBlockTransformations();
                             break;
 
                         case BOW:

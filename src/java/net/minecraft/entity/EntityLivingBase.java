@@ -1,5 +1,6 @@
 package net.minecraft.entity;
 
+import cn.superskidder.modules.OldAnimation;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
@@ -31,6 +32,7 @@ import net.minecraft.scoreboard.Team;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import org.union4dev.base.Access;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.movement.JumpEvent;
 
@@ -1316,9 +1318,11 @@ public abstract class EntityLivingBase extends Entity
      * Returns an integer indicating the end point of the swing animation, used by {@link #swingProgress} to provide a
      * progress indicator. Takes dig speed enchantments into account.
      */
-    private int getArmSwingAnimationEnd()
-    {
-        return this.isPotionActive(Potion.digSpeed) ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier()) * 1 : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6);
+    private int getArmSwingAnimationEnd() {
+        return (Access.getInstance().getModuleManager().isEnabled(OldAnimation.class) ? OldAnimation.swingSpeed.getValue().intValue() : 1)
+                * (this.isPotionActive(Potion.digSpeed)
+                ? 6 - (1 + this.getActivePotionEffect(Potion.digSpeed).getAmplifier())
+                : (this.isPotionActive(Potion.digSlowdown) ? 6 + (1 + this.getActivePotionEffect(Potion.digSlowdown).getAmplifier()) * 2 : 6));
     }
 
     /**

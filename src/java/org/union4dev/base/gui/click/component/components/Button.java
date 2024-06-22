@@ -2,6 +2,7 @@ package org.union4dev.base.gui.click.component.components;
 
 import cn.cedo.misc.ColorUtil;
 import cn.cedo.shader.RoundedUtil;
+import cn.cedo.shader.blur.GaussianBlur;
 import cn.langya.font.FontDrawer;
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
@@ -79,14 +80,19 @@ public class Button extends Component {
         GL11.glPushMatrix();
 
         if (Access.getInstance().getModuleManager().isEnabled(this.mod)) {
+            RoundedUtil.drawRound(parent.getX() + 1, end ? this.parent.getY() + this.offset - 2.2F : this.parent.getY() + this.offset + 1F, 86,end ? 14 : 11,
+                    end ? 3 : 0, new Color(0,0,0,60));
             RoundedUtil.drawGradientRound(parent.getX() + 1, end ? this.parent.getY() + this.offset - 2.2F : this.parent.getY() + this.offset + 1F, 86,end ? 14 : 11,
                     end ? 3 : 0, HUD.color1.getValue().brighter(),HUD.color1.getValue().brighter(),
                     HUD.color1.getValue().darker(), HUD.color1.getValue().darker());
 
         } else {
+            GaussianBlur.startBlur();
             Gui.drawRect(parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset,
-                    this.isHovered ? (Access.getInstance().getModuleManager().isEnabled(this.mod) ?
-                    new Color(0xFF222222).darker().getRGB() : 0xFF222222) : (Access.getInstance().getModuleManager().isEnabled(this.mod) ? new Color(14, 14, 14).getRGB() : 0xFF111111));
+                    new Color(0,0,0,60).getRGB());
+            GaussianBlur.endBlur(25,2);
+            Gui.drawRect(parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset,
+                    new Color(0,0,0,60).getRGB());
         }
 
         GL11.glTranslated(0,end ? -2 : 0,0);

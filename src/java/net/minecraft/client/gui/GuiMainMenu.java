@@ -1,26 +1,22 @@
 package net.minecraft.client.gui;
 
+import alan.RiseShaders;
+import alan.base.ShaderRenderType;
+import alan.impl.MainMenuBackgroundShader;
+import cn.cedo.animations.Animation;
+import cn.cedo.animations.impl.DecelerateAnimation;
+import cn.dxg.MainMenuBackground;
 import cn.langya.screen.GuiCustomBackground;
-import cn.langya.utils.BufferImageUtil;
 import cn.langya.verify.Verify;
-import com.google.common.collect.Lists;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.GameSettings;
@@ -29,9 +25,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
-import net.optifine.CustomPanorama;
-import net.optifine.CustomPanoramaProperties;
-import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GLContext;
@@ -67,59 +60,19 @@ public class GuiMainMenu extends GuiScreen {
     private GuiScreen field_183503_M;
     private GuiButton modButton;
     private GuiScreen modUpdateNotification;
+    public boolean hoverSwitch;
+    public boolean hoverFlushed;
+    public Animation a = new DecelerateAnimation(500, 1.0);
+    int bg = 0;
+    MainMenuBackground shaderBackground;
+
 
     public GuiMainMenu()
     {
         this.openGLWarning2 = field_96138_a;
         this.field_183502_L = false;
         this.splashText = "missingno";
-        BufferedReader bufferedreader = null;
 
-        try
-        {
-            List<String> list = Lists.newArrayList();
-            bufferedreader = new BufferedReader(new InputStreamReader(Minecraft.getMinecraft().getResourceManager().getResource(splashTexts).getInputStream(), Charsets.UTF_8));
-            String s;
-
-            while ((s = bufferedreader.readLine()) != null)
-            {
-                s = s.trim();
-
-                if (!s.isEmpty())
-                {
-                    list.add(s);
-                }
-            }
-
-            if (!list.isEmpty())
-            {
-                while (true)
-                {
-                    this.splashText = list.get(RANDOM.nextInt(list.size()));
-
-                    if (this.splashText.hashCode() != 125780783)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
-        catch (IOException var12)
-        {
-        }
-        finally
-        {
-            if (bufferedreader != null)
-            {
-                try
-                {
-                    bufferedreader.close();
-                }
-                catch (IOException var11)
-                {
-                }
-            }
-        }
 
         this.updateCounter = RANDOM.nextFloat();
         this.openGLWarning1 = "";
@@ -158,6 +111,14 @@ public class GuiMainMenu extends GuiScreen {
 
     public void initGui()
     {
+        /*
+        try {
+            shaderBackground = new MainMenuBackground("/assets/minecraft/client/shaders/mainmenu.fsh");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+         */
         this.viewportTexture = new DynamicTexture(256, 256);
         this.backgroundTexture = this.mc.getTextureManager().getDynamicTextureLocation("background", this.viewportTexture);
         Calendar calendar = Calendar.getInstance();
@@ -196,7 +157,7 @@ public class GuiMainMenu extends GuiScreen {
     {
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_,"单人游戏"));
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_, "多人游戏"));
-        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, p_73969_1_ + p_73969_2_ + p_73969_2_, "自定义壁纸"));
+        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, p_73969_1_ + p_73969_2_ + p_73969_2_, "切换壁纸"));
     }
 
     protected void actionPerformed(GuiButton button) throws IOException
@@ -208,7 +169,7 @@ public class GuiMainMenu extends GuiScreen {
 
         if (button.id == 3)
         {
-            this.mc.displayGuiScreen(new GuiCustomBackground());
+            MainMenuBackgroundShader.doSwitchBG();
         }
 
         if (button.id == 5)
@@ -281,39 +242,8 @@ public class GuiMainMenu extends GuiScreen {
 
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-        GlStateManager.disableAlpha();
-        drawBackground(0);
-        // BufferImageUtil.drawMP4(new File("C:\\Users\\LangYa\\Downloads\\Earth\\Earth.mp4"),0,0,width,height);
-        GlStateManager.enableAlpha();
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        int i = 274;
-        int j = this.width / 2 - i / 2;
-        int k = 30;
-        int l = -2130706433;
-        int i1 = 16777215;
-        int j1 = 0;
-        int k1 = Integer.MIN_VALUE;
-        CustomPanoramaProperties custompanoramaproperties = CustomPanorama.getCustomPanoramaProperties();
-
-        if (custompanoramaproperties != null)
-        {
-            l = custompanoramaproperties.getOverlay1Top();
-            i1 = custompanoramaproperties.getOverlay1Bottom();
-            j1 = custompanoramaproperties.getOverlay2Top();
-            k1 = custompanoramaproperties.getOverlay2Bottom();
-        }
-
-        if (l != 0 || i1 != 0)
-        {
-            this.drawGradientRect(0, 0, this.width, this.height, l, i1);
-        }
-
-        if (j1 != 0 || k1 != 0)
-        {
-            this.drawGradientRect(0, 0, this.width, this.height, j1, k1);
-        }
-
+        // Renders the background
+        RiseShaders.MAIN_MENU_SHADER.run(ShaderRenderType.OVERLAY, partialTicks, null);
 
         GlStateManager.pushMatrix();
         GlStateManager.translate((this.width / 2 + 90), 70.0F, 0.0F);

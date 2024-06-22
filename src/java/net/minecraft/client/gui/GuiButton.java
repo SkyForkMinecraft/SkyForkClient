@@ -1,5 +1,10 @@
 package net.minecraft.client.gui;
 
+import cn.cedo.animations.Animation;
+import cn.cedo.animations.Direction;
+import cn.cedo.animations.impl.DecelerateAnimation;
+import cn.cedo.misc.ColorUtil;
+import cn.cedo.shader.blur.GaussianBlur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
@@ -58,15 +63,26 @@ public class GuiButton extends Gui
         return i;
     }
 
+    public Animation hoverAnimation = new DecelerateAnimation(250, 1, Direction.BACKWARDS);
+
     public void drawButton(Minecraft mc, int mouseX, int mouseY)
     {
         if (this.visible)
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-            if(hovered) RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 3.0F, new Color(0, 0, 0, 160));
-            else RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 3.0F, new Color(0, 0, 0, 80));
+            GaussianBlur.startBlur();
+            if(hovered) RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 10, new Color(0, 0, 0, 160));
+            else RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 10, new Color(0, 0, 0, 80));
+            GaussianBlur.endBlur(25,2);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            hoverAnimation.setDirection(Direction.FORWARDS);
+            if (!hoverAnimation.isDone() || hoverAnimation.finished(Direction.FORWARDS)) {
+                RoundedUtil.drawRoundOutline(this.xPosition, this.yPosition, width, height, 10, 1,
+                        ColorUtil.applyOpacity(Color.WHITE, 0), ColorUtil.applyOpacity(Color.WHITE, hoverAnimation.getOutput().floatValue()));
+            } else {
+                hoverAnimation.reset();
+            }
 
             this.mouseDragged(mc, mouseX, mouseY);
 
