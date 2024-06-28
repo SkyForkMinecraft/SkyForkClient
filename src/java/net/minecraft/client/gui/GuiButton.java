@@ -5,6 +5,8 @@ import cn.cedo.animations.Direction;
 import cn.cedo.animations.impl.DecelerateAnimation;
 import cn.cedo.misc.ColorUtil;
 import cn.cedo.shader.blur.GaussianBlur;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
@@ -18,7 +20,9 @@ import java.awt.*;
 public class GuiButton extends Gui
 {
     protected static final ResourceLocation buttonTextures = new ResourceLocation("textures/gui/widgets.png");
+    @Setter
     protected int width;
+    @Setter
     protected int height;
     public int xPosition;
     public int yPosition;
@@ -74,7 +78,7 @@ public class GuiButton extends Gui
             GaussianBlur.startBlur();
             if(hovered) RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 10, new Color(0, 0, 0, 160));
             else RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 10, new Color(0, 0, 0, 80));
-            GaussianBlur.endBlur(25,2);
+            GaussianBlur.endBlur(10,2);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             hoverAnimation.setDirection(Direction.FORWARDS);
             if (!hoverAnimation.isDone() || hoverAnimation.finished(Direction.FORWARDS)) {
@@ -122,8 +126,4 @@ public class GuiButton extends Gui
         return this.width;
     }
 
-    public void setWidth(int width)
-    {
-        this.width = width;
-    }
 }

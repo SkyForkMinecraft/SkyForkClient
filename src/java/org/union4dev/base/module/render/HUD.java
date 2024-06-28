@@ -1,15 +1,9 @@
 package org.union4dev.base.module.render;
 
-import cn.cedo.animations.Direction;
-import cn.cedo.animations.impl.DecelerateAnimation;
 import cn.cedo.misc.ColorUtil;
 import cn.cedo.misc.Pair;
-import cn.cedo.shader.GradientUtil;
-import cn.cedo.shader.RoundedUtil;
-import cn.langya.RenderUtil;
 import cn.langya.event.ShaderType;
 import cn.langya.font.FontManager;
-import cn.langya.notification.Notification;
 import cn.superskidder.BloomUtil;
 import cn.superskidder.GaussianBlur;
 import cn.superskidder.KawaseBlur;
@@ -73,8 +67,7 @@ public class HUD implements Access.InstanceAccess {
 
     @EventTarget
     void onR2d(Render2DEvent e) {
-
-
+        FontManager.M18.drawStringWithShadow("DEV BUILD",2, e.getScaledResolution().getScaledHeight() - FontManager.M18.getHeight() - 5,-1);
         // RenderUtil.drawRect(50,50,50,50,-1);
 //        RoundedRectTest.drawG2DLogoTest(50,50,50,50,Color.WHITE);
 

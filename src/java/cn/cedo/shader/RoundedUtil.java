@@ -18,6 +18,10 @@ public class RoundedUtil {
     private static final ShaderUtil roundedGradientShader = new ShaderUtil("roundedRectGradient");
 
 
+    public static void drawRound(float x, float y, float width, float height, float radius, int color) {
+        drawRound(x, y, width, height, radius, false, new Color(color));
+    }
+
     public static void drawRound(float x, float y, float width, float height, float radius, Color color) {
         drawRound(x, y, width, height, radius, false, color);
     }

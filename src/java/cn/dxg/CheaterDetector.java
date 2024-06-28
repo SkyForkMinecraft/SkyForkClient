@@ -5,6 +5,7 @@ package cn.dxg;
 import java.text.DecimalFormat;
 
 import cn.imflowow.LoadWorldEvent;
+import cn.yapeteam.notification.NotificationType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,6 +69,7 @@ public class CheaterDetector implements Access.InstanceAccess {
         String prefix = EnumChatFormatting.GRAY + "[" + EnumChatFormatting.AQUA + "黑客检测" + EnumChatFormatting.GRAY + "] " + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + attacker.getName() + EnumChatFormatting.WHITE + " failed ";
         if (reach > 3.0) {
             mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText((prefix + EnumChatFormatting.AQUA + "长臂猿" + EnumChatFormatting.WHITE + " (vl:" + attackerCount + ".0)" + EnumChatFormatting.GRAY + ": " + DF_1.format(reach) + " blocks")));
+            Access.getInstance().getNotificationManager().post(String.format("%s 是长臂猿外挂!!",entity.getDisplayName().getFormattedText()), NotificationType.WARNING);
         }
     }
 
@@ -78,6 +80,7 @@ public class CheaterDetector implements Access.InstanceAccess {
         String prefix = EnumChatFormatting.GRAY + "[" + EnumChatFormatting.AQUA + "黑客检测" + EnumChatFormatting.GRAY + "] " + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + player.getName() + EnumChatFormatting.WHITE + " failed ";
         if (player.isUsingItem() && (player.posX - player.lastTickPosX > 0.2 || player.posZ - player.lastTickPosZ > 0.2)) {
             mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText((prefix + EnumChatFormatting.AQUA + "无减速 (Prediction)" + EnumChatFormatting.WHITE + " (vl:" + vl + ".0)")));
+            Access.getInstance().getNotificationManager().post(String.format("%s 是无减速外挂!!",player.getDisplayName().getFormattedText()), NotificationType.WARNING);
             ++vl;
         }
         if (!mc.theWorld.loadedEntityList.contains(player) || !player.isEntityAlive()) {

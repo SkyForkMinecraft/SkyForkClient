@@ -13,7 +13,7 @@ public class ChatUtil {
     public static final String SECONDARY_COLOR = EnumChatFormatting.GRAY.toString();
     private static final String PREFIX = PRIMARY_COLOR + "[" + SECONDARY_COLOR + Access.CLIENT_NAME + PRIMARY_COLOR + "] ";
 
-    private static void send(final String message) {
+    public static void send(final String message) {
         if (Minecraft.getMinecraft().thePlayer == null) return;
         Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(message));
     }

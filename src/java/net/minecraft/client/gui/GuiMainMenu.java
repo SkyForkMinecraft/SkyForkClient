@@ -29,6 +29,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GLContext;
 import cn.langya.font.FontManager;
+import unknow.JavaCVUtil;
 
 import javax.swing.*;
 
@@ -244,7 +245,7 @@ public class GuiMainMenu extends GuiScreen {
     {
         // Renders the background
         RiseShaders.MAIN_MENU_SHADER.run(ShaderRenderType.OVERLAY, partialTicks, null);
-
+        // JavaCVUtil.drawMP4();
         GlStateManager.pushMatrix();
         GlStateManager.translate((this.width / 2 + 90), 70.0F, 0.0F);
         GlStateManager.rotate(-20.0F, 0.0F, 0.0F, 1.0F);

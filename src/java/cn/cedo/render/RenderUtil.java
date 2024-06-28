@@ -363,6 +363,24 @@ public class RenderUtil implements Access.InstanceAccess {
         glDisable(GL_BLEND);
     }
 
+    public static void drawCircle(float x, float y, float radius, int color) {
+        glColor(color);
+        glEnable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_LINE_SMOOTH);
+        glPushMatrix();
+        glLineWidth(1F);
+        glBegin(GL_POLYGON);
+        for (int i = 0; i <= 360; i++)
+            glVertex2d(x + Math.sin(i * Math.PI / 180.0D) * radius, y + Math.cos(i * Math.PI / 180.0D) * radius);
+        glEnd();
+        glPopMatrix();
+        glEnable(GL_TEXTURE_2D);
+        glDisable(GL_LINE_SMOOTH);
+        glColor4f(1F, 1F, 1F, 1F);
+    }
+
 
     // fpsmaster
     public static void drawBoundingBox(final AxisAlignedBB aa) {
@@ -630,6 +648,103 @@ public class RenderUtil implements Access.InstanceAccess {
             return 0x70FFAA00;
         return 0x70FFFFFF;
     }
+
+    public static void circle(final float x, final float y, final float radius, final int fill) {
+        arc(x, y, 0.0f, 360.0f, radius, fill);
+    }
+
+    public static void circle(final double x, final double y, final double radius, final int fill) {
+        arc(x, y, 0.0f, 360.0f, radius, fill);
+    }
+
+    public static void arc(final float x, final float y, final float start, final float end, final float radius, final int color) {
+        arcEllipse(x, y, start, end, radius, radius, color);
+    }
+
+    public static void arc(final double x, final double y, final double start, final double end, final double radius, final int color) {
+        arcEllipse(x, y, start, end, radius, radius, color);
+    }
+
+    public static void arcEllipse(final float x, final float y, float start, float end, final float w, final float h, final int color) {
+        GlStateManager.color(0.0f, 0.0f, 0.0f);
+        GL11.glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
+        float temp;
+        if (start > end) {
+            temp = end;
+            end = start;
+            start = temp;
+        }
+        final float var11 = (color >> 24 & 0xFF) / 255.0f;
+        final float var12 = (color >> 16 & 0xFF) / 255.0f;
+        final float var13 = (color >> 8 & 0xFF) / 255.0f;
+        final float var14 = (color & 0xFF) / 255.0f;
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(var12, var13, var14, var11);
+        if (var11 > 0.5f) {
+            GL11.glEnable(2848);
+            GL11.glLineWidth(2.0f);
+            GL11.glBegin(3);
+            for (float i = end; i >= start; i -= 4.0f) {
+                final float ldx = (float) Math.cos(i * 3.141592653589793 / 180.0) * (w * 1.001f);
+                final float ldy = (float) Math.sin(i * 3.141592653589793 / 180.0) * (h * 1.001f);
+                GL11.glVertex2f(x + ldx, y + ldy);
+            }
+            GL11.glEnd();
+            GL11.glDisable(2848);
+        }
+        GL11.glBegin(6);
+        for (float i = end; i >= start; i -= 4.0f) {
+            final float ldx = (float) Math.cos(i * 3.141592653589793 / 180.0) * w;
+            final float ldy = (float) Math.sin(i * 3.141592653589793 / 180.0) * h;
+            GL11.glVertex2f(x + ldx, y + ldy);
+        }
+        GL11.glEnd();
+        enableTexture2D();
+        disableBlend();
+    }
+
+    public static void arcEllipse(final double x, final double y, double start, double end, final double w, final double h, final int color) {
+        GlStateManager.color(0.0f, 0.0f, 0.0f);
+        GL11.glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
+        double temp;
+        if (start > end) {
+            temp = end;
+            end = start;
+            start = temp;
+        }
+        final float var11 = (color >> 24 & 0xFF) / 255.0f;
+        final float var12 = (color >> 16 & 0xFF) / 255.0f;
+        final float var13 = (color >> 8 & 0xFF) / 255.0f;
+        final float var14 = (color & 0xFF) / 255.0f;
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(var12, var13, var14, var11);
+        if (var11 > 0.5f) {
+            GL11.glEnable(2848);
+            GL11.glLineWidth(2.0f);
+            GL11.glBegin(3);
+            for (double i = end; i >= start; i -= 4.0f) {
+                final double ldx = Math.cos(i * 3.141592653589793 / 180.0) * (w * 1.001f);
+                final double ldy = Math.sin(i * 3.141592653589793 / 180.0) * (h * 1.001f);
+                GL11.glVertex2f((float) (x + ldx), (float) (y + ldy));
+            }
+            GL11.glEnd();
+            GL11.glDisable(2848);
+        }
+        GL11.glBegin(6);
+        for (double i = end; i >= start; i -= 4.0f) {
+            final double ldx = Math.cos(i * 3.141592653589793 / 180.0) * w;
+            final double ldy = Math.sin(i * 3.141592653589793 / 180.0) * h;
+            GL11.glVertex2f((float) (x + ldx), (float) (y + ldy));
+        }
+        GL11.glEnd();
+        enableTexture2D();
+        disableBlend();
+    }
+
 
 
 }

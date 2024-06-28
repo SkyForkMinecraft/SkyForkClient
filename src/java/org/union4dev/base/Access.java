@@ -1,17 +1,17 @@
 package org.union4dev.base;
 
+import cn.chimera.command.CommandManager;
 import cn.langya.MemoryManager;
-import cn.langya.PacketManager;
 import cn.langya.RankManager;
 import cn.langya.TargetManager;
 import cn.langya.elements.ElementManager;
 import cn.langya.files.ConfigManager;
-import cn.langya.font.FontManager;
 import cn.langya.irc.IRCManager;
-import cn.langya.notification.NotificationManager;
 import cn.langya.verify.Verify;
+import cn.yapeteam.notification.NotificationManager;
 import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "3.0";
+    public static final String CLIENT_VERSION = "3.3";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -77,7 +77,8 @@ public final class Access {
 
      */
     @Getter
-    private final ClickGuiScreen clickGui;
+    @Setter
+    private GuiScreen clickGui;
 
     @Getter
     private final ElementManager elementManager;
@@ -85,6 +86,8 @@ public final class Access {
     private final IRCManager ircManager;
     @Getter
     private final NotificationManager notificationManager;
+    @Getter
+    private final CommandManager commandManager;
 
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
         SystemTray tray = SystemTray.getSystemTray();
@@ -107,7 +110,7 @@ public final class Access {
     public Access() {
         INSTANCE = this;
 
-        // Verify.verify();
+        Verify.verify();
 
         // Initialize managers
         ircManager = new IRCManager();
@@ -117,6 +120,7 @@ public final class Access {
         clickGui = new ClickGuiScreen();
         elementManager = new ElementManager();
         notificationManager = new NotificationManager();
+        commandManager = new CommandManager();
 
         // new ClientMain("38.12.30.171", 11451).start();
         // Init ViaMCP
@@ -139,7 +143,7 @@ public final class Access {
         EventManager.register(new RankManager());
         EventManager.register(new TargetManager());
         EventManager.register(new MemoryManager());
-        EventManager.register(new PacketManager());
+        // EventManager.register(new PacketManager());
 
         loaded = true;
     }

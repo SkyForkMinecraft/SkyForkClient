@@ -11,6 +11,8 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.util.List;
+
+import guichaguri.betterfps.BetterFpsHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
@@ -94,6 +96,7 @@ public class Main
         PropertyMap propertymap1 = gson.fromJson(parse.valueOf(profileProperties), PropertyMap.class);
         File file1 = parse.valueOf(gameDir);
         File file2 = parse.has(assetsDir) ? parse.valueOf(assetsDir) : new File(file1, "assets/");
+        BetterFpsHelper.MCDIR = file1;
         File file3 = parse.has(resourcePackDir) ? parse.valueOf(resourcePackDir) : new File(file1, "resourcepacks/");
         String s4 = parse.has(uuid) ? uuid.value(parse) : username.value(parse);
         String s5 = parse.has(assetIndex) ? assetIndex.value(parse) : null;

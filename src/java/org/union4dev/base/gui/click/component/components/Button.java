@@ -87,19 +87,15 @@ public class Button extends Component {
                     HUD.color1.getValue().darker(), HUD.color1.getValue().darker());
 
         } else {
-            GaussianBlur.startBlur();
-            Gui.drawRect(parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset,
-                    new Color(0,0,0,60).getRGB());
-            GaussianBlur.endBlur(25,2);
             Gui.drawRect(parent.getX(), this.parent.getY() + this.offset, parent.getX() + parent.getWidth(), this.parent.getY() + 12 + this.offset,
                     new Color(0,0,0,60).getRGB());
         }
 
         GL11.glTranslated(0,end ? -2 : 0,0);
         if (Access.getInstance().getModuleManager().isEnabled(this.mod)) {
-            FontManager.MB18.drawStringWithShadow(Access.getInstance().getModuleManager().getName(this.mod), (parent.getX() + 2) , (parent.getY() + offset + 2)  , -1);
+            FontManager.MB18.drawStringWithShadow(Access.getInstance().getModuleManager().format(this.mod), (parent.getX() + 2) , (parent.getY() + offset + 2)  , -1);
         } else {
-            FontManager.M18.drawStringWithShadow(Access.getInstance().getModuleManager().getName(this.mod), (parent.getX() + 2) , (parent.getY() + offset + 2)  , -1);
+            FontManager.M18.drawStringWithShadow(Access.getInstance().getModuleManager().format(this.mod), (parent.getX() + 2) , (parent.getY() + offset + 2)  , -1);
         }
 
         if (this.subcomponents.size() > 2) FontManager.M18.drawStringWithShadow(this.open ? "-" : "+", (parent.getX() + parent.getWidth() - 10) , (parent.getY() + offset + 2)  , -1);

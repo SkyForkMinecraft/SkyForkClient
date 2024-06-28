@@ -4,7 +4,7 @@ import cn.cedo.misc.ColorUtil;
 import cn.cedo.render.RenderUtil;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.opengl.GL11;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
@@ -36,15 +36,15 @@ public class AttackCircle implements Access.InstanceAccess {
 
         if (targetCircle.getValue()) {
             for (Entity entity : mc.theWorld.loadedEntityList) {
-                if (entity != mc.thePlayer && entity instanceof EntityLivingBase && ((EntityLivingBase) entity).getHealth() > 0 && !entity.isDead && mc.thePlayer.getDistanceToEntity(entity) < targetMaxDistance.getValue()) {
-                    drawCircle(range, (EntityLivingBase) entity);
+                if (entity != mc.thePlayer && entity instanceof EntityPlayer && ((EntityPlayer) entity).getHealth() > 0 && !entity.isDead && mc.thePlayer.getDistanceToEntity(entity) < targetMaxDistance.getValue()) {
+                    drawCircle(range, (EntityPlayer) entity);
                 }
             }
         }
 
     }
 
-    private void drawCircle(float range,EntityLivingBase target) {
+    private void drawCircle(float range,EntityPlayer target) {
         if (target.isDead || target.getHealth() <= 0 || target.getDistanceToEntity(mc.thePlayer) > targetMaxDistance.getValue()) return;
         GL11.glPushMatrix();
         GL11.glTranslated(

@@ -3,12 +3,16 @@ package org.union4dev.base.module;
 import cn.cedo.render.targethud.TargetHUDMod;
 import cn.dxg.CheaterDetector;
 import cn.langya.modules.render.MotionBlur;
+import cn.langya.verify.User;
+import cn.langya.verify.Verify;
 import cn.superskidder.BlockOverlay;
 import cn.langya.elements.impls.*;
 import cn.langya.modules.client.*;
 import cn.langya.modules.misc.*;
 import cn.superskidder.modules.OldAnimation;
 import cn.superskidder.modules.TNTTimer;
+import cn.yapeteam.cloudmusic.module.MusicPlayerOverlay;
+import net.erouax.combodisplay.Combo;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.*;
@@ -62,6 +66,15 @@ public final class ModuleManager {
         register(TNTTimer.class,"TNT时间",Category.Render);
         register(CPSInfo.class,"CPS显示",Category.Render);
         register(MotionBlur.class,"动态模糊",Category.Render);
+        // register(MusicPlayerOverlay.class,"音乐歌词",Category.Render);
+        register(AttackCircle.class,"攻击距离光环",Category.Render);
+        register(TargetCircle.class,"目标光环",Category.Render);
+        register(Combo.class,"连击显示",Category.Render);
+
+        if (Verify.user == User.User) register(KillAura.class,"杀戮光环",Category.Render);
+        if (Verify.user == User.User) register(SafeWalk.class,"自动蹲搭",Category.Render);
+        if (Verify.user == User.User) register(FastPlace.class,"快速放置",Category.Render);
+        if (Verify.user == User.User) register(Blink.class,"瞬移",Category.Render);
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
@@ -69,10 +82,8 @@ public final class ModuleManager {
         register(CustomWorldTime.class, "自定义世界时间", Category.Misc);
         register(AttackParticles.class, "自定义攻击粒子", Category.Misc);
         register(KillEffectsMod.class,"击杀特效",Category.Misc);
-        register(CheaterDetector.class,"黑客检测",Category.Misc);
+        register(CheaterDetector.class,"外挂检测",Category.Misc);
         register(Fulbright.class,"夜视",Category.Misc);
-        register(AttackCircle.class,"攻击距离光环",Category.Misc);
-
         // Register Client
         register(ClientSettings.class,"客户端设置",Category.Render);
         register(ClickGui.class,"功能管理页面",Category.Render);
@@ -375,6 +386,7 @@ public final class ModuleManager {
     public void setEnable(Class<?> module, boolean state) {
         this.modules.get(module).setEnable(state);
     }
+
 
     /**
      * Set a module visible status

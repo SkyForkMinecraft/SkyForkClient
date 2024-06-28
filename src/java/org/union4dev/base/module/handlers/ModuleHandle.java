@@ -1,8 +1,12 @@
 package org.union4dev.base.module.handlers;
 
+import cn.yapeteam.notification.Notification;
+import cn.yapeteam.notification.NotificationType;
+import cn.yapeteam.util.animation2.Easing;
 import lombok.Getter;
 import lombok.Setter;
 import org.lwjgl.input.Keyboard;
+import org.union4dev.base.Access;
 import org.union4dev.base.annotations.module.Disable;
 import org.union4dev.base.annotations.module.Enable;
 import org.union4dev.base.events.EventManager;
@@ -23,6 +27,9 @@ public final class ModuleHandle {
     private final Category category;
 
     private final Object object;
+
+    public float optionAnim;
+    public float optionAnimNow;
 
     @Setter
     @Getter
@@ -59,9 +66,11 @@ public final class ModuleHandle {
         if (state) {
             EventManager.register(object);
             invokeMethodsAnnotationPresent(Enable.class);
+            if (Access.getInstance().getNotificationManager()!= null && this.getName() != "功能管理页面") Access.getInstance().getNotificationManager().post(name + " 已开启",NotificationType.SUCCESS);
         } else {
             EventManager.unregister(object);
             invokeMethodsAnnotationPresent(Disable.class);
+            if (Access.getInstance().getNotificationManager()!= null  && this.getName() != "功能管理页面") Access.getInstance().getNotificationManager().post(name + " 已关闭",NotificationType.FAILED);
         }
     }
 

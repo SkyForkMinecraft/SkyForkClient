@@ -11,6 +11,7 @@ import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import de.florianmichael.viamcp.fixes.AttackOrder;
+import guichaguri.betterfps.BetterFpsClient;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -223,7 +224,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     /**
      * When you place a block, it's set to 6, decremented once per tick, when it's 0, you can place another block.
      */
-    private int rightClickDelayTimer;
+    public int rightClickDelayTimer;
     private String serverName;
     private int serverPort;
 
@@ -525,6 +526,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         new Access();
 
         this.renderGlobal.makeEntityOutlineShader();
+
+        BetterFpsClient.start(this);
     }
 
     private void registerMetadataSerializers()
