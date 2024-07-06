@@ -1,17 +1,12 @@
 package org.union4dev.base.module;
-
-import cn.cedo.render.targethud.TargetHUDMod;
 import cn.dxg.CheaterDetector;
-import cn.langya.modules.render.MotionBlur;
-import cn.langya.verify.User;
-import cn.langya.verify.Verify;
+import cn.langya.modules.render.*;
 import cn.superskidder.BlockOverlay;
 import cn.langya.elements.impls.*;
 import cn.langya.modules.client.*;
 import cn.langya.modules.misc.*;
 import cn.superskidder.modules.OldAnimation;
 import cn.superskidder.modules.TNTTimer;
-import cn.yapeteam.cloudmusic.module.MusicPlayerOverlay;
 import net.erouax.combodisplay.Combo;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
@@ -70,12 +65,6 @@ public final class ModuleManager {
         register(AttackCircle.class,"攻击距离光环",Category.Render);
         register(TargetCircle.class,"目标光环",Category.Render);
         register(Combo.class,"连击显示",Category.Render);
-
-        if (Verify.user == User.User) register(KillAura.class,"杀戮光环",Category.Render);
-        if (Verify.user == User.User) register(SafeWalk.class,"自动蹲搭",Category.Render);
-        if (Verify.user == User.User) register(FastPlace.class,"快速放置",Category.Render);
-        if (Verify.user == User.User) register(Blink.class,"瞬移",Category.Render);
-
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
@@ -397,4 +386,5 @@ public final class ModuleManager {
     public void setVisible(Class<?> module, boolean state) {
         this.modules.get(module).setVisible(state);
     }
+
 }

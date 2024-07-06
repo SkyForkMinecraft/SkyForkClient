@@ -16,5 +16,7 @@
     <orderEntry type="library" name="Ambien-1.5.0-lib" level="project" />
     <orderEntry type="library" name="IRCTest" level="project" />
     <orderEntry type="library" name="javacv-platform-1.4.4" level="project" />
+    <orderEntry type="library" name="phantomshield-inline" level="project" />
+    <orderEntry type="library" name="phantomshield-annotations" level="project" />
   </component>
 </module>

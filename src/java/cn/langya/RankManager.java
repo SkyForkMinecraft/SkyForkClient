@@ -1,7 +1,6 @@
 package cn.langya;
 
 import cn.langya.event.TextEvent;
-import com.yumegod.obfuscation.Native;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
 
@@ -13,7 +12,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2024/6/5 下午9:25
  */
 
-@Native
 public class RankManager {
     public static final String PRIMARY_COLOR = EnumChatFormatting.RED.toString();
     public static final String SECONDARY_COLOR = EnumChatFormatting.GRAY.toString();

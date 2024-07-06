@@ -85,4 +85,9 @@ public class MotionUpdateEvent extends Event.EventCancellable {
     public boolean isRotate() {
         return rotate;
     }
+
+    public void setRotations(float yaw, float pitch) {
+        this.yaw = yaw;
+        this.pitch = pitch;
+    }
 }

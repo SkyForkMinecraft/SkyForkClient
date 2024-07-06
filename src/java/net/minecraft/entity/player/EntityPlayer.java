@@ -1,5 +1,7 @@
 package net.minecraft.entity.player;
 
+import cn.cedo.KeepSprintEvent;
+import cn.dxg.RotationUtil;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
@@ -74,6 +76,7 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
+import org.union4dev.base.events.EventManager;
 
 @SuppressWarnings("incomplete-switch")
 public abstract class EntityPlayer extends EntityLivingBase
@@ -161,7 +164,7 @@ public abstract class EntityPlayer extends EntityLivingBase
      */
     private int itemInUseCount;
     protected float speedOnGround = 0.1F;
-    protected float speedInAir = 0.02F;
+    public float speedInAir = 0.02F;
     private int lastXPSound;
 
     /** The player's unique game profile */
@@ -253,6 +256,15 @@ public abstract class EntityPlayer extends EntityLivingBase
         {
             this.setEating(false);
         }
+    }
+
+    public float getClosestDistanceToEntity(final Entity target) {
+        final Vec3 eyes = this.getPositionEyes(1.0f);
+        final Vec3 pos = RotationUtil.getNearestPointBB(eyes, target.getEntityBoundingBox());
+        final double xDist = Math.abs(pos.xCoord - eyes.xCoord);
+        final double yDist = Math.abs(pos.yCoord - eyes.yCoord);
+        final double zDist = Math.abs(pos.zCoord - eyes.zCoord);
+        return (float)Math.sqrt(Math.pow(xDist, 2.0) + Math.pow(yDist, 2.0) + Math.pow(zDist, 2.0));
     }
 
     public boolean isBlocking()
@@ -1354,12 +1366,16 @@ public abstract class EntityPlayer extends EntityLivingBase
 
                     if (flag2)
                     {
-                        if (i > 0)
-                        {
-                            targetEntity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
-                            this.motionX *= 0.6D;
-                            this.motionZ *= 0.6D;
-                            this.setSprinting(false);
+                        if (i > 0) {
+                            targetEntity.addVelocity(-MathHelper.sin(this.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F, 0.1D, MathHelper.cos(this.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F);
+
+                            KeepSprintEvent keepSprintEvent = new KeepSprintEvent();
+                            EventManager.call(keepSprintEvent);
+                            if (!keepSprintEvent.isCancelled()) {
+                                this.motionX *= 0.6D;
+                                this.motionZ *= 0.6D;
+                                this.setSprinting(false);
+                            }
                         }
 
                         if (targetEntity instanceof EntityPlayerMP && targetEntity.velocityChanged)

@@ -250,6 +250,7 @@ public abstract class EntityLivingBase extends Entity
      */
     public void onEntityUpdate()
     {
+        this.prevRotationPitchHead = this.rotationPitchHead;
         this.prevSwingProgress = this.swingProgress;
         super.onEntityUpdate();
         this.worldObj.theProfiler.startSection("livingEntityBaseTick");
@@ -1564,6 +1565,9 @@ public abstract class EntityLivingBase extends Entity
             final JumpEvent event = new JumpEvent(motionY, this.rotationYaw);
             EventManager.call(event);
             motionY = event.getJumpMotion();
+
+            this.movementYaw = event.getYaw();
+            this.velocityYaw = event.getYaw();
 
             if (event.isCancelled()) {
                 return;

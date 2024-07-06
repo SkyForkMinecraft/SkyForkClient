@@ -1,5 +1,6 @@
 package net.minecraft.client.entity;
 
+import cn.dxg.EventMotion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -24,6 +25,7 @@ import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.*;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
+import org.lwjgl.util.vector.Vector2f;
 import org.union4dev.base.Access;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.misc.ChatEvent;
@@ -71,7 +73,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     private boolean serverSneakState;
 
     /** the last sprinting state sent to the server */
-    private boolean serverSprintState;
+    public static boolean serverSprintState;
 
     /**
      * Reset to 0 every time position is sent to the server, used to send periodic updates every 20 ticks even when the
@@ -104,6 +106,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     /** The amount of time an entity has been in a Portal the previous tick */
     public float prevTimeInPortal;
+
+    public int onGroundTicks;
+    public int offGroundTicks;
 
     public EntityPlayerSP(Minecraft mcIn, World worldIn, NetHandlerPlayClient netHandler, StatFileWriter statFile)
     {
@@ -147,6 +152,8 @@ public class EntityPlayerSP extends AbstractClientPlayer
      */
     public void onUpdate()
     {
+        this.prevRenderPitchHead = this.renderPitchHead;
+        this.renderPitchHead = this.rotationPitch;
         EventManager.call(new UpdateEvent());
         if (this.worldObj.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ)))
         {
@@ -173,10 +180,22 @@ public class EntityPlayerSP extends AbstractClientPlayer
      * called every tick when the player is on foot. Performs all the things that normally happen during movement.
      */
     public void onUpdateWalkingPlayer() {
+        if (this.onGround) {
+            this.offGroundTicks = 0;
+            ++this.onGroundTicks;
+        }
+        else {
+            this.onGroundTicks = 0;
+            ++this.offGroundTicks;
+        }
+
         MotionUpdateEvent pre = new MotionUpdateEvent(this.rotationYaw, this.rotationPitch, this.posX, this.getEntityBoundingBox().minY, this.posZ, this.onGround);
         EventManager.call(pre);
         boolean flag = this.isSprinting();
 
+
+        final EventMotion PRE = new EventMotion(this.rotationYaw, this.rotationPitch, this.lastReportedYaw, this.lastReportedPitch, this.posX, this.posY, this.posZ, this.onGround);
+        EventManager.call(PRE);
         if (flag != this.serverSprintState) {
             if (flag) {
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SPRINTING));
@@ -244,6 +263,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 this.lastReportedYaw = yaw;
                 this.lastReportedPitch = pitch;
             }
+
+            final EventMotion POST = new EventMotion(yaw, pitch);
+            EventManager.call(POST);
 
             MotionUpdateEvent post = new MotionUpdateEvent();
             EventManager.call(post);
@@ -683,6 +705,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
             this.prevRenderArmPitch = this.renderArmPitch;
             this.renderArmPitch = (float)((double)this.renderArmPitch + (double)(this.rotationPitch - this.renderArmPitch) * 0.5D);
             this.renderArmYaw = (float)((double)this.renderArmYaw + (double)(this.rotationYaw - this.renderArmYaw) * 0.5D);
+            this.rotationPitchHead = this.rotationPitch;
         }
     }
 
@@ -892,5 +915,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
             this.capabilities.isFlying = false;
             this.sendPlayerAbilities();
         }
+    }
+
+    public Vector2f getPreviousRotation() {
+        return new Vector2f(this.lastReportedYaw, this.lastReportedPitch);
     }
 }

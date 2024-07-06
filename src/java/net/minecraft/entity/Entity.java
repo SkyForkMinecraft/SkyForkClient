@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.Callable;
 
 import cn.cedo.PlayerMoveUpdateEvent;
+import cn.dxg.Vector3d;
 import de.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
@@ -105,7 +106,7 @@ public abstract class Entity implements ICommandSender
     public float prevRotationPitch;
 
     /** Axis aligned bounding box. */
-    private AxisAlignedBB boundingBox;
+    public AxisAlignedBB boundingBox;
     public boolean onGround;
 
     /**
@@ -247,6 +248,14 @@ public abstract class Entity implements ICommandSender
 
     /** The command result statistics for this Entity. */
     private final CommandResultStats cmdResultStats;
+
+    public float movementYaw;
+    public float velocityYaw;
+    public float lastMovementYaw;
+    public float renderPitchHead;
+    public float prevRenderPitchHead;
+    public float rotationPitchHead;
+    public float prevRotationPitchHead;
 
     public int getEntityId()
     {
@@ -2836,4 +2845,29 @@ public abstract class Entity implements ICommandSender
 
         EnchantmentHelper.applyArthropodEnchantments(entityLivingBaseIn, entityIn);
     }
+
+    public final Vec3 getVectorForRotationPublic(float pitch, float yaw)
+    {
+        float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
+        float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
+        float f2 = -MathHelper.cos(-pitch * 0.017453292F);
+        float f3 = MathHelper.sin(-pitch * 0.017453292F);
+        return new Vec3((double)(f1 * f2), (double)f3, (double)(f * f2));
+    }
+
+    public Vector3d getCustomPositionVector() {
+        return new Vector3d(this.posX, this.posY, this.posZ);
+    }
+
+    public Vec3 getLookCustom(float yaw, float pitch) {
+        return this.getVectorForRotation(pitch, yaw);
+    }
+
+    public MovingObjectPosition rayTraceCustom(double blockReachDistance, float yaw, float pitch) {
+        Vec3 vec3 = this.getPositionEyes(1.0f);
+        Vec3 vec31 = this.getLookCustom(yaw, pitch);
+        Vec3 vec32 = vec3.addVector(vec31.xCoord * blockReachDistance, vec31.yCoord * blockReachDistance, vec31.zCoord * blockReachDistance);
+        return this.worldObj.rayTraceBlocks(vec3, vec32, false, false, true);
+    }
+
 }

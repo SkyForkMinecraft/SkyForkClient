@@ -178,12 +178,12 @@ public class GuiChat extends GuiScreen
                     this.element = null;
                 }
             }
+        }
 
-            IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
+        IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
-            if (this.handleComponentClick(ichatcomponent)) {
-                return;
-            }
+        if (this.handleComponentClick(ichatcomponent)) {
+            return;
         }
 
         this.inputField.mouseClicked(mouseX, mouseY, mouseButton);

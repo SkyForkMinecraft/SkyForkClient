@@ -4,23 +4,19 @@ import cn.cedo.shader.RoundedUtil;
 import cn.langya.elements.Element;
 import cn.langya.font.FontDrawer;
 import cn.langya.font.FontManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.S19PacketEntityStatus;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.events.misc.AttackEvent;
 import org.union4dev.base.events.network.PacketReceiveEvent;
-import org.union4dev.base.events.render.Render2DEvent;
 import org.union4dev.base.events.update.TickEvent;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.NumberValue;
-import superblaubeere27.CPSCounter;
 
 import java.awt.*;
 
 public class Combo extends Element implements Access.InstanceAccess {
-    private final Minecraft mc = Minecraft.getMinecraft();
     private long sentAttackTime;
     private int lastAttackId;
     private int currentCombo;

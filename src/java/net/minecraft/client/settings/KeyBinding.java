@@ -148,4 +148,8 @@ public class KeyBinding implements Comparable<KeyBinding>
 
         return i;
     }
+
+    public void setPressed(boolean keyDown) {
+        this.pressed = keyDown;
+    }
 }

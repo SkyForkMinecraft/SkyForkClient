@@ -1646,6 +1646,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      * Runs the current tick.
      */
     public void runTick() throws IOException {
+        if (this.thePlayer != null) {
+            this.thePlayer.lastMovementYaw = this.thePlayer.movementYaw;
+            final EntityPlayerSP thePlayer = this.thePlayer;
+            final EntityPlayerSP thePlayer2 = this.thePlayer;
+            final float rotationYaw = this.thePlayer.rotationYaw;
+            thePlayer2.velocityYaw = rotationYaw;
+            thePlayer.movementYaw = rotationYaw;
+        }
         EventManager.call(new TickEvent());
 
         if (this.rightClickDelayTimer > 0) {

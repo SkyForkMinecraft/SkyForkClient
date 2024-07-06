@@ -1,6 +1,7 @@
 package org.union4dev.base;
 
 import cn.chimera.command.CommandManager;
+import cn.dxg.RotationUtil;
 import cn.langya.MemoryManager;
 import cn.langya.RankManager;
 import cn.langya.TargetManager;
@@ -16,6 +17,7 @@ import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.util.HttpUtil;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +41,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "3.3";
+    public static final String CLIENT_VERSION = "3.8";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -110,7 +112,7 @@ public final class Access {
     public Access() {
         INSTANCE = this;
 
-        Verify.verify();
+//        Verify.verify();
 
         // Initialize managers
         ircManager = new IRCManager();
@@ -143,6 +145,7 @@ public final class Access {
         EventManager.register(new RankManager());
         EventManager.register(new TargetManager());
         EventManager.register(new MemoryManager());
+        EventManager.register(new RotationUtil(0,0));
         // EventManager.register(new PacketManager());
 
         loaded = true;

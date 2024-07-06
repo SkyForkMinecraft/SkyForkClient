@@ -17,7 +17,7 @@ public class ToggleCommand implements Command {
                 ChatUtil.info("The module with the name " + args[1] + " does not exist.");
                 return false;
             }
-            Access.getInstance().getModuleManager().setEnable(m,Access.getInstance().getModuleManager().isEnabled(m));
+            Access.getInstance().getModuleManager().setEnable(m,!Access.getInstance().getModuleManager().isEnabled(m));
             return true;
         }
         return false;

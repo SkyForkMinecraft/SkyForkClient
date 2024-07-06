@@ -78,6 +78,7 @@ import org.union4dev.base.Access;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.render.HurtCamEvent;
 import org.union4dev.base.events.render.Render3DEvent;
+import org.union4dev.base.gui.click.ClickGuiScreen;
 
 import java.io.IOException;
 import java.nio.FloatBuffer;

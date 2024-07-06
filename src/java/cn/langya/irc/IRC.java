@@ -1,6 +1,5 @@
 package cn.langya.irc;
 
-import com.yumegod.obfuscation.Native;
 import com.yumegod.simpleirc.IRCClient;
 import com.yumegod.simpleirc.IRCEvent;
 import org.union4dev.base.Access;
@@ -10,7 +9,6 @@ import org.union4dev.base.events.misc.ChatEvent;
 import org.union4dev.base.util.ChatUtil;
 
 
-@Native
 @Startup
 public class IRC implements Access.InstanceAccess {
 

@@ -1,6 +1,5 @@
 package cn.langya.verify;
 
-import com.yumegod.obfuscation.Native;
 import lombok.SneakyThrows;
 import unknow.WebUtils;
 
@@ -16,7 +15,6 @@ import static org.union4dev.base.Access.*;
  * @since 2024/5/6 20:10
  */
 
-@Native
 public class Verify {
 
     public static User user = User.Free;
