@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.server.S14PacketEntity;
 import net.minecraft.network.play.server.S19PacketEntityStatus;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.Access;
@@ -81,7 +82,7 @@ public class CheaterDetector implements Access.InstanceAccess {
             return;
         }
         String prefix = EnumChatFormatting.GRAY + "[" + EnumChatFormatting.AQUA + "黑客检测" + EnumChatFormatting.GRAY + "] " + EnumChatFormatting.RESET + EnumChatFormatting.GRAY + player.getName() + EnumChatFormatting.WHITE + " failed ";
-        if (player.isUsingItem() && (player.posX - player.lastTickPosX > 0.2 || player.posZ - player.lastTickPosZ > 0.2)) {
+        if (player.isUsingItem() && (player.posX - player.lastTickPosX > 0.2 || player.posZ - player.lastTickPosZ > 0.2) && !player.isPotionActive(Potion.moveSpeed)) {
             mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText((prefix + EnumChatFormatting.AQUA + "无减速 (Prediction)" + EnumChatFormatting.WHITE + " (vl:" + vl + ".0)")));
             Access.getInstance().getNotificationManager().post(String.format("%s 是无减速外挂!!",player.getDisplayName().getFormattedText()), NotificationType.WARNING);
             ++vl;

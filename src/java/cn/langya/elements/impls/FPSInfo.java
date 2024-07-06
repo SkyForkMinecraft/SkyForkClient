@@ -4,6 +4,7 @@ import cn.langya.elements.Element;
 import cn.langya.font.FontManager;
 import net.minecraft.client.Minecraft;
 import org.union4dev.base.Access;
+import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
 import cn.cedo.misc.ColorUtil;
@@ -17,6 +18,8 @@ public class FPSInfo extends Element {
     private static final NumberValue customColorRed = new NumberValue("自定义红色", 0, 0, 255, 5);
     private static final NumberValue customColorGreen = new NumberValue("自定义绿色", 0, 0, 255, 5);
     private static final NumberValue customColorBlue = new NumberValue("自定义蓝色", 0, 0, 255, 5);
+    private final BooleanValue colorText = new BooleanValue("彩虹色文字",true);
+
     public FPSInfo() {
         super(20, 20);
     }
@@ -42,7 +45,11 @@ public class FPSInfo extends Element {
             case "彩虹":
                 c = new Color(ColorUtil.getColor(-(1 + 5 * 1.7f), 0.7f, 1));
         }
-        FontManager.M18.drawStringWithShadow(text, x,y, c.getRGB());
+        if (colorText.getValue()) {
+            FontManager.M18.drawGradientStringWithShadow(text, x,y);
+        } else {
+            FontManager.M18.drawStringWithShadow(text, x,y, c.getRGB());
+        }
         setWidth(FontManager.M18.getStringWidth(text));
         setHeight(FontManager.M18.getHeight());
     }
