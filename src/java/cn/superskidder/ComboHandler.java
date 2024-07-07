@@ -11,17 +11,14 @@ import org.union4dev.base.events.update.TickEvent;
  * @since 2024/07/07/下午1:39
  */
 public class ComboHandler implements Access.InstanceAccess {
-    private static Entity target;
+    public static Entity target;
     public static int combo = 0;
 
     @EventTarget
     public void onTick(TickEvent e) {
         if (mc.thePlayer == null) return;
 
-        if (mc.thePlayer.hurtTime == 1 ||
-                (target != null && mc.thePlayer.getDistanceToEntity(
-                        target
-                ) > 5)) {
+        if (mc.thePlayer.hurtTime == 1 || (target != null && mc.thePlayer.getDistanceToEntity(target) > 5)) {
             combo = 0;
         }
 

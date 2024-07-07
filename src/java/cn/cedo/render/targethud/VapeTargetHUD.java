@@ -43,10 +43,10 @@ public class VapeTargetHUD extends TargetHUD {
             GlStateManager.disableBlend();
         } else {
             RoundedUtil.drawRound(x + 4, y + 5.5f, 29, 29, 1, ColorUtil.applyOpacity(new Color(30, 30, 30), alpha));
-            FontManager.MB30.drawCenteredStringWithShadow("?", x + 18.5f, y + 20 - FontManager.MB30.getHeight() / 2f, ColorUtil.applyOpacity(-1, alpha));
+            FontManager.M30.drawCenteredStringWithShadow("?", x + 18.5f, y + 20 - FontManager.M30.getHeight() / 2f, ColorUtil.applyOpacity(-1, alpha));
         }
 
-        FontManager.MB14.drawString(target.getName(), x + 36.5f, y + 5.5f, ColorUtil.applyOpacity(-1, alpha)); // y + 1.2f
+        FontManager.M14.drawString(target.getName(), x + 36.5f, y + 5.5f, ColorUtil.applyOpacity(-1, alpha)); // y + 1.2f
 
         float targetHealth = target.getHealth();
         float targetMaxHealth = target.getMaxHealth();

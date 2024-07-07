@@ -1,4 +1,5 @@
 package org.union4dev.base.module;
+import cn.cedo.render.targethud.TargetHUDMod;
 import cn.dxg.CheaterDetector;
 import cn.langya.modules.render.*;
 import cn.superskidder.BlockOverlay;
@@ -65,6 +66,7 @@ public final class ModuleManager {
         register(AttackCircle.class,"攻击距离光环",Category.Render);
         register(TargetCircle.class,"目标光环",Category.Render);
         register(Combo.class,"连击显示",Category.Render);
+        register(TargetHUDMod.class,"目标显示",Category.Render);
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
@@ -73,6 +75,7 @@ public final class ModuleManager {
         register(KillEffectsMod.class,"击杀特效",Category.Misc);
         register(CheaterDetector.class,"外挂检测",Category.Misc);
         register(Fulbright.class,"夜视",Category.Misc);
+
         // Register Client
         register(ClientSettings.class,"客户端设置",Category.Render);
         register(ClickGui.class,"功能管理页面",Category.Render);
@@ -83,7 +86,7 @@ public final class ModuleManager {
         register(DragonWings.class,"龙翼",Category.Client);
         register(OldAnimation.class,"自定义动画",Category.Client);
         register(ItemPhysic.class,"物品物理掉落",Category.Client);
-        register(cn.langya.irc.IRC.class,"客户端聊天",Category.Client);
+        register(NoHitClick.class,"无打击延迟",Category.Client);
 
     }
 

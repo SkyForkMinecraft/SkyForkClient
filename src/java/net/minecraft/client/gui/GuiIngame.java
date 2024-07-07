@@ -38,6 +38,7 @@ import net.minecraft.world.border.WorldBorder;
 import net.optifine.CustomColors;
 import org.union4dev.base.Access;
 import org.union4dev.base.events.EventManager;
+import org.union4dev.base.events.render.PreRenderEvent;
 import org.union4dev.base.events.render.Render2DEvent;
 import org.union4dev.base.module.render.HUD;
 
@@ -169,10 +170,13 @@ public class GuiIngame extends Gui
             this.renderTooltip(scaledresolution, partialTicks);
         }
 
+        PreRenderEvent event = new PreRenderEvent(scaledresolution, partialTicks);
+        EventManager.call(event);
+
         HUD.blurScreen();
 
-        Render2DEvent event = new Render2DEvent(scaledresolution, partialTicks);
-        EventManager.call(event);
+        Render2DEvent event1 = new Render2DEvent(scaledresolution, partialTicks);
+        EventManager.call(event1);
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(icons);

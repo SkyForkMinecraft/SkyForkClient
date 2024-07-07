@@ -3,13 +3,14 @@ package cn.cedo.render.targethud;
 import cn.cedo.animations.Animation;
 import cn.cedo.animations.Direction;
 import cn.cedo.animations.impl.DecelerateAnimation;
+import cn.cedo.drag.Dragging;
 import cn.cedo.misc.ColorUtil;
 import cn.cedo.misc.GradientColorWheel;
 import cn.cedo.misc.Pair;
 import cn.cedo.render.ESPUtil;
+import cn.imflowow.LoadWorldEvent;
 import cn.langya.RenderUtil;
 import cn.langya.TargetManager;
-import cn.langya.elements.Element;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,6 +18,7 @@ import org.lwjgl.util.vector.Vector4f;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.Enable;
+import org.union4dev.base.events.render.PreRenderEvent;
 import org.union4dev.base.events.render.Render2DEvent;
 import org.union4dev.base.events.render.Render3DEvent;
 import org.union4dev.base.events.render.ShaderEvent;
@@ -25,27 +27,29 @@ import org.union4dev.base.value.impl.ComboValue;
 
 import java.awt.*;
 
-public class TargetHUDMod extends Element {
+public class TargetHUDMod implements Access.InstanceAccess {
 
-    private final ComboValue targetHud = new ComboValue("Mode", "Tenacity", "Tenacity", "Old Tenacity", "Rise", "Exhibition", "Auto-Dox", "Akrien", "Astolfo", "Novoline", "Vape");
+    private final ComboValue targetHud = new ComboValue("Mode", "Old Tenacity", "Old Tenacity", "Exhibition","Akrien", "Astolfo", "Novoline", "Vape");
     private final BooleanValue trackTarget = new BooleanValue("Track Target", false);
     private final ComboValue trackingMode = new ComboValue("Tracking Mode", "Middle", "Middle", "Top", "Left", "Right");
-    private final BooleanValue glow = new BooleanValue("Glow", false);
 
     private final GradientColorWheel colorWheel = new GradientColorWheel();
 
     public TargetHUDMod() {
-        super(250,250);
-        setWH(300,300);
         TargetHUD.init();
     }
 
     private EntityLivingBase target;
+    private final Dragging drag = Access.getInstance().getDragManager().createDrag("targetHud", 300, 300);
 
     private final Animation openAnimation = new DecelerateAnimation(175, .5);
-    
+
     private Vector4f targetVector;
 
+    @EventTarget
+    public void onWorldLoad(LoadWorldEvent event) {
+        openAnimation.setDirection(Direction.BACKWARDS);
+    }
 
     @EventTarget
     public void onRender3DEvent(Render3DEvent event) {
@@ -63,24 +67,17 @@ public class TargetHUDMod extends Element {
     }
 
     @EventTarget
-    public void onPreRenderEvent(Render2DEvent event) {
-        if (!Access.getInstance().getModuleManager().isEnabled(this.getClass())) {
-            setWidth(0);
-            setHeight(0);
-            return;
-        }
+    public void onPreRenderEvent(PreRenderEvent event) {
         TargetHUD currentTargetHUD = TargetHUD.get(targetHud.getValue());
-        setWidth(currentTargetHUD.getWidth());
-        setHeight(currentTargetHUD.getHeight());
-
+        drag.setWidth(currentTargetHUD.getWidth());
+        drag.setHeight(currentTargetHUD.getHeight());
 
         if (!(mc.currentScreen instanceof GuiChat)) {
 
             if (target == null && TargetManager.target != null) {
                 target = TargetManager.target;
                 openAnimation.setDirection(Direction.FORWARDS);
-
-
+                
             } else if (TargetManager.target == null || target != TargetManager.target) {
                 openAnimation.setDirection(Direction.BACKWARDS);
             }
@@ -104,12 +101,7 @@ public class TargetHUDMod extends Element {
 
     @EventTarget
     public void onRender2DEvent(Render2DEvent e) {
-        if (!Access.getInstance().getModuleManager().isEnabled(this.getClass())) {
-            setWidth(0);
-            setHeight(0);
-            return;
-        }
-        this.setSuffix(targetHud.getValue(),TargetHUDMod.class);
+        this.setSuffix(targetHud.getValue(),this);
         boolean tracking = trackTarget.getValue() && targetVector != null && target != mc.thePlayer;
 
         TargetHUD currentTargetHUD = TargetHUD.get(targetHud.getValue());
@@ -118,7 +110,7 @@ public class TargetHUDMod extends Element {
 
 
             float trackScale = 1;
-            
+            float x = drag.getXPos(), y = drag.getYPos();
             if (tracking) {
                 float newWidth = (targetVector.getZ() - targetVector.getX()) * 1.4f;
                 trackScale = Math.min(1, newWidth / currentTargetHUD.getWidth());
@@ -129,7 +121,7 @@ public class TargetHUDMod extends Element {
             }
 
 
-            RenderUtil.scaleStart(x + width / 2f, y + height / 2f,
+            RenderUtil.scaleStart(x + drag.getWidth() / 2f, y + drag.getHeight() / 2f,
                     (float) (.5 + openAnimation.getOutput().floatValue()) * trackScale);
             float alpha = Math.min(1, openAnimation.getOutput().floatValue() * 2);
 
@@ -143,11 +135,7 @@ public class TargetHUDMod extends Element {
 
     @EventTarget
     public void onShaderEvent(ShaderEvent e) {
-        if (!Access.getInstance().getModuleManager().isEnabled(this.getClass())) {
-            setWidth(0);
-            setHeight(0);
-            return;
-        }
+        float x = drag.getXPos(), y = drag.getYPos();
         float trackScale = 1;
         TargetHUD currentTargetHUD = TargetHUD.get(targetHud.getValue());
         if (trackTarget.getValue() && targetVector != null && target != mc.thePlayer) {
@@ -162,11 +150,12 @@ public class TargetHUDMod extends Element {
 
         if (target != null) {
 
-            RenderUtil.scaleStart(x + width / 2f, y + height / 2f,
+            boolean glow = false;
+            RenderUtil.scaleStart(x + drag.getWidth() / 2f, y + drag.getHeight() / 2f,
                     (float) (.5 + openAnimation.getOutput().floatValue()) * trackScale);
             float alpha = Math.min(1, openAnimation.getOutput().floatValue() * 2);
 
-            currentTargetHUD.renderEffects(x, y, alpha, glow.getValue());
+            currentTargetHUD.renderEffects(x, y, alpha, glow);
 
             RenderUtil.scaleEnd();
         }
@@ -180,6 +169,7 @@ public class TargetHUDMod extends Element {
 
 
     private Pair<Float, Float> getTrackedCoords() {
+        float width = drag.getWidth(), height = drag.getHeight();
         float x = targetVector.getX(), y = targetVector.getY();
         float entityWidth = (targetVector.getZ() - targetVector.getX());
         float entityHeight = (targetVector.getW() - targetVector.getY());
