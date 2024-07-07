@@ -4,6 +4,7 @@ package net.minecraft.client.gui;
 import cn.cedo.animations.Animation;
 import cn.cedo.animations.Direction;
 import cn.cedo.animations.impl.DecelerateAnimation;
+import cn.cedo.drag.Dragging;
 import cn.langya.elements.Element;
 import cn.langya.font.FontManager;
 import cn.langya.utils.AnimationUtil;
@@ -50,6 +51,13 @@ public class GuiChat extends GuiScreen
 
     public void initGui()
     {
+
+        for (Dragging dragging : Access.getInstance().getDragManager().getDraggable().values()) {
+            if (!dragging.hoverAnimation.getDirection().equals(Direction.BACKWARDS)) {
+                dragging.hoverAnimation.setDirection(Direction.BACKWARDS);
+            }
+        }
+
         openingAnimation = new DecelerateAnimation(175, 1);
         Keyboard.enableRepeatEvents(true);
         this.sentHistoryCursor = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
@@ -64,6 +72,11 @@ public class GuiChat extends GuiScreen
     @Override
     protected void mouseReleased(int mouseX, int mouseY, int state)
     {
+        Access.getInstance().getDragManager().getDraggable().values().forEach(dragging -> {
+            if (dragging.isState()) {
+                dragging.onRelease(state);
+            }
+        });
         if (state == 0) {
             if (this.element != null) {
                 this.element.setDragging(false);
@@ -76,6 +89,7 @@ public class GuiChat extends GuiScreen
     {
         Keyboard.enableRepeatEvents(false);
         this.mc.ingameGUI.getChatGUI().resetScroll();
+        Access.getInstance().getDragManager().saveDragData();
     }
 
     public void updateScreen()
@@ -163,6 +177,23 @@ public class GuiChat extends GuiScreen
     }
 
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+
+
+        boolean hoveringResetButton = MouseUtil.isHovering(width / 2f - 100, 20, 200, 20, mouseX, mouseY);
+        if (hoveringResetButton && mouseButton == 0) {
+            for (Dragging dragging : Access.getInstance().getDragManager().getDraggable().values()) {
+                dragging.setXPos(dragging.initialXVal);
+                dragging.setYPos(dragging.initialYVal);
+            }
+            return;
+        }
+
+
+        Access.getInstance().getDragManager().getDraggable().values().forEach(dragging -> {
+            if (dragging.isState()) {
+                dragging.onClick(mouseX, mouseY, mouseButton);
+            }
+        });
 
         for (Element element : Access.getInstance().getElementManager().getElements()) {
             if (MouseUtil.isHovering(element.getX(), element.getY(), element.getWidth(), element.getHeight(), mouseX, mouseY)) {
@@ -300,6 +331,12 @@ public class GuiChat extends GuiScreen
             mc.displayGuiScreen((GuiScreen) null);
             return;
         }
+
+        Access.getInstance().getDragManager().getDraggable().values().forEach(dragging -> {
+            if (dragging.isState()) {
+                dragging.onDraw(mouseX, mouseY);
+            }
+        });
         RoundedUtil.drawRound(0,  this.height - (14 * openingAnimation.getOutput().floatValue()), this.width, this.height - 4,5, new Color(0,0,0,150));
 
         inputField.yPosition = this.height - (12 * openingAnimation.getOutput().intValue());

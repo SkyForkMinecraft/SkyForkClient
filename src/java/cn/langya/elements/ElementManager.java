@@ -37,7 +37,6 @@ public class ElementManager {
         elements.add(new CPSInfo());
         elements.add(new MusicPlayerOverlay());
         elements.add(new Combo());
-        elements.add(new KeyStore());
         // elements.add(new TargetHUDMod());
     }
 

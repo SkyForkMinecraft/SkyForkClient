@@ -1,5 +1,6 @@
 package org.union4dev.base;
 
+import cn.cedo.drag.DragManager;
 import cn.chimera.command.CommandManager;
 import cn.dxg.RotationUtil;
 import cn.langya.MemoryManager;
@@ -91,6 +92,8 @@ public final class Access {
     private final NotificationManager notificationManager;
     @Getter
     private final CommandManager commandManager;
+    @Getter
+    private final DragManager dragManager;
 
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
         SystemTray tray = SystemTray.getSystemTray();
@@ -116,6 +119,8 @@ public final class Access {
 //        Verify.verify();
 
         // Initialize managers
+        dragManager = new DragManager();
+        dragManager.loadDragData();
         ircManager = new IRCManager();
         moduleManager = new ModuleManager();
         configManager = new ConfigManager();

@@ -56,7 +56,7 @@ public class FPSInfo extends Element {
         if (backgroundValue.getValue() && !blur.getValue()) RoundedUtil.drawRound(x,y,fontRenderer.getStringWidth(text) + 1.5F,fontRenderer.getHeight(),backgroundRadiusValue.getValue().intValue(),new Color(0,0,0,80));
 
         String logoText = textMode.getValue();
-        String text = String.format("[%s: %s]",logoText, Minecraft.getDebugFPS());
+        text = String.format("[%s: %s]",logoText, Minecraft.getDebugFPS());
         Color c = Access.CLIENT_COLOR;
         switch (colorMode.getValue()) {
             case "客户端":
