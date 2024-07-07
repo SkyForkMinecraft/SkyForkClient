@@ -9,6 +9,7 @@ import cn.langya.elements.ElementManager;
 import cn.langya.files.ConfigManager;
 import cn.langya.irc.IRCManager;
 import cn.langya.verify.Verify;
+import cn.superskidder.ComboHandler;
 import cn.yapeteam.notification.NotificationManager;
 import de.florianmichael.viamcp.ViaMCP;
 import lombok.Getter;
@@ -146,6 +147,7 @@ public final class Access {
         EventManager.register(new TargetManager());
         EventManager.register(new MemoryManager());
         EventManager.register(new RotationUtil(0,0));
+        EventManager.register(new ComboHandler());
         // EventManager.register(new PacketManager());
 
         loaded = true;

@@ -2,9 +2,9 @@ package cn.langya.elements;
 
 import cn.cedo.render.targethud.TargetHUDMod;
 import cn.langya.elements.impls.*;
+import cn.superskidder.modules.Combo;
 import cn.yapeteam.cloudmusic.module.MusicPlayerOverlay;
 import lombok.Getter;
-import net.erouax.combodisplay.Combo;
 import net.minecraft.client.gui.Gui;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.events.EventManager;
