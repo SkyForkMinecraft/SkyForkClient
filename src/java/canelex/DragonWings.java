@@ -59,7 +59,7 @@ public class DragonWings extends ModelBase
 	{
 		EntityPlayer player = mc.thePlayer;
 
-		if ( !player.isInvisible() ) // Should render wings onto this player?
+		if ( !player.isInvisible() && mc.gameSettings.thirdPersonView > 0) // Should render wings onto this player?
 		{
 			renderWings(player, event.getRenderPartialTicks());
 		}
