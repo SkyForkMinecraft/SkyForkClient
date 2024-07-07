@@ -1,6 +1,9 @@
 package net.minecraft.client.gui;
 
+import cn.cedo.ScoreboardMod;
 import cn.cedo.misc.ColorUtil;
+import cn.cedo.render.GLUtil;
+import cn.cedo.shader.blur.GaussianBlur;
 import cn.langya.font.FontManager;
 import cn.langya.modules.client.CustomHotbar;
 import com.google.common.base.Predicate;
@@ -573,60 +576,56 @@ public class GuiIngame extends Gui
         this.streamIndicator.render(scaledRes.getScaledWidth() - 10, 10);
     }
 
-    private void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes)
-    {
+
+    public void renderScoreboard(ScoreObjective objective, ScaledResolution scaledRes) {
         Scoreboard scoreboard = objective.getScoreboard();
         Collection<Score> collection = scoreboard.getSortedScores(objective);
-        List<Score> list = Lists.newArrayList(Iterables.filter(collection, new Predicate<Score>()
-        {
-            public boolean apply(Score p_apply_1_)
-            {
-                return p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#");
-            }
-        }));
+        List<Score> list = Lists.newArrayList(Iterables.filter(collection, p_apply_1_ -> p_apply_1_.getPlayerName() != null && !p_apply_1_.getPlayerName().startsWith("#")));
 
-        if (list.size() > 15)
-        {
+        if (list.size() > 15) {
             collection = Lists.newArrayList(Iterables.skip(list, collection.size() - 15));
-        }
-        else
-        {
+        } else {
             collection = list;
         }
 
-        int i = this.getFontRenderer().getStringWidth(objective.getDisplayName());
+        float i = FontManager.M14.getStringWidth(objective.getDisplayName());
 
-        for (Score score : collection)
-        {
+        for (Score score : collection) {
             ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(score.getPlayerName());
             String s = ScorePlayerTeam.formatPlayerName(scoreplayerteam, score.getPlayerName()) + ": " + EnumChatFormatting.RED + score.getScorePoints();
-            i = Math.max(i, this.getFontRenderer().getStringWidth(s));
+            i = Math.max(i, FontManager.M14.getStringWidth(s));
         }
 
-        int i1 = collection.size() * this.getFontRenderer().FONT_HEIGHT;
-        int j1 = scaledRes.getScaledHeight() / 2 + i1 / 3;
-        int k1 = 3;
-        int l1 = scaledRes.getScaledWidth() - i - k1;
+        int i1 = collection.size() * FontManager.M14.getHeight();
+        int j1 = (int) (scaledRes.getScaledHeight() / 2 + i1 / 3 + ScoreboardMod.drag.getYPos());
+        float l1 = scaledRes.getScaledWidth() - i - 3;
         int j = 0;
 
-        for (Score score1 : collection)
-        {
+        Color color = ColorUtil.applyOpacity(Color.BLACK, 75 / 255f);
+        for (Score score1 : collection) {
             ++j;
             ScorePlayerTeam scoreplayerteam1 = scoreboard.getPlayersTeam(score1.getPlayerName());
             String s1 = ScorePlayerTeam.formatPlayerName(scoreplayerteam1, score1.getPlayerName());
-            String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
-            int k = j1 - j * this.getFontRenderer().FONT_HEIGHT;
-            int l = scaledRes.getScaledWidth() - k1 + 2;
-            drawRect(l1 - 2, k, l, k + this.getFontRenderer().FONT_HEIGHT, 1342177280);
-            this.getFontRenderer().drawString(s1, l1, k, 553648127);
-            this.getFontRenderer().drawString(s2, l - this.getFontRenderer().getStringWidth(s2), k, 553648127);
+            int k = j1 - j * FontManager.M14.getHeight();
+            int l = scaledRes.getScaledWidth() - 3 + 2;
+            GLUtil.startBlend();
+            drawRect(l1 - 2, k, l, k + FontManager.M14.getHeight(), color.getRGB());
 
-            if (j == collection.size())
-            {
+            // Line text
+            FontManager.M14.drawStringWithShadow(s1, l1, k, -1);
+
+            // Line number
+            if (ScoreboardMod.redNumbers.getValue()) {
+                String s2 = EnumChatFormatting.RED + "" + score1.getScorePoints();
+                FontManager.M14.drawStringWithShadow(s2, l - FontManager.M14.getStringWidth(s2), k, -1);
+            }
+
+            if (j == collection.size()) {
                 String s3 = objective.getDisplayName();
-                drawRect(l1 - 2, k - this.getFontRenderer().FONT_HEIGHT - 1, l, k - 1, 1610612736);
-                drawRect(l1 - 2, k - 1, l, k, 1342177280);
-                this.getFontRenderer().drawString(s3, l1 + i / 2 - this.getFontRenderer().getStringWidth(s3) / 2, k - this.getFontRenderer().FONT_HEIGHT, 553648127);
+                drawRect(l1 - 2, k - FontManager.M14.getHeight() - 1, l, k - 1, color.getRGB());
+                GLUtil.startBlend();
+                drawRect(l1 - 2, k - 1, l, k, color.getRGB());
+                FontManager.M14.drawStringWithShadow(s3, l1 + i / 2.0F - FontManager.M14.getStringWidth(s3) / 2.0F, k - FontManager.M14.getHeight(), -1);
             }
         }
     }

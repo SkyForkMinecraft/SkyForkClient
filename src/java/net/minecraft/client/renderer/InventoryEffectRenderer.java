@@ -121,15 +121,16 @@ public abstract class InventoryEffectRenderer extends GuiContainer
         }
     }
 
-    public void drawActivePotionEffects(boolean bg,int rad)
+    public void drawActivePotionEffects(int dragX,int dragY,boolean bg,int rad)
     {
-        int i = guiLeft - 124;
-        int j = guiTop;
+        int i = dragX;
+        int j = dragY;
         Collection<PotionEffect> collection = mc.thePlayer.getActivePotionEffects();
 
         if (!collection.isEmpty())
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.disableLighting();
             int l = 33;
 
             if (collection.size() > 5)
@@ -163,14 +164,15 @@ public abstract class InventoryEffectRenderer extends GuiContainer
 
                 if (potion.hasStatusIcon()) {
                     int i1 = potion.getStatusIconIndex();
-                    GlStateManager.enableLighting();
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     mc.getTextureManager().bindTexture(inventoryBackground);
                     drawTexturedModalRect(i + 6, j , i1 % 8 * 18, 198 + i1 / 8 * 18, 18, 18);
-                    GlStateManager.disableBlend();
                 }
 
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 FontManager.M16.drawStringWithShadow(s1, (float)(i + 10 + 18), (float)(j), 16777215);
                 FontManager.M14.drawStringWithShadow(s, (float)(i + 10 + 18), (float)(j + 10), 8355711);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 j += l;
             }
         }

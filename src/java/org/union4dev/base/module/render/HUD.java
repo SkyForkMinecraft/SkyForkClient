@@ -7,6 +7,7 @@ import cn.langya.font.FontManager;
 import cn.superskidder.BloomUtil;
 import cn.superskidder.GaussianBlur;
 import cn.superskidder.KawaseBlur;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.shader.Framebuffer;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
@@ -67,7 +68,7 @@ public class HUD implements Access.InstanceAccess {
 
     @EventTarget
     void onR2d(Render2DEvent e) {
-        FontManager.M18.drawStringWithShadow("DEV BUILD",2, e.getScaledResolution().getScaledHeight() - FontManager.M18.getHeight() - 5,-1);
+        FontManager.M14.drawString(String.format("XYZ: %s, %s, %s", Math.round(mc.thePlayer.posX) ,Math.round(mc.thePlayer.posY), Math.round(mc.thePlayer.posZ)),2, e.getScaledResolution().getScaledHeight() - FontManager.M14.getHeight() - 3,-1);
         // RenderUtil.drawRect(50,50,50,50,-1);
 //        RoundedRectTest.drawG2DLogoTest(50,50,50,50,Color.WHITE);
 
@@ -85,6 +86,7 @@ public class HUD implements Access.InstanceAccess {
     }
 
     public static void blurScreen() {
+        ScaledResolution sr = new ScaledResolution(mc);
 
         StencilUtil.initStencilToWrite();
         EventManager.call(new ShaderEvent(ShaderType.Blur));
@@ -106,5 +108,6 @@ public class HUD implements Access.InstanceAccess {
         EventManager.call(new ShaderEvent(ShaderType.Shadow));
         bloomFramebuffer.unbindFramebuffer();
         BloomUtil.renderBlur(bloomFramebuffer.framebufferTexture, shadowRadius.getValue().intValue(), shadowOffset.getValue().intValue());
+
     }
 }

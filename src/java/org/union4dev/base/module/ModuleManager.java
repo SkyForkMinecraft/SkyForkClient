@@ -1,4 +1,5 @@
 package org.union4dev.base.module;
+import cn.cedo.ScoreboardMod;
 import cn.cedo.render.targethud.TargetHUDMod;
 import cn.dxg.CheaterDetector;
 import cn.langya.modules.render.*;
@@ -90,6 +91,7 @@ public final class ModuleManager {
         register(OldAnimation.class,"自定义动画",Category.Client);
         register(ItemPhysic.class,"物品物理掉落",Category.Client);
         register(NoHitClick.class,"无打击延迟",Category.Client);
+        register(ScoreboardMod.class,"自定义记分版",Category.Client);
 
     }
 

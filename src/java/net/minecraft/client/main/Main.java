@@ -38,7 +38,7 @@ public class Main
         final OptionSpec<Integer> proxyPort = optionParser.accepts("proxyPort").withRequiredArg().defaultsTo("8080", new String[0]).ofType(Integer.class);
         final OptionSpec<String> proxyUser = optionParser.accepts("proxyUser").withRequiredArg();
         final OptionSpec<String> proxyPass = optionParser.accepts("proxyPass").withRequiredArg();
-        final OptionSpec<String> username = optionParser.accepts("username").withRequiredArg().defaultsTo("Player" + Minecraft.getSystemTime() % 1000L);
+        final OptionSpec<String> username = optionParser.accepts("username").withRequiredArg().defaultsTo("SkyFork_" + Minecraft.getSystemTime() % 1000L);
         final OptionSpec<String> uuid = optionParser.accepts("uuid").withRequiredArg();
         final OptionSpec<String> accessToken = optionParser.accepts("accessToken").withRequiredArg().required();
         final OptionSpec<String> version = optionParser.accepts("version").withRequiredArg().required();
