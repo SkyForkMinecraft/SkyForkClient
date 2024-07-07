@@ -129,6 +129,7 @@ public abstract class InventoryEffectRenderer extends GuiContainer
 
         if (!collection.isEmpty())
         {
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             int l = 33;
 
             if (collection.size() > 5)
@@ -159,10 +160,13 @@ public abstract class InventoryEffectRenderer extends GuiContainer
                 String s = Potion.getDurationString(potioneffect);
                 if (bg) RoundedUtil.drawRound(i, j - 5,45 + FontManager.M16.getStringWidth(s) + FontManager.M16.getStringWidth(s1), 28,rad,new Color(0,0,0,120));
 
+
                 if (potion.hasStatusIcon()) {
                     int i1 = potion.getStatusIconIndex();
+                    GlStateManager.enableLighting();
                     mc.getTextureManager().bindTexture(inventoryBackground);
                     drawTexturedModalRect(i + 6, j , i1 % 8 * 18, 198 + i1 / 8 * 18, 18, 18);
+                    GlStateManager.disableBlend();
                 }
 
                 FontManager.M16.drawStringWithShadow(s1, (float)(i + 10 + 18), (float)(j), 16777215);

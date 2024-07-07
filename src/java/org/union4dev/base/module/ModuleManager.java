@@ -20,6 +20,7 @@ import org.union4dev.base.module.render.*;
 import org.union4dev.base.value.AbstractValue;
 import org.union4dev.base.value.impl.*;
 import canelex.DragonWings;
+import soar.ClientInfoMod;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -67,6 +68,8 @@ public final class ModuleManager {
         register(TargetCircle.class,"目标光环",Category.Render);
         register(Combo.class,"连击显示",Category.Render);
         register(TargetHUDMod.class,"目标显示",Category.Render);
+        // register(ClientInfoMod.class,"客户端信息",Category.Render);
+
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);

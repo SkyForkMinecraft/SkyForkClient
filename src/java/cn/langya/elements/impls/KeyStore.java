@@ -38,21 +38,25 @@ public class KeyStore  implements Access.InstanceAccess {
 
     public void draw(float x, float y, float width, float height, int radius, KeyBinding key) {
 
-        float alpha = (float) (.5f + (.5 * resetButtonHover.getOutput().floatValue()));
-
         resetButtonHover.setDirection(key.isKeyDown() ? Direction.FORWARDS : Direction.BACKWARDS);
+
+        drawRect(x,y,width,height,radius,key);
+        FontManager.M14.drawStringWithShadow(Keyboard.getKeyName(key.getKeyCode()), x + 8, y + 8, -1);
+    }
+
+    public void drawRect(float x, float y, float width, float height, int radius,KeyBinding key) {
+        float alpha = (float) (.5f + (.5 * resetButtonHover.getOutput().floatValue()));
 
         if (key.isKeyDown()) {
             RoundedUtil.drawRound(x, y, width, height, radius, new Color(Color.white.getRed(), Color.white.getGreen(), Color.white.getBlue(), (int) (255 * alpha)));
         } else {
             RoundedUtil.drawRound(x, y, width, height, radius, new Color(0, 0, 0, 120));
         }
-        FontManager.M14.drawStringWithShadow(Keyboard.getKeyName(key.getKeyCode()), x + 8, y + 8, -1);
     }
+
 
     @EventTarget
     private void onRender2D(Render2DEvent event) {
-        if (blur.getValue()) return;
 
         pos.setWidth(75);
         pos.setHeight(75);
@@ -84,16 +88,17 @@ public class KeyStore  implements Access.InstanceAccess {
     @EventTarget
     private void onShader(ShaderEvent event) {
         if (!blur.getValue()) return;
+
         float x = pos.getXPos();
         float y = pos.getYPos();
-        draw(x + 1F, y + 60, 27.75F * 3.0F, 25, 5, mc.gameSettings.keyBindJump);
+        drawRect(x + 1F, y + 60, 27.75F * 3.0F, 25, 5, mc.gameSettings.keyBindJump);
 
-        draw(x + 30, y, 25, 25, 5, mc.gameSettings.keyBindForward);
+        drawRect(x + 30, y, 25, 25, 5, mc.gameSettings.keyBindForward);
 
-        draw(x, y + 30, 25, 25, 5, mc.gameSettings.keyBindLeft);
+        drawRect(x, y + 30, 25, 25, 5, mc.gameSettings.keyBindLeft);
 
-        draw(x + 30, y + 30, 25, 25, 5, mc.gameSettings.keyBindBack);
-        draw(x + 60, y + 30, 25, 25, 5, mc.gameSettings.keyBindRight);
+        drawRect(x + 30, y + 30, 25, 25, 5, mc.gameSettings.keyBindBack);
+        drawRect(x + 60, y + 30, 25, 25, 5, mc.gameSettings.keyBindRight);
         /*
         draw(x.getValue().intValue() + 1F, y.getValue().intValue() + 60, 27.75F * 3.0F, 25, 5, mc.gameSettings.keyBindJump);
 
