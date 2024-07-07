@@ -2,7 +2,6 @@ package cn.langya.elements.impls;
 
 import cn.cedo.animations.Animation;
 import cn.cedo.animations.Direction;
-import cn.cedo.animations.impl.DecelerateAnimation;
 import cn.cedo.animations.impl.SmoothStepAnimation;
 import cn.langya.elements.Element;
 import cn.langya.font.FontManager;
@@ -15,7 +14,6 @@ import org.union4dev.base.events.render.Render2DEvent;
 import cn.cedo.shader.RoundedUtil;
 import org.union4dev.base.events.render.ShaderEvent;
 import org.union4dev.base.value.impl.BooleanValue;
-import org.union4dev.base.value.impl.NumberValue;
 
 import java.awt.*;
 
@@ -88,7 +86,6 @@ public class KeyStore  extends Element implements Access.InstanceAccess {
 
         draw(y + 30, y + 30, 25, 25, 5, mc.gameSettings.keyBindBack);
         draw(x + 60, y + 30, 25, 25, 5, mc.gameSettings.keyBindRight);
-        GlStateManager.popMatrix();
         /*
         draw(x.getValue().intValue() + 1F, y.getValue().intValue() + 60, 27.75F * 3.0F, 25, 5, mc.gameSettings.keyBindJump);
 
