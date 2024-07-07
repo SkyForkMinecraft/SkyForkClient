@@ -1,6 +1,8 @@
 package cn.langya.elements.impls;
 
+import cn.cedo.shader.RoundedUtil;
 import cn.langya.elements.Element;
+import cn.langya.font.FontDrawer;
 import cn.langya.font.FontManager;
 import net.minecraft.client.Minecraft;
 import org.union4dev.base.Access;
@@ -20,8 +22,27 @@ public class FPSInfo extends Element {
     private static final NumberValue customColorBlue = new NumberValue("自定义蓝色", 0, 0, 255, 5);
     private final BooleanValue colorText = new BooleanValue("彩虹色文字",true);
 
+    private final BooleanValue backgroundValue = new BooleanValue("背景",true);
+    private final NumberValue backgroundRadiusValue = new NumberValue("背景自圆角值", 2,0,10,1);
+    private final BooleanValue blur = new BooleanValue("模糊背景",true);
+
     public FPSInfo() {
         super(20, 20);
+    }
+    private String text;
+
+    private FontDrawer fontRenderer = FontManager.M18;
+
+    @Override
+    public void draw(boolean shader) {
+        if (!Access.getInstance().getModuleManager().isEnabled(this.getClass())) {
+            setWidth(0);
+            setHeight(0);
+            return;
+        }
+
+        if (backgroundValue.getValue() && blur.getValue()) RoundedUtil.drawRound(x,y,fontRenderer.getStringWidth(text) + 1.5F,fontRenderer.getHeight(),backgroundRadiusValue.getValue().intValue(),new Color(0,0,0,80));
+
     }
 
     @Override
@@ -31,6 +52,8 @@ public class FPSInfo extends Element {
             setHeight(0);
             return;
         }
+
+        if (backgroundValue.getValue() && !blur.getValue()) RoundedUtil.drawRound(x,y,fontRenderer.getStringWidth(text) + 1.5F,fontRenderer.getHeight(),backgroundRadiusValue.getValue().intValue(),new Color(0,0,0,80));
 
         String logoText = textMode.getValue();
         String text = String.format("[%s: %s]",logoText, Minecraft.getDebugFPS());

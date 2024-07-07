@@ -8,6 +8,7 @@ import cn.superskidder.ComboHandler;
 import org.union4dev.base.Access;
 import org.union4dev.base.value.impl.BooleanValue;
 import org.union4dev.base.value.impl.NumberValue;
+import superblaubeere27.CPSCounter;
 
 import java.awt.*;
 
@@ -21,6 +22,20 @@ public class Combo extends Element implements Access.InstanceAccess {
     public Combo() {
         super(4, 4);
     }
+    private FontDrawer fontRenderer = FontManager.M18;
+
+
+    @Override
+    public void draw(boolean shader) {
+        if (!shader) return;
+        String text = String.format("CPS : %s | %s", CPSCounter.getCPS(CPSCounter.MouseButton.LEFT), CPSCounter.getCPS(CPSCounter.MouseButton.RIGHT));
+        if (!Access.getInstance().getModuleManager().isEnabled(this.getClass())) {
+            setWidth(0);
+            setHeight(0);
+            return;
+        }
+        if (backgroundValue.getValue() && blur.getValue()) RoundedUtil.drawRound(x,y,fontRenderer.getStringWidth(text) + 1.5F,fontRenderer.getHeight(),backgroundRadiusValue.getValue().intValue(),new Color(0,0,0,80));
+    }
 
     @Override
     public void draw() {
@@ -30,7 +45,6 @@ public class Combo extends Element implements Access.InstanceAccess {
             setHeight(0);
             return;
         }
-        FontDrawer fontRenderer = FontManager.M18;
         if (backgroundValue.getValue() && !blur.getValue()) RoundedUtil.drawRound(x,y,fontRenderer.getStringWidth(text) + 1.5F,fontRenderer.getHeight(),backgroundRadiusValue.getValue().intValue(),new Color(0,0,0,80));
         setWH(fontRenderer.getStringWidth(text),fontRenderer.getHeight());
         fontRenderer.drawStringWithShadow(text, x, y + 0.5,-1);
