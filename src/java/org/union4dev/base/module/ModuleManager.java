@@ -10,6 +10,7 @@ import cn.langya.modules.misc.*;
 import cn.superskidder.modules.Combo;
 import cn.superskidder.modules.OldAnimation;
 import cn.superskidder.modules.TNTTimer;
+import lol.tgformat.ESP;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.annotations.module.*;
@@ -21,7 +22,7 @@ import org.union4dev.base.module.render.*;
 import org.union4dev.base.value.AbstractValue;
 import org.union4dev.base.value.impl.*;
 import canelex.DragonWings;
-import soar.ClientInfoMod;
+import soar.GuiClickEffect;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -70,6 +71,7 @@ public final class ModuleManager {
         register(Combo.class,"连击显示",Category.Render);
         register(TargetHUDMod.class,"目标显示",Category.Render);
         // register(ClientInfoMod.class,"客户端信息",Category.Render);
+        register(ESP.class,"自定义碰撞箱",Category.Render);
 
         // Register Misc
         register(FakeFPS.class,"虚假帧率",Category.Misc);
@@ -92,6 +94,7 @@ public final class ModuleManager {
         register(ItemPhysic.class,"物品物理掉落",Category.Client);
         register(NoHitClick.class,"无打击延迟",Category.Client);
         register(ScoreboardMod.class,"自定义记分版",Category.Client);
+        register(GuiClickEffect.class,"页面点击特效",Category.Client);
 
     }
 

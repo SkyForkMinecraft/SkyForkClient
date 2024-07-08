@@ -1,6 +1,5 @@
 package net.minecraft.client.gui.inventory;
 
-import cn.cedo.ChestStealer;
 import cn.langya.font.FontManager;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
@@ -18,8 +17,14 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
+import org.union4dev.base.Access;
+import soar.ClickEffect;
+import soar.GuiClickEffect;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 public abstract class GuiContainer extends GuiScreen {
@@ -94,6 +99,7 @@ public abstract class GuiContainer extends GuiScreen {
     private int lastClickButton;
     private boolean doubleClick;
     private ItemStack shiftClickedSlot;
+    private List<ClickEffect> clickEffects = new ArrayList<>();
 
     public GuiContainer(Container inventorySlotsIn) {
         this.inventorySlots = inventorySlotsIn;
@@ -115,9 +121,9 @@ public abstract class GuiContainer extends GuiScreen {
      * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
         FontManager.MB30.drawStringWithShadow("Sky Fork",width - 75,height - 20,-1);
 
-        this.drawDefaultBackground();
         int i = this.guiLeft;
         int j = this.guiTop;
         this.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
@@ -206,6 +212,16 @@ public abstract class GuiContainer extends GuiScreen {
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();
         RenderHelper.enableStandardItemLighting();
+
+        if(clickEffects.size() > 0) {
+            Iterator<ClickEffect> clickEffectIterator= clickEffects.iterator();
+            while(clickEffectIterator.hasNext()){
+                ClickEffect clickEffect = clickEffectIterator.next();
+                clickEffect.draw();
+                if (clickEffect.canRemove()) clickEffectIterator.remove();
+            }
+        }
+
     }
 
     /**
@@ -420,6 +436,11 @@ public abstract class GuiContainer extends GuiScreen {
         this.lastClickSlot = slot;
         this.lastClickTime = i;
         this.lastClickButton = mouseButton;
+
+        if (Access.getInstance().getModuleManager().isEnabled(GuiClickEffect.class)) {
+            ClickEffect clickEffect = new ClickEffect(mouseX, mouseY);
+            clickEffects.add(clickEffect);
+        }
     }
 
     /**

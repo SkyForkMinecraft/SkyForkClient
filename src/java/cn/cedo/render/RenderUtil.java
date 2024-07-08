@@ -85,7 +85,7 @@ public class RenderUtil implements Access.InstanceAccess {
     }
 
     public static void resetColor(Color color) {
-        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F,color.getBlue() / 255F, color.getAlpha() / 255F);
+        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
     }
 
     public static Framebuffer createFrameBuffer(Framebuffer framebuffer) {
@@ -140,6 +140,7 @@ public class RenderUtil implements Access.InstanceAccess {
         disableBlend();
         GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
     }
+
     public static void drawArc(float x1, float y1, double r, int color, int startPoint, double arc, int linewidth) {
         r *= 2.0;
         x1 *= 2.0F;
@@ -744,7 +745,5 @@ public class RenderUtil implements Access.InstanceAccess {
         enableTexture2D();
         disableBlend();
     }
-
-
 
 }
