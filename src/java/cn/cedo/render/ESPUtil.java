@@ -28,6 +28,7 @@ public class ESPUtil implements Access.InstanceAccess {
 
     public static boolean isInView(Entity ent) {
         frustum.setPosition(mc.getRenderViewEntity().posX, mc.getRenderViewEntity().posY, mc.getRenderViewEntity().posZ);
+        if (!mc.thePlayer.canEntityBeSeen(ent)) return false;
         return frustum.isBoundingBoxInFrustum(ent.getEntityBoundingBox()) || ent.ignoreFrustumCheck;
     }
 

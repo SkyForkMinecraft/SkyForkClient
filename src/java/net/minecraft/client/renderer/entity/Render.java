@@ -365,7 +365,7 @@ public abstract class Render<T extends Entity> implements IEntityRenderer
     protected void renderLivingLabel(T entityIn, String str, double x, double y, double z, int maxDistance) {
 
         if (entityIn instanceof EntityOtherPlayerMP) {
-            RenderNameTagEvent e = new RenderNameTagEvent(str);
+            RenderNameTagEvent e = new RenderNameTagEvent(str,entityIn);
             EventManager.call(e);
             if (e.isCancelled())
                 return;
