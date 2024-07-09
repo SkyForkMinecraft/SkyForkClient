@@ -18,13 +18,13 @@ import org.lwjgl.input.Keyboard;
 public class GuiEditSign extends GuiScreen
 {
     /** Reference to the sign object. */
-    private TileEntitySign tileSign;
+    protected TileEntitySign tileSign;
 
     /** Counts the number of screen updates. */
-    private int updateCounter;
+    protected int updateCounter;
 
     /** The index of the line that is being edited. */
-    private int editLine;
+    protected int editLine;
 
     /** "Done" button for the GUI. */
     private GuiButton doneBtn;
@@ -42,7 +42,7 @@ public class GuiEditSign extends GuiScreen
     {
         this.buttonList.clear();
         Keyboard.enableRepeatEvents(true);
-        this.buttonList.add(this.doneBtn = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, I18n.format("gui.done", new Object[0])));
+        this.buttonList.add(this.doneBtn = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, I18n.format("gui.done")));
         this.tileSign.setEditable(false);
     }
 
@@ -80,7 +80,7 @@ public class GuiEditSign extends GuiScreen
             if (button.id == 0)
             {
                 this.tileSign.markDirty();
-                this.mc.displayGuiScreen((GuiScreen)null);
+                this.mc.displayGuiScreen(null);
             }
         }
     }
@@ -127,7 +127,7 @@ public class GuiEditSign extends GuiScreen
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(this.fontRendererObj, I18n.format("sign.edit", new Object[0]), this.width / 2, 40, 16777215);
+        this.drawCenteredString(this.fontRendererObj, I18n.format("sign.edit"), this.width / 2, 40, 16777215);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2), 0.0F, 50.0F);

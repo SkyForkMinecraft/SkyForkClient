@@ -2,6 +2,7 @@ package org.union4dev.base.module;
 import cn.cedo.ScoreboardMod;
 import cn.cedo.render.targethud.TargetHUDMod;
 import cn.dxg.CheaterDetector;
+import cn.dxg.Protocol;
 import cn.langya.modules.render.*;
 import cn.superskidder.BlockOverlay;
 import cn.langya.elements.impls.*;
@@ -95,6 +96,7 @@ public final class ModuleManager {
         register(NoHitClick.class,"无打击延迟",Category.Client);
         register(ScoreboardMod.class,"自定义记分版",Category.Client);
         register(GuiClickEffect.class,"页面点击特效",Category.Client);
+        register(Protocol.class,"花雨庭协议",Category.Client);
 
     }
 

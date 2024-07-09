@@ -532,6 +532,10 @@ public class FontDrawer {
         drawString(name, x, y, color.getRGB(), false);
     }
 
+    public float getMiddleOfBox(final float height) {
+        return height / 2.0f - this.getHeight() / 2.0f;
+    }
+
     private final class Glyph {
         public final int textureID;
         public final int width;
