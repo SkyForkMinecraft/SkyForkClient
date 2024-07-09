@@ -201,6 +201,21 @@ public final class ModuleManager {
     }
 
     /**
+     * Get all modules in a category
+     *
+     * @param category Target Category
+     * @return {@link List}<{@link Class}<{@link ?}>>
+     */
+    public List<ModuleHandle> getCModulesByCategory(Category category) {
+        ArrayList<ModuleHandle> mods = new ArrayList<>();
+        for(ModuleHandle module : getCModules().values()) {
+            if(getCategory(module.getClass()) == category)
+                mods.add(module);
+        }
+        return mods;
+    }
+
+    /**
      * Get module category
      *
      * @param module Module Class

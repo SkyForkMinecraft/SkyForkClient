@@ -27,7 +27,6 @@ public abstract class TargetHUD implements Access.InstanceAccess {
     }
 
 
-
     protected void renderPlayer2D(float x, float y, float width, float height, AbstractClientPlayer player) {
         GLUtil.startBlend();
         mc.getTextureManager().bindTexture(player.getLocationSkin());
@@ -58,6 +57,7 @@ public abstract class TargetHUD implements Access.InstanceAccess {
         targetHuds.put(AkrienTargetHUD.class, new AkrienTargetHUD());
         targetHuds.put(AstolfoTargetHUD.class, new AstolfoTargetHUD());
         targetHuds.put(NovolineTargetHUD.class, new NovolineTargetHUD());
+        targetHuds.put(ThunderHackTargetHUD.class, new ThunderHackTargetHUD());
     }
 
 }

@@ -1,5 +1,6 @@
 package org.union4dev.base.module.render;
 
+import cn.dxg.NormalClickGUI;
 import cn.yapeteam.ClickUI.ClickUIScreen;
 import cn.yapeteam.VapeClickGUi.VapeClickGui;
 import org.lwjgl.input.Keyboard;
@@ -11,7 +12,7 @@ import org.union4dev.base.value.impl.ComboValue;
 
 @Binding(Keyboard.KEY_RSHIFT)
 public class ClickGui implements Access.InstanceAccess {
-    private ComboValue modeValue = new ComboValue("模式","普通","普通","测试","测试2");
+    private ComboValue modeValue = new ComboValue("模式","普通","普通","测试","测试2","测试3");
     @Enable
     public void onEnable(){
         setEnable(this,false);
@@ -19,8 +20,10 @@ public class ClickGui implements Access.InstanceAccess {
             access.setClickGui(new ClickGuiScreen());
         } else if (modeValue.isMode("测试")){
             access.setClickGui(new ClickUIScreen());
-        } else {
+        } else if (modeValue.isMode("测试2")){
             access.setClickGui(new VapeClickGui());
+        } else if (modeValue.isMode("测试3")){
+            access.setClickGui(new NormalClickGUI());
         }
         mc.displayGuiScreen(access.getClickGui());
     }

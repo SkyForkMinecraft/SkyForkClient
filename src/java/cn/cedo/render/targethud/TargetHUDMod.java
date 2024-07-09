@@ -29,7 +29,7 @@ import java.awt.*;
 
 public class TargetHUDMod implements Access.InstanceAccess {
 
-    private final ComboValue targetHud = new ComboValue("Mode", "Old Tenacity", "Old Tenacity", "Exhibition","Akrien", "Astolfo", "Novoline", "Vape");
+    private final ComboValue targetHud = new ComboValue("Mode", "Old Tenacity", "Old Tenacity", "ThunderHack", "Exhibition","Akrien", "Astolfo", "Novoline", "Vape");
     private final BooleanValue trackTarget = new BooleanValue("Track Target", false);
     private final ComboValue trackingMode = new ComboValue("Tracking Mode", "Middle", "Middle", "Top", "Left", "Right");
 

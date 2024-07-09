@@ -2,6 +2,7 @@ package cn.langya.font;
 
 import java.awt.Font;
 
+import cn.langya.FontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -11,6 +12,7 @@ public class FontManager {
     public static FontDrawer M16 = getFont("MiSans-Bold", 16);
     public static FontDrawer M18 = getFont("MiSans-Bold", 18);
     public static FontDrawer M20 = getFont("MiSans-Bold", 20);
+    public static FontDrawer M22 = getFont("MiSans-Bold", 22);
     public static FontDrawer M30 = getFont("MiSans-Bold", 30);
     public static FontDrawer M50 = getFont("MiSans-Bold", 50);
 

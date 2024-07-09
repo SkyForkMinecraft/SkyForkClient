@@ -22,9 +22,14 @@ public class RoundedUtil {
         drawRound(x, y, width, height, radius, false, new Color(color));
     }
 
+    public static void drawRound(float x, float y, float width, float height, int color) {
+        drawRound(x, y, width, height, 0, false, new Color(color));
+    }
+
     public static void drawRound(float x, float y, float width, float height, float radius, Color color) {
         drawRound(x, y, width, height, radius, false, color);
     }
+
 
     public static void drawGradientHorizontal(float x, float y, float width, float height, float radius, Color left, Color right) {
         drawGradientRound(x, y, width, height, radius, left, left, right, right);

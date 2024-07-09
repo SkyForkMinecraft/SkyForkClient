@@ -1,12 +1,16 @@
 package cn.cedo.render;
 
 import cn.langya.font.FontManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
@@ -18,6 +22,7 @@ import org.union4dev.base.Access;
 import cn.cedo.misc.ColorUtil;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import static net.minecraft.client.renderer.GlStateManager.disableBlend;
 import static net.minecraft.client.renderer.GlStateManager.enableTexture2D;
@@ -364,6 +369,7 @@ public class RenderUtil implements Access.InstanceAccess {
         glDisable(GL_BLEND);
     }
 
+
     public static void drawCircle(float x, float y, float radius, int color) {
         glColor(color);
         glEnable(GL_BLEND);
@@ -476,6 +482,14 @@ public class RenderUtil implements Access.InstanceAccess {
         worldRenderer.pos(aa.minX, aa.minY, aa.maxZ).endVertex();
         worldRenderer.pos(aa.minX, aa.maxY, aa.maxZ).endVertex();
         tessellator.draw();
+    }
+
+    public static int width() {
+        return new ScaledResolution(Minecraft.getMinecraft()).getScaledWidth();
+    }
+
+    public static int height() {
+        return new ScaledResolution(Minecraft.getMinecraft()).getScaledHeight();
     }
 
 
@@ -746,4 +760,93 @@ public class RenderUtil implements Access.InstanceAccess {
         disableBlend();
     }
 
+    public static void quickDrawRect(float x, float y, float x2, float y2) {
+        GL11.glBegin(7);
+        GL11.glVertex2d(x2, y);
+        GL11.glVertex2d(x, y);
+        GL11.glVertex2d(x, y2);
+        GL11.glVertex2d(x2, y2);
+        GL11.glEnd();
+    }
+    public static Color getColor(int color) {
+        int f = color >> 24 & 0xFF;
+        int f1 = color >> 16 & 0xFF;
+        int f2 = color >> 8 & 0xFF;
+        int f3 = color & 0xFF;
+        return new Color(f1, f2, f3, f);
+    }
+
+    public static void startGlScissor(int x, int y, int width, int height) {
+        int scaleFactor = new ScaledResolution(mc).getScaleFactor();
+        GL11.glPushMatrix();
+        GL11.glEnable(3089);
+        GL11.glScissor(x * scaleFactor, RenderUtil.mc.displayHeight - (y + height) * scaleFactor, width * scaleFactor, (height += 14) * scaleFactor);
+    }
+
+    public static void stopGlScissor() {
+        GL11.glDisable(3089);
+        GL11.glPopMatrix();
+    }
+
+    public static void drawEquippedShit2(final double x, final double y, final EntityLivingBase target) {
+        if (!(target instanceof EntityPlayer)) {
+            return;
+        }
+        GL11.glPushMatrix();
+        final ArrayList<ItemStack> stuff = new ArrayList<ItemStack>();
+        int cock = -2;
+        if (target.getHeldItem() != null) {
+            stuff.add(target.getHeldItem());
+        }
+        for (int geraltOfNigeria = 3; geraltOfNigeria >= 0; --geraltOfNigeria) {
+            final ItemStack armor = target.getCurrentArmor(geraltOfNigeria);
+            if (armor != null) {
+                stuff.add(armor);
+            }
+        }
+        for (final ItemStack yes : stuff) {
+            if (Minecraft.getMinecraft().theWorld != null) {
+                RenderHelper.enableGUIStandardItemLighting();
+                cock += 16;
+            }
+            GlStateManager.pushMatrix();
+            GlStateManager.disableAlpha();
+            GlStateManager.clear(256);
+            GlStateManager.enableBlend();
+            GL11.glHint(3155, 4352);
+            Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(yes, (int) (cock + x), (int) y);
+            Minecraft.getMinecraft().getRenderItem().renderItemOverlays(Minecraft.getMinecraft().fontRendererObj, yes, (int) (cock + x), (int) y);
+            GlStateManager.disableBlend();
+            GlStateManager.scale(0.5, 0.5, 0.5);
+            GlStateManager.disableDepth();
+            GlStateManager.disableLighting();
+            GlStateManager.enableDepth();
+            GlStateManager.scale(2.0f, 2.0f, 2.0f);
+            GlStateManager.enableAlpha();
+            GlStateManager.popMatrix();
+            yes.getEnchantmentTagList();
+        }
+        GL11.glPopMatrix();
+    }
+
+
+    public static void drawImageRound(ResourceLocation imageLocation, double x, double y, double width, double height, int color, Runnable cutMethod) {
+        GlStateManager.pushMatrix();
+        StencilUtil.initStencilToWrite();
+        cutMethod.run();
+        StencilUtil.readStencilBuffer(1);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(770, 771);
+        GlStateManager.disableAlpha();
+        mc.getTextureManager().bindTexture(imageLocation);
+        RenderUtil.glColor(color);
+        Gui.drawModalRectWithCustomSizedTexture((float)x, (float)y, 0.0f, 0.0f, (float)width, (float)height, (float)width, (float)height);
+        GlStateManager.resetColor();
+        GlStateManager.bindTexture(0);
+        GlStateManager.enableAlpha();
+        GlStateManager.disableBlend();
+        StencilUtil.uninitStencilBuffer();
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
+    }
 }
