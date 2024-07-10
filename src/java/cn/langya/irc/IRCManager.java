@@ -1,15 +1,67 @@
 package cn.langya.irc;
 
-import java.io.IOException;
+import anti_leak.Native;
+import net.minecraft.client.gui.GuiMainMenu;
+import org.union4dev.base.Access;
+import org.union4dev.base.annotations.event.EventTarget;
+import org.union4dev.base.events.EventManager;
+import org.union4dev.base.events.update.TickEvent;
+import org.union4dev.base.util.ChatUtil;
 
-public class IRCManager {
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+@Native
+public class IRCManager implements Access.InstanceAccess {
+
+    public static BufferedReader in = null;
+    public static PrintWriter out = null;
+    public static boolean verified = false;
 
     public IRCManager() {
+        init();
+    }
 
+    public void init() {
+
+            String hostName = "socket.skyclient.lol";
+            int portNumber = 520;
+
+            Socket echoSocket;
+            try {
+                echoSocket = new Socket(hostName, portNumber);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                out = new PrintWriter(echoSocket.getOutputStream(), true);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+      //  EventManager.register(this);
+    }
+
+    @EventTarget
+    public void onTick(TickEvent event) {
+
+        try {
+            if (in.readLine().startsWith("MESSAGE")) {
+                ChatUtil.info("[IRC] " + in.readLine().replace("MESSAGE",""));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
-    public static void init() throws IOException {
-
-    }
 }

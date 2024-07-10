@@ -1,5 +1,6 @@
 package cn.langya.modules.render;
 
+import anti_leak.Native;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ResourceLocation;
@@ -14,6 +15,7 @@ import unknow.MotionBlurResourceManager;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+@Native
 public class MotionBlur implements Access.InstanceAccess {
     public static final NumberValue amount = new NumberValue("模糊度", 2, 1, 10,1);
 

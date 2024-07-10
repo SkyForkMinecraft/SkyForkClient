@@ -1,5 +1,6 @@
 package org.union4dev.base;
 
+import anti_leak.Native;
 import cn.cedo.drag.DragManager;
 import cn.chimera.command.CommandManager;
 import cn.dxg.RotationUtil;
@@ -30,6 +31,7 @@ import org.union4dev.base.module.ModuleManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,7 +45,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "4.2";
+    public static final String CLIENT_VERSION = "4.4";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -64,13 +66,13 @@ public final class Access {
 
      */
     @Getter
-    private final ModuleManager moduleManager;
+    private ModuleManager moduleManager;
 
     /**
      * ConfigManager instance for access config
      */
     @Getter
-    private final ConfigManager configManager;
+    private ConfigManager configManager;
 
     /**
      * ClickGui Instance
@@ -85,15 +87,15 @@ public final class Access {
     private GuiScreen clickGui;
 
     @Getter
-    private final ElementManager elementManager;
+    private ElementManager elementManager;
     @Getter
-    private final IRCManager ircManager;
+    private IRCManager ircManager;
     @Getter
-    private final NotificationManager notificationManager;
+    private NotificationManager notificationManager;
     @Getter
-    private final CommandManager commandManager;
+    private CommandManager commandManager;
     @Getter
-    private final DragManager dragManager;
+    private DragManager dragManager;
 
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
         SystemTray tray = SystemTray.getSystemTray();
@@ -115,13 +117,16 @@ public final class Access {
     @SneakyThrows
     public Access() {
         INSTANCE = this;
+        init();
 
 //        Verify.verify();
 
-        // Initialize managers
+    }
+
+    @Native
+    public void init() {
         dragManager = new DragManager();
         dragManager.loadDragData();
-        ircManager = new IRCManager();
         moduleManager = new ModuleManager();
         configManager = new ConfigManager();
         configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
@@ -146,7 +151,14 @@ public final class Access {
         // Finished Initialization
         Display.setTitle(CLIENT_NAME + " " + CLIENT_VERSION + " - " + Verify.user.getDisplayName());
 
-        GuiScreen.d = new DynamicTexture(ImageIO.read(new URL(GuiScreen.url)));
+        /*
+        try {
+            GuiScreen.d = new DynamicTexture(ImageIO.read(new URL(GuiScreen.url)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+         */
 
         EventManager.register(new RankManager());
         EventManager.register(new TargetManager());
@@ -154,6 +166,8 @@ public final class Access {
         EventManager.register(new RotationUtil(0,0));
         EventManager.register(new ComboHandler());
         // EventManager.register(new PacketManager());
+
+        ircManager = new IRCManager();
 
         loaded = true;
     }

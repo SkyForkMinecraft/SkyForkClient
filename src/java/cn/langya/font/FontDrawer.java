@@ -267,6 +267,11 @@ public class FontDrawer {
     public void drawGradientStringWithShadow(String s, double x, double y) {
         drawGradientStringWithShadow(s,(float)x,(float)y);
     }
+    public void drawCenteredGradientStringWithShadow(String s, double x, double y) {
+        drawGradientStringWithShadow(s, x - getStringWidth(s) / 2.0, y);
+
+    }
+
 
 
     public void drawGradientString(String s, float x, float y) {

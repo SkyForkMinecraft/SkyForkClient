@@ -3099,9 +3099,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     public static int getDebugFPS()
     {
-        int fakefps;
-        if(Access.InstanceAccess.access.getModuleManager().isEnabled(FakeFPS.class))  fakefps = FakeFPS.fakefps.getValue().intValue(); else fakefps = 0;
-        if(debugFPS > 60) return debugFPS + fakefps; else return debugFPS;
+        return debugFPS;
     }
 
     /**

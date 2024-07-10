@@ -1,5 +1,6 @@
 package cn.langya;
 
+import anti_leak.Native;
 import cn.langya.event.TextEvent;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
@@ -18,6 +19,7 @@ public class RankManager {
 
     public static final List<String> adminList = new CopyOnWriteArrayList<>();
 
+    @Native
     @EventTarget
     public void onT(TextEvent e) {
         // 2582457270 赞助用户 20人民币
