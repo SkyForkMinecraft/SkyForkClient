@@ -13,7 +13,7 @@ public class PotionInfo implements Access.InstanceAccess {
     private static final BooleanValue background = new BooleanValue("背景",true);
     private static final NumberValue customRadius = new NumberValue("自定义圆角值", 2,0,10,1);
 
-    private final Dragging drag = Access.getInstance().getDragManager().createDrag("potioninfo", 300, 300);
+    private final Dragging drag = Access.getInstance().getDragManager().createDrag(this.getClass(),"potioninfo", 300, 300);
 
     @EventTarget
     public void onRender2D(Render2DEvent event) {

@@ -7,7 +7,6 @@ import cn.dxg.RotationUtil;
 import cn.langya.MemoryManager;
 import cn.langya.RankManager;
 import cn.langya.TargetManager;
-import cn.langya.elements.ElementManager;
 import cn.langya.files.ConfigManager;
 import cn.langya.irc.IRCManager;
 import cn.langya.verify.Verify;
@@ -19,8 +18,6 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.util.HttpUtil;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,10 +26,7 @@ import org.union4dev.base.events.EventManager;
 import org.union4dev.base.gui.click.ClickGuiScreen;
 import org.union4dev.base.module.ModuleManager;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.IOException;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -85,9 +79,6 @@ public final class Access {
     @Getter
     @Setter
     private GuiScreen clickGui;
-
-    @Getter
-    private ElementManager elementManager;
     @Getter
     private IRCManager ircManager;
     @Getter
@@ -131,7 +122,6 @@ public final class Access {
         configManager = new ConfigManager();
         configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
         clickGui = new ClickGuiScreen();
-        elementManager = new ElementManager();
         notificationManager = new NotificationManager();
         commandManager = new CommandManager();
 

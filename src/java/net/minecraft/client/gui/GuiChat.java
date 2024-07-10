@@ -5,9 +5,6 @@ import cn.cedo.animations.Animation;
 import cn.cedo.animations.Direction;
 import cn.cedo.animations.impl.DecelerateAnimation;
 import cn.cedo.drag.Dragging;
-import cn.langya.elements.Element;
-import cn.langya.font.FontManager;
-import cn.langya.utils.AnimationUtil;
 import cn.langya.utils.MouseUtil;
 import com.google.common.collect.Lists;
 
@@ -25,7 +22,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.union4dev.base.Access;
-import cn.cedo.render.RenderUtil;
 import cn.cedo.shader.RoundedUtil;
 
 public class GuiChat extends GuiScreen
@@ -38,7 +34,6 @@ public class GuiChat extends GuiScreen
     private List<String> foundPlayerNames = Lists.<String>newArrayList();
     protected GuiTextField inputField;
     private String defaultInputFieldText = "";
-    private Element element;
 
     public GuiChat()
     {
@@ -73,16 +68,10 @@ public class GuiChat extends GuiScreen
     protected void mouseReleased(int mouseX, int mouseY, int state)
     {
         Access.getInstance().getDragManager().getDraggable().values().forEach(dragging -> {
-            if (dragging.isState()) {
+            if (Access.getInstance().getModuleManager().isEnabled(dragging.getModuleClazz())) {
                 dragging.onRelease(state);
             }
         });
-        if (state == 0) {
-            if (this.element != null) {
-                this.element.setDragging(false);
-                this.element = null;
-            }
-        }
     }
 
     public void onGuiClosed()
@@ -190,26 +179,10 @@ public class GuiChat extends GuiScreen
 
 
         Access.getInstance().getDragManager().getDraggable().values().forEach(dragging -> {
-            if (dragging.isState()) {
+            if (Access.getInstance().getModuleManager().isEnabled(dragging.getModuleClazz())) {
                 dragging.onClick(mouseX, mouseY, mouseButton);
             }
         });
-
-        for (Element element : Access.getInstance().getElementManager().getElements()) {
-            if (MouseUtil.isHovering(element.getX(), element.getY(), element.getWidth(), element.getHeight(), mouseX, mouseY)) {
-
-                element.setDragging(true);
-                this.element = element;
-
-                if (mouseButton == 0) {
-                    element.setMoveX(mouseX - element.getX());
-                    element.setMoveY(mouseY - element.getY());
-                } else {
-                    element.setDragging(false);
-                    this.element = null;
-                }
-            }
-        }
 
         IChatComponent ichatcomponent = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
@@ -333,7 +306,7 @@ public class GuiChat extends GuiScreen
         }
 
         Access.getInstance().getDragManager().getDraggable().values().forEach(dragging -> {
-            if (dragging.isState()) {
+            if (Access.getInstance().getModuleManager().isEnabled(dragging.getModuleClazz())) {
                 dragging.onDraw(mouseX, mouseY);
             }
         });
@@ -346,26 +319,6 @@ public class GuiChat extends GuiScreen
         if (ichatcomponent != null && ichatcomponent.getChatStyle().getChatHoverEvent() != null)
         {
             this.handleComponentHover(ichatcomponent, mouseX, mouseY);
-        }
-
-        if (this.element != null) element.updateMousePos(mouseX, mouseY);
-
-        for (Element element : Access.getInstance().getElementManager().getElements()) {
-            if (MouseUtil.isHovering(element.getX(), element.getY(), element.getWidth(), element.getHeight(), mouseX, mouseY)) {
-
-                RenderUtil.drawBorder(element.getX() - 4, element.getY() - 4,  element.getWidth() + 8, element.getHeight() + 8, 1, -1);
-                FontManager.M14.drawCenteredStringWithShadow(String.format("X轴: %s Y轴: %s", element.getX(), element.getY()), element.getX() + 37, element.getY() - 12, -1);
-            }
-            /*
-            else if(MouseUtil.isHovering(element.getX(), element.getY(), element.getWidth() + 60, element.getHeight() + 60, mouseX, mouseY)) {
-                ClientButton button = new ClientButton(element.getX() + 60, element.getY(), 60, 30, 3, "删除");
-                button.setMouseX(mouseX);
-                button.setMouseY(mouseY);
-                button.draw();
-                if (keyCode == 0 && button.isHover()) element.setState(false);
-            }
-
-             */
         }
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

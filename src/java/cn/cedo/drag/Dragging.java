@@ -11,7 +11,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 import lombok.Setter;
 import org.union4dev.base.Access;
-import org.union4dev.base.module.handlers.ModuleHandle;
 
 import java.awt.*;
 
@@ -37,18 +36,19 @@ public class Dragging implements Access.InstanceAccess {
     @SerializedName("name")
     private String name;
 
-    public Animation hoverAnimation = new DecelerateAnimation(250, 1, Direction.BACKWARDS);
     @Getter
-    private boolean state = true;
+    private Class<?> moduleClazz;
 
-    public Dragging(String name, float initialXVal, float initialYVal) {
+    public Animation hoverAnimation = new DecelerateAnimation(250, 1, Direction.BACKWARDS);
+
+    public Dragging(Class<?> clazz,String name, float initialXVal, float initialYVal) {
+        this.moduleClazz = clazz;
         this.name = name;
         this.xPos = initialXVal;
         this.yPos = initialYVal;
         this.initialXVal = initialXVal;
         this.initialYVal = initialYVal;
     }
-
 
     private String longestModule;
 
@@ -80,4 +80,8 @@ public class Dragging implements Access.InstanceAccess {
         if (button == 0) dragging = false;
     }
 
+    public void setWH(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
 }

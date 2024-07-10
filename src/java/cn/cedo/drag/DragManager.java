@@ -19,8 +19,8 @@ public class DragManager {
     private final File DRAG_DATA = new File(ConfigManager.fold, "Drag.json");
     private final Gson GSON = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
 
-    public Dragging createDrag(String name, float x, float y) {
-        draggable.put(name, new Dragging(name, x, y));
+    public Dragging createDrag(Class<?> clazz,String name, float x, float y) {
+        draggable.put(name, new Dragging(clazz,name, x, y));
         return draggable.get(name);
     }
 

@@ -17,11 +17,12 @@ public class TargetManager implements Access.InstanceAccess {
     public void onMotionEvent(MotionUpdateEvent event) {
         sortTargets();
 
+        if (!targets.isEmpty()) target = targets.get(0);
+
         if (mc.thePlayer.getDistanceToEntity(target) > 6 || target.getHealth() <= 0) {
             target = null;
         }
 
-        if (!targets.isEmpty()) target = targets.get(0);
     }
 
     private void sortTargets() {

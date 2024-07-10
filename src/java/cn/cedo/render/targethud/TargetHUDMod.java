@@ -40,7 +40,7 @@ public class TargetHUDMod implements Access.InstanceAccess {
     }
 
     private EntityLivingBase target;
-    private final Dragging drag = Access.getInstance().getDragManager().createDrag("targetHud", 300, 300);
+    private final Dragging drag = Access.getInstance().getDragManager().createDrag(this.getClass(),"targetHud", 300, 300);
 
     private final Animation openAnimation = new DecelerateAnimation(175, .5);
 

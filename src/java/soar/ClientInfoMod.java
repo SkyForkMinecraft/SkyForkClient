@@ -4,19 +4,16 @@ import java.awt.Color;
 
 import cn.cedo.drag.Dragging;
 import cn.cedo.shader.RoundedUtil;
-import cn.langya.RenderUtil;
-import cn.langya.event.ShaderType;
 
 import cn.langya.font.FontManager;
 import net.minecraft.client.Minecraft;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.events.render.Render2DEvent;
-import org.union4dev.base.events.render.ShaderEvent;
 
 public class ClientInfoMod implements Access.InstanceAccess {
 
-	private final Dragging drag = Access.getInstance().getDragManager().createDrag("clientinfo", 5, 5);
+	private final Dragging drag = Access.getInstance().getDragManager().createDrag(this.getClass(),"clientinfo", 5, 5);
 
 	@EventTarget
 	public void onRender2D(Render2DEvent event) {
@@ -28,11 +25,6 @@ public class ClientInfoMod implements Access.InstanceAccess {
 
 		drag.setWidth(FontManager.M20.getStringWidth(text) + 8);
 		drag.setHeight(8 + (FontManager.M20.getHeight()));
-	}
-
-
-	@EventTarget
-	public void onRenderShadow(ShaderEvent event) {
 	}
 
 }

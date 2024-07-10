@@ -11,7 +11,7 @@ public class ScoreboardMod implements Access.InstanceAccess {
 
     public static final BooleanValue redNumbers = new BooleanValue("行数", false);
 
-    public static final Dragging drag = Access.getInstance().getDragManager().createDrag("scoreboard", 0, 50);
+    public static final Dragging drag = Access.getInstance().getDragManager().createDrag(ScoreboardMod.class,"scoreboard", 0, 50);
     private boolean set = false;
 
     @EventTarget

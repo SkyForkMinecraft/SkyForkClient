@@ -9,8 +9,6 @@ import net.minecraft.client.settings.KeyBinding;
 import org.lwjgl.input.Keyboard;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
-import org.union4dev.base.annotations.module.Disable;
-import org.union4dev.base.annotations.module.Enable;
 import org.union4dev.base.events.render.Render2DEvent;
 import cn.cedo.shader.RoundedUtil;
 import org.union4dev.base.events.render.ShaderEvent;
@@ -34,7 +32,7 @@ public class KeyStore  implements Access.InstanceAccess {
     }
 
     private Animation resetButtonHover;
-    private final Dragging pos = Access.getInstance().getDragManager().createDrag( "keystore", 150, 150);
+    private final Dragging pos = Access.getInstance().getDragManager().createDrag(this.getClass(), "keystore", 150, 150);
 
     public void draw(float x, float y, float width, float height, int radius, KeyBinding key) {
 
