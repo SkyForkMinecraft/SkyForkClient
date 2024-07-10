@@ -9,8 +9,8 @@ public enum Start {
     public static void main(String[] args)
     {
         // System.setProperty("org.lwjgl.librarypath", new File("C:\\SkyForkLauncher\\run\\natives").getAbsolutePath());
-        Main.main(concat(new String[] {"--version", "mcp", "--accessToken", "0","--assetsDir", "assets", "--assetIndex", "1.8", "--userProperties", "{}"}, args));
-        // Main.main(concat(new String[] { "--version", "mcp","--username","zdshkasopd" ,"--accessToken", "0", "--assetsDir", "assets", "--assetIndex", "1.8", "--userProperties", "{}" }, args));
+       // Main.main(concat(new String[] {"--version", "mcp", "--accessToken", "0","--assetsDir", "assets", "--assetIndex", "1.8", "--userProperties", "{}"}, args));
+        Main.main(concat(new String[] { "--version", "mcp","--username","LangYa466" ,"--accessToken", "0", "--assetsDir", "assets", "--assetIndex", "1.8", "--userProperties", "{}" }, args));
     }
 
     public static <T> T[] concat(T[] first, T[] second)
