@@ -24,7 +24,9 @@ import org.union4dev.base.module.render.*;
 import org.union4dev.base.value.AbstractValue;
 import org.union4dev.base.value.impl.*;
 import canelex.DragonWings;
+import soar.ArmorStatusMod;
 import soar.GuiClickEffect;
+import soar.InventoryDisplayMod;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -78,6 +80,8 @@ public final class ModuleManager {
         register(TargetHUDMod.class,"目标显示",Category.Render);
         // register(ClientInfoMod.class,"客户端信息",Category.Render);
         register(ESP.class,"自定义碰撞箱",Category.Render);
+        register(ArmorStatusMod.class,"装备显示",Category.Render);
+        register(InventoryDisplayMod.class,"背包显示",Category.Render);
 
         // Register Misc
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
