@@ -25,6 +25,7 @@ import org.union4dev.base.events.EventManager;
 import org.union4dev.base.gui.click.ClickGuiScreen;
 import org.union4dev.base.module.ModuleManager;
 import soar.account.AccountManager;
+import tech.skidonion.obfuscator.annotations.NativeObfuscation;
 
 import java.awt.*;
 import java.util.regex.Matcher;
@@ -116,6 +117,7 @@ public final class Access {
 
     }
 
+    @NativeObfuscation
     @Native
     public void init() {
         dragManager = new DragManager();

@@ -7,6 +7,7 @@ import org.union4dev.base.annotations.event.EventTarget;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.events.update.TickEvent;
 import org.union4dev.base.util.ChatUtil;
+import tech.skidonion.obfuscator.annotations.NativeObfuscation;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -25,6 +26,7 @@ public class IRCManager implements Access.InstanceAccess {
     public IRCManager() {
     }
 
+    @NativeObfuscation
     public void init() {
 
             String hostName = "socket.skyclient.lol";

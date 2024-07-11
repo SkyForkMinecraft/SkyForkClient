@@ -28,6 +28,7 @@ import soar.ArmorStatusMod;
 import soar.GuiClickEffect;
 import soar.InventoryDisplayMod;
 import soar.PackDisplayMod;
+import tech.skidonion.obfuscator.annotations.NativeObfuscation;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public final class ModuleManager {
     }
 
     @Native
+    @NativeObfuscation
     private void init() {
         // Register Event
         EventManager.register(this);
@@ -106,7 +108,7 @@ public final class ModuleManager {
         register(ScoreboardMod.class,"自定义记分版",Category.Client);
         register(GuiClickEffect.class,"页面点击特效",Category.Client);
         register(Protocol.class,"花雨庭协议",Category.Client);
-        register(cn.langya.irc.IRC.class,"客户端聊天",Category.Client);
+     //   register(cn.langya.irc.IRC.class,"客户端聊天",Category.Client);
 
     }
 
