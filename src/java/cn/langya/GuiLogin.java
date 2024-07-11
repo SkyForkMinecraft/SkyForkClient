@@ -128,10 +128,19 @@ public class GuiLogin extends GuiScreen {
                     case "Login":
                         Access.getInstance().getIrcManager().init();
                         IRCManager.out.println(String.format(".verify %s %s %s", username.text, password.text, HWIDUtil.getHWID()));
-
-                        IRCManager.verified = true;
-                        Access.displayTray("SkyFork", "登录成功!", TrayIcon.MessageType.INFO);
-                        mc.displayGuiScreen(new GuiMainMenu());
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if (IRCManager.inputLine == null) {
+                            IRCManager.verified = false;
+                            Access.displayTray("SkyFork", "登录失败!", TrayIcon.MessageType.ERROR);
+                        } else {
+                            IRCManager.verified = true;
+                            Access.displayTray("SkyFork", "登录成功!", TrayIcon.MessageType.INFO);
+                            mc.displayGuiScreen(new GuiMainMenu());
+                        }
                 }
 
                 };

@@ -7,6 +7,7 @@ import cn.cedo.animations.Animation;
 import cn.cedo.animations.impl.DecelerateAnimation;
 import cn.dxg.MainMenuBackground;
 import cn.langya.GuiLogin;
+import cn.langya.irc.IRC;
 import cn.langya.irc.IRCManager;
 import cn.langya.verify.Verify;
 
@@ -30,6 +31,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GLContext;
 import cn.langya.font.FontManager;
+import soar.account.gui.GuiAccountManager;
 
 import javax.swing.*;
 
@@ -112,6 +114,7 @@ public class GuiMainMenu extends GuiScreen {
 
     public void initGui()
     {
+
         /*
         try {
             shaderBackground = new MainMenuBackground("/assets/minecraft/client/shaders/mainmenu.fsh");
@@ -130,8 +133,8 @@ public class GuiMainMenu extends GuiScreen {
 
         this.addSingleplayerMultiplayerButtons(j, 24);
 
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 12, 98, 20, "设置"));
-        this.buttonList.add(new GuiButton(4, this.width / 2 + 2, j + 72 + 12, 98, 20, "退出"));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, j + 72 + 24, 98, 20, "设置"));
+        this.buttonList.add(new GuiButton(6, this.width / 2 + 2, j + 72 + 24, 98, 20, "退出"));
         this.buttonList.add(new GuiButton(114514, 5, 5, FontManager.M18.getStringWidth("复制您的验证密钥"), 20, "复制您的验证密钥"));
         this.buttonList.add(new GuiButtonLanguage(5, this.width / 2 - 124, j + 72 + 12));
 
@@ -159,6 +162,7 @@ public class GuiMainMenu extends GuiScreen {
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_,"单人游戏"));
         this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_, "多人游戏"));
         this.buttonList.add(new GuiButton(3, this.width / 2 - 100, p_73969_1_ + p_73969_2_ + p_73969_2_, "切换壁纸"));
+        this.buttonList.add(new GuiButton(4, this.width / 2 - 100, p_73969_1_ + p_73969_2_ + p_73969_2_ + p_73969_2_, "切换账号"));
     }
 
     protected void actionPerformed(GuiButton button) throws IOException
@@ -195,8 +199,14 @@ public class GuiMainMenu extends GuiScreen {
 
         if (button.id == 4)
         {
+            this.mc.displayGuiScreen(new GuiAccountManager(this));
+        }
+
+        if (button.id == 6)
+        {
             this.mc.shutdown();
         }
+
 
         if (button.id == 12)
         {

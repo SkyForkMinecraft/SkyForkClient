@@ -30,6 +30,8 @@ public class ConfigManager {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     public static final File fold = new File(Minecraft.getMinecraft().mcDataDir, "Skyfork");
     public File dir = new File(fold, "config");
+    public File moduleConfigFile = new File(dir, "modules.json");
+    public static File accountFile = new File(new File(fold, "config"), "account.json");
     public ModuleConfig moduleConfig;
     @Getter
     public boolean friststart;
@@ -41,6 +43,20 @@ public class ConfigManager {
         }
         if (!dir.exists()) {
             dir.mkdir();
+        }
+        if (!moduleConfigFile.exists()) {
+            try {
+                moduleConfigFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        if (!accountFile.exists()) {
+            try {
+                accountFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         moduleConfig = new ModuleConfig("modules.json");
         configs.add(moduleConfig);

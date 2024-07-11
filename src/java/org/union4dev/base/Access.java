@@ -3,7 +3,6 @@ package org.union4dev.base;
 import anti_leak.Native;
 import cn.cedo.drag.DragManager;
 import cn.chimera.command.CommandManager;
-import cn.dxg.RotationUtil;
 import cn.langya.MemoryManager;
 import cn.langya.RankManager;
 import cn.langya.TargetManager;
@@ -25,6 +24,7 @@ import org.lwjgl.opengl.Display;
 import org.union4dev.base.events.EventManager;
 import org.union4dev.base.gui.click.ClickGuiScreen;
 import org.union4dev.base.module.ModuleManager;
+import soar.account.AccountManager;
 
 import java.awt.*;
 import java.util.regex.Matcher;
@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "4.5";
+    public static final String CLIENT_VERSION = "4.6";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -87,6 +87,8 @@ public final class Access {
     private CommandManager commandManager;
     @Getter
     private DragManager dragManager;
+    @Getter
+    private AccountManager accountManager;
 
     public static void displayTray(String title, String text, TrayIcon.MessageType type) {
         SystemTray tray = SystemTray.getSystemTray();
@@ -124,6 +126,8 @@ public final class Access {
         clickGui = new ClickGuiScreen();
         notificationManager = new NotificationManager();
         commandManager = new CommandManager();
+        accountManager = new AccountManager();
+        accountManager.load();
 
         // new ClientMain("38.12.30.171", 11451).start();
         // Init ViaMCP
@@ -153,7 +157,6 @@ public final class Access {
         EventManager.register(new RankManager());
         EventManager.register(new TargetManager());
         EventManager.register(new MemoryManager());
-        EventManager.register(new RotationUtil(0,0));
         EventManager.register(new ComboHandler());
         // EventManager.register(new PacketManager());
 

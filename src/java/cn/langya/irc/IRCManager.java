@@ -21,9 +21,8 @@ public class IRCManager implements Access.InstanceAccess {
     public static BufferedReader in = null;
     public static PrintWriter out = null;
     public static boolean verified = false;
-
+    public static String inputLine;
     public IRCManager() {
-        init();
     }
 
     public void init() {
@@ -48,19 +47,19 @@ public class IRCManager implements Access.InstanceAccess {
                 throw new RuntimeException(e);
             }
 
-      //  EventManager.register(this);
-    }
-
-    @EventTarget
-    public void onTick(TickEvent event) {
-
-        try {
-            if (in.readLine().startsWith("MESSAGE")) {
-                ChatUtil.info("[IRC] " + in.readLine().replace("MESSAGE",""));
+        new Thread(() -> {
+            try {
+                while ((inputLine = in.readLine()) != null) {
+                    if (inputLine.startsWith("MESSAGE")) {
+                        ChatUtil.info("[IRC] " + inputLine.replace("MESSAGE",""));
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        }).start();
+
+      //  EventManager.register(this);
     }
 
 

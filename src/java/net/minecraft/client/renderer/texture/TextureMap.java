@@ -38,6 +38,8 @@ import net.optifine.util.CounterInt;
 import net.optifine.util.TextureUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.union4dev.base.events.EventManager;
+import soar.SwitchTextureEvent;
 
 public class TextureMap extends AbstractTexture implements ITickableTextureObject
 {
@@ -485,8 +487,12 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
                 TextureUtils.saveGlTexture("debug/" + this.basePath.replaceAll("/", "_"), this.getGlTextureId(), this.mipmapLevels, stitcher.getCurrentWidth(), stitcher.getCurrentHeight());
             }
 
+            SwitchTextureEvent switchTextureEvent = new SwitchTextureEvent();
+            EventManager.call(switchTextureEvent);
+
             return;
         }
+
     }
 
     public ResourceLocation completeResourceLocation(ResourceLocation p_completeResourceLocation_1_)

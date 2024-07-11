@@ -27,6 +27,7 @@ import canelex.DragonWings;
 import soar.ArmorStatusMod;
 import soar.GuiClickEffect;
 import soar.InventoryDisplayMod;
+import soar.PackDisplayMod;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public final class ModuleManager {
         register(ESP.class,"自定义碰撞箱",Category.Render);
         register(ArmorStatusMod.class,"装备显示",Category.Render);
         register(InventoryDisplayMod.class,"背包显示",Category.Render);
-
+        register(PackDisplayMod.class,"材质包显示",Category.Render);
         // Register Misc
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
         register(CustomWorldTime.class, "自定义世界时间", Category.Misc);

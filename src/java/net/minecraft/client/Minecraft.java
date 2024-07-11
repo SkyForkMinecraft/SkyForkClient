@@ -174,7 +174,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private Entity renderViewEntity;
     public Entity pointedEntity;
     public EffectRenderer effectRenderer;
-    private final Session session;
+    public Session session;
     private boolean isGamePaused;
 
     /** The font renderer used for displaying and measuring text */
@@ -261,7 +261,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private IReloadableResourceManager mcResourceManager;
     private final IMetadataSerializer metadataSerializer_ = new IMetadataSerializer();
     private final List<IResourcePack> defaultResourcePacks = Lists.newArrayList();
-    private final DefaultResourcePack mcDefaultResourcePack;
+    public final DefaultResourcePack mcDefaultResourcePack;
     private ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;
     private IStream stream;
@@ -980,7 +980,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.stream.shutdownStream();
             logger.info("Stopping!");
             Access.getInstance().getConfigManager().saveConfig(Access.getInstance().getConfigManager().moduleConfig.name);
-
+            Access.getInstance().getDragManager().saveDragData();
+            Access.getInstance().getAccountManager().save();
             try
             {
                 this.loadWorld(null);

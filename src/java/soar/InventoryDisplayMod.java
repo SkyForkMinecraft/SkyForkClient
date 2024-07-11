@@ -19,7 +19,7 @@ import java.awt.*;
 
 public class InventoryDisplayMod implements Access.InstanceAccess{
     public ComboValue textMode = new ComboValue("显示文本", "Inventory", "Inventory", "背包");
-    private static final NumberValue customAplha = new NumberValue("自定义不透明度",0,0,255,5);
+    private static final NumberValue customAplha = new NumberValue("自定义不透明度",80,0,255,5);
     private static final NumberValue customRadius = new NumberValue("自定义圆角值", 2,0,10,1);
     private final Dragging drag = Access.getInstance().getDragManager().createDrag(this.getClass(), "inventorydisplay", 150, 150);
     private final BooleanValue blur = new BooleanValue("模糊背景",true);

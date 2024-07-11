@@ -293,8 +293,6 @@ public class FontDrawer {
         RenderUtil.resetColor();
 
     }
-
-
     public void drawGradientStringWithShadow(String s, float x, float y,Color color1,Color color2) {
 
         drawString(s, x + 0.3, y,0,true);
