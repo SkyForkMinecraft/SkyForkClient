@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import cn.langya.font.FontManager;
 import cn.langya.modules.client.ClientSettings;
 import com.google.common.collect.Lists;
 
@@ -163,7 +164,17 @@ public class GuiNewChat extends Gui
         }
 
         int i = MathHelper.floor_float(this.getChatWidth() / this.getChatScale());
-        List<IChatComponent> list = GuiUtilRenderComponents.splitText(chatComponent, i, this.mc.fontRendererObj, false, false);
+
+        List<IChatComponent> list;
+        if (Access.getInstance().getModuleManager().isEnabled(ClientSettings.class)) {
+            if (ClientSettings.font.getValue()) {
+                list = GuiUtilRenderComponents.splitText(chatComponent, i, FontManager.M14, false, false);
+            } else {
+                list = GuiUtilRenderComponents.splitText(chatComponent, i, this.mc.fontRendererObj, false, false);
+            }
+        } else {
+            list = GuiUtilRenderComponents.splitText(chatComponent, i, this.mc.fontRendererObj, false, false);
+        }
         boolean flag = this.getChatOpen();
 
         for (IChatComponent ichatcomponent : list)

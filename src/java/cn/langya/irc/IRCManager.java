@@ -28,6 +28,7 @@ public class IRCManager implements Access.InstanceAccess {
 
     @NativeObfuscation
     public void init() {
+        if (true) return;
 
             String hostName = "socket.skyclient.lol";
             int portNumber = 520;
