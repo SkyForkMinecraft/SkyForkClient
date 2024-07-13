@@ -4,7 +4,11 @@ import anti_leak.Native;
 import cn.langya.event.TextEvent;
 import net.minecraft.util.EnumChatFormatting;
 import org.union4dev.base.annotations.event.EventTarget;
+import unknow.IoUtil;
+import unknow.WebUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -19,25 +23,32 @@ public class RankManager {
 
     public static final List<String> adminList = new CopyOnWriteArrayList<>();
 
+    public RankManager() {
+        BufferedReader br = null;
+        try {
+            br = IoUtil.StringToBufferedReader(WebUtils.get("https://skyclient.lol/rank.txt"));
+            String line;
+            for (line = br.readLine(); line != null; line = br.readLine()) {
+                String[] tokens = line.split("-");
+                String userName = tokens[0];
+                String type = tokens[1];
+                RankUtil.tokens.put(userName,type);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Native
     @EventTarget
     public void onT(TextEvent e) {
-        // 2582457270 赞助用户 20人民币
-        set(e,"NotChisken","SponsorShip");
-        set(e,"lindsey614","SponsorShip");
-
-        // 2696478875 生病龙虾 SickLobster
-        set(e,"UnfairLobster","Staff");
-
-        // 3109983896 high ping hyp group admin
-        set(e,"f_lyx","Frisk++");
-        set(e,"lyx_frisk","Frisk++");
-
-        set(e,"mao_ling_feng","Staff");
-
-        // langya
-        set(e,"Lang7a","Admin");
-        set(e,"LangYa466","Admin");
+        RankUtil.tokens.forEach((playerName, rank) -> set(e, playerName, rank));
     }
 
     private String getRank(String str, String color) {
