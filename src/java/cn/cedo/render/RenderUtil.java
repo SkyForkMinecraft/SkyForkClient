@@ -16,14 +16,23 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.glu.GLU;
+import org.lwjgl.util.vector.Vector2f;
 import org.union4dev.base.Access;
 import cn.cedo.misc.ColorUtil;
+import unknow.Vector3d;
+import unknow.Vector4d;
 
 import java.awt.*;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 
+import static cn.cedo.misc.MathUtils.interpolate;
 import static net.minecraft.client.renderer.GlStateManager.disableBlend;
 import static net.minecraft.client.renderer.GlStateManager.enableTexture2D;
 import static org.lwjgl.opengl.GL11.*;
@@ -849,4 +858,100 @@ public class RenderUtil implements Access.InstanceAccess {
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
     }
+
+    public static void drawTargetESP2D(float x, float y, Color color, Color color2, Color color3, Color color4, float scale, int index) {
+        long millis = System.currentTimeMillis() + (long)index * 400L;
+        double angle = MathHelper.clamp_double((Math.sin((double)millis / 150.0) + 1.0) / 2.0 * 30.0, 0.0, 30.0);
+        double scaled = MathHelper.clamp_double((Math.sin((double)millis / 500.0) + 1.0) / 2.0, 0.8, 1.0);
+        double rotate = MathHelper.clamp_double((Math.sin((double)millis / 1000.0) + 1.0) / 2.0 * 360.0, 0.0, 360.0);
+        rotate += 45.0 - (angle - 15.0);
+        float size = 128.0F * scale * (float)scaled;
+        float x2 = (x -= size / 2.0F) + size;
+        float y2 = (y -= size / 2.0F) + size;
+        GlStateManager.pushMatrix();
+        customRotatedObject2D(x, y, size, size, (float)rotate);
+        GL11.glDisable(3008);
+        GlStateManager.depthMask(false);
+        GlStateManager.enableBlend();
+        GlStateManager.shadeModel(7425);
+        GlStateManager.tryBlendFuncSeparate(770, 1, 1, 0);
+        drawESPImage(new ResourceLocation("client/target.png"), x, y, x2, y2, color, color2, color3, color4);
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.resetColor();
+        GlStateManager.shadeModel(7424);
+        GlStateManager.depthMask(true);
+        GL11.glEnable(3008);
+        GlStateManager.popMatrix();
+    }
+    private static void drawESPImage(ResourceLocation resource, double x, double y, double x2, double y2, Color c, Color c2, Color c3, Color c4) {
+        mc.getTextureManager().bindTexture(resource);
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer bufferbuilder = tessellator.getWorldRenderer();
+        bufferbuilder.begin(9, DefaultVertexFormats.POSITION_TEX_COLOR);
+        bufferbuilder.pos(x, y2, 0.0).tex(0.0, 1.0).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
+        bufferbuilder.pos(x2, y2, 0.0).tex(1.0, 1.0).color(c2.getRed(), c2.getGreen(), c2.getBlue(), c2.getAlpha()).endVertex();
+        bufferbuilder.pos(x2, y, 0.0).tex(1.0, 0.0).color(c3.getRed(), c3.getGreen(), c3.getBlue(), c3.getAlpha()).endVertex();
+        bufferbuilder.pos(x, y, 0.0).tex(0.0, 0.0).color(c4.getRed(), c4.getGreen(), c4.getBlue(), c4.getAlpha()).endVertex();
+        GlStateManager.shadeModel(7425);
+        GlStateManager.depthMask(false);
+        tessellator.draw();
+        GlStateManager.depthMask(true);
+        GlStateManager.shadeModel(7424);
+    }
+
+    public static void customRotatedObject2D(float oXpos, float oYpos, float oWidth, float oHeight, float rotate) {
+        GL11.glTranslated((double)(oXpos + oWidth / 2.0F), (double)(oYpos + oHeight / 2.0F), 0.0);
+        GL11.glRotated((double)rotate, 0.0, 0.0, 1.0);
+        GL11.glTranslated((double)(-oXpos - oWidth / 2.0F), (double)(-oYpos - oHeight / 2.0F), 0.0);
+    }
+
+    public static Vector2f targetESPSPos(EntityLivingBase entity) {
+        EntityRenderer entityRenderer = mc.entityRenderer;
+        float partialTicks = mc.timer.renderPartialTicks;
+        int scaleFactor = (new ScaledResolution(mc)).getScaleFactor();
+        double x = interpolate(entity.posX, entity.prevPosX, (double)partialTicks);
+        double y = interpolate(entity.posY, entity.prevPosY, (double)partialTicks);
+        double z = interpolate(entity.posZ, entity.prevPosZ, (double)partialTicks);
+        double height = (double)(entity.height / (entity.isChild() ? 1.75F : 1.0F) / 2.0F);
+        double width = 0.0;
+        AxisAlignedBB aabb = new AxisAlignedBB(x - 0.0, y, z - 0.0, x + 0.0, y + height, z + 0.0);
+        Vector3d[] vectors = new Vector3d[]{new Vector3d(aabb.minX, aabb.minY, aabb.minZ), new Vector3d(aabb.minX, aabb.maxY, aabb.minZ), new Vector3d(aabb.maxX, aabb.minY, aabb.minZ), new Vector3d(aabb.maxX, aabb.maxY, aabb.minZ), new Vector3d(aabb.minX, aabb.minY, aabb.maxZ), new Vector3d(aabb.minX, aabb.maxY, aabb.maxZ), new Vector3d(aabb.maxX, aabb.minY, aabb.maxZ), new Vector3d(aabb.maxX, aabb.maxY, aabb.maxZ)};
+        entityRenderer.setupCameraTransform(partialTicks, 0);
+        Vector4d position = null;
+        Vector3d[] vecs3 = vectors;
+        int vecLength = vectors.length;
+
+        for(int vecI = 0; vecI < vecLength; ++vecI) {
+            Vector3d vector = vecs3[vecI];
+            vector = project2D(scaleFactor, vector.getX() - mc.getRenderManager().viewerPosX, vector.getY() - mc.getRenderManager().viewerPosY, vector.getZ() - mc.getRenderManager().viewerPosZ);
+            if (vector != null && vector.getZ() >= 0.0 && vector.getZ() < 1.0) {
+                if (position == null) {
+                    position = new Vector4d(vector.getX(), vector.getY(), vector.getZ(), 0.0);
+                }
+
+                position.x = Math.min(vector.getX(), position.x);
+                position.y = Math.min(vector.getY(), position.y);
+                position.z = Math.max(vector.getX(), position.z);
+                position.w = Math.max(vector.getY(), position.w);
+            }
+        }
+
+        entityRenderer.setupOverlayRendering();
+        if (position != null) {
+            return new Vector2f((float)position.x, (float)position.y);
+        } else {
+            return null;
+        }
+    }
+    private static Vector3d project2D(int scaleFactor, double x, double y, double z) {
+        IntBuffer viewport = GLAllocation.createDirectIntBuffer(16);
+        FloatBuffer modelView = GLAllocation.createDirectFloatBuffer(16);
+        FloatBuffer projection = GLAllocation.createDirectFloatBuffer(16);
+        FloatBuffer vector = GLAllocation.createDirectFloatBuffer(4);
+        GL11.glGetFloat(2982, modelView);
+        GL11.glGetFloat(2983, projection);
+        GL11.glGetInteger(2978, viewport);
+        return GLU.gluProject((float)x, (float)y, (float)z, modelView, projection, viewport, vector) ? new Vector3d((double)(vector.get(0) / (float)scaleFactor), (double)(((float) Display.getHeight() - vector.get(1)) / (float)scaleFactor), (double)vector.get(2)) : null;
+    }
+
 }

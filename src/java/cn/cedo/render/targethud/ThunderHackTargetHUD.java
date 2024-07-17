@@ -42,17 +42,18 @@ public class ThunderHackTargetHUD extends TargetHUD {
             StencilUtil.uninitStencilBuffer();
             GlStateManager.disableBlend();
         }
+        float animatedHealthBar = 1F;
         FontManager.M18.drawString(target.getName(), x + 54.0f, y + 6.0f, -1);
         final float f = (float)(92.0 * healthPercentage);
-        target.animatedHealthBar = AnimationUtil.animate(target.animatedHealthBar, f, 0.1f);
+        animatedHealthBar = AnimationUtil.animate(animatedHealthBar, f, 0.1f);
         GlStateManager.pushMatrix();
         GlStateManager.scale(0.8, 0.8, 0.8);
         if (target != null) {
             RenderUtil.drawEquippedShit2((int)(x + 42.0f) / 0.8, (int)(y + 18.0f) / 0.8, target);
         }
         GlStateManager.popMatrix();
-        GlowUtils.drawGlow(x + 54.0f, y + 36.0f, target.animatedHealthBar, 8.0f, 16, Access.CLIENT_COLOR, () -> RoundedUtil.drawRound(x + 54.0f, y + 36.0f, target.animatedHealthBar, 8.0f, 2.0f, Access.CLIENT_COLOR));
-        RoundedUtil.drawRound(x + 54.0f, y + 36.0f, target.animatedHealthBar, 8.0f, 2.0f, Access.CLIENT_COLOR);
+        GlowUtils.drawGlow(x + 54.0f, y + 36.0f, animatedHealthBar, 8.0f, 16, Access.CLIENT_COLOR, () -> RoundedUtil.drawRound(x + 54.0f, y + 36.0f, target.animatedHealthBar, 8.0f, 2.0f, Access.CLIENT_COLOR));
+        RoundedUtil.drawRound(x + 54.0f, y + 36.0f, animatedHealthBar, 8.0f, 2.0f, Access.CLIENT_COLOR);
         FontManager.M14.drawCenteredString(String.valueOf(MathUtils.round(target.getHealth(), 1)), x + 100.0f, y + 38.0f, -1);
     }
 

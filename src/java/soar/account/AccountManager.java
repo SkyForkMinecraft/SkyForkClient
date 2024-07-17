@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import cn.langya.files.ConfigManager;
+import cn.dxg.config.ConfigManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.Session;

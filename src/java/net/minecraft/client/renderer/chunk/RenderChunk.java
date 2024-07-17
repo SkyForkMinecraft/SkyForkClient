@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.chunk;
 
+import cn.imflowow.ChunkAnimator;
 import com.google.common.collect.Sets;
 import java.nio.FloatBuffer;
 import java.util.BitSet;
@@ -44,6 +45,7 @@ import net.optifine.reflect.ReflectorForge;
 import net.optifine.render.AabbFrame;
 import net.optifine.render.RenderEnv;
 import net.optifine.shaders.SVertexBuilder;
+import org.union4dev.base.Access;
 
 public class RenderChunk
 {
@@ -120,6 +122,9 @@ public class RenderChunk
 
     public void setPosition(BlockPos pos)
     {
+        if (Access.getInstance().getModuleManager().isEnabled(ChunkAnimator.class)) {
+            ChunkAnimator.animation.setPosition(this, pos);
+        }
         this.stopCompileTask();
         this.position = pos;
         int i = 8;

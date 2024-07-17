@@ -668,6 +668,10 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     {
     }
 
+    public void onDrag(int mouseX, int mouseY) {
+    }
+
+
     public static DynamicTexture d;
     public static String url = "https://imgapi.xl0408.top/index.php";
     public void drawClientBackground() {

@@ -78,7 +78,7 @@ public class GuiChat extends GuiScreen
     {
         Keyboard.enableRepeatEvents(false);
         this.mc.ingameGUI.getChatGUI().resetScroll();
-        Access.getInstance().getDragManager().saveDragData();
+        Access.getInstance().getConfigManager().saveAllConfig();
     }
 
     public void updateScreen()

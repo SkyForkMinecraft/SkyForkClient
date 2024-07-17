@@ -4,7 +4,9 @@ import cn.cedo.misc.ColorUtil;
 import cn.cedo.render.RenderUtil;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
 import org.lwjgl.opengl.GL11;
 import org.union4dev.base.Access;
 import org.union4dev.base.annotations.event.EventTarget;
@@ -14,6 +16,7 @@ import org.union4dev.base.value.impl.ComboValue;
 import org.union4dev.base.value.impl.NumberValue;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class AttackCircle implements Access.InstanceAccess {
 
@@ -22,13 +25,14 @@ public class AttackCircle implements Access.InstanceAccess {
     private final BooleanValue playerCircle = new BooleanValue("玩家光环",true);
     private final NumberValue circleAccuracy = new NumberValue("圆角值", 15, 0, 60,2);
     private static final ComboValue colorMode = new ComboValue("颜色模式","客户端","客户端","自定义","彩虹");
-    private static final NumberValue customColorRed = new NumberValue("自定义红色",0,0,255,5);
-    private static final NumberValue customColorGreen = new NumberValue("自定义绿色",0,0,255,5);
-    private static final NumberValue customColorBlue = new NumberValue("自定义蓝色",0,0,255,5);
+    private static final NumberValue customColorRed = new NumberValue("自定义红色",255,0,255,5);
+    private static final NumberValue customColorGreen = new NumberValue("自定义绿色",255,0,255,5);
+    private static final NumberValue customColorBlue = new NumberValue("自定义蓝色",255,0,255,5);
 
     @EventTarget
     void onRender3D(Render3DEvent e) {
         float range = 3.0F;
+
 
         if (playerCircle.getValue()) {
             drawCircle(range, mc.thePlayer);
@@ -42,6 +46,18 @@ public class AttackCircle implements Access.InstanceAccess {
             }
         }
 
+        /*
+        for (Entity entity : mc.theWorld.loadedEntityList) {
+                if (entity != mc.thePlayer && entity instanceof EntityLivingBase && ((EntityLivingBase) entity).getHealth() > 0 && !entity.isDead && mc.thePlayer.getDistanceToEntity(entity) < targetMaxDistance.getValue()) {
+                    float dst = mc.thePlayer.getDistanceToEntity(entity);
+                    RenderUtil.drawTargetESP2D((Objects.requireNonNull(RenderUtil.targetESPSPos((EntityLivingBase) entity))).x, (Objects.requireNonNull(RenderUtil.targetESPSPos((EntityLivingBase) entity))).y, Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, (1.0F - MathHelper.clamp_float(Math.abs(dst - 6.0F) / 60.0F, 0.0F, 0.75F)), 1);
+
+                }
+            }
+
+
+
+         */
     }
 
     private void drawCircle(float range,EntityPlayer target) {

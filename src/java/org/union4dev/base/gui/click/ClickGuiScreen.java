@@ -29,7 +29,7 @@ public class ClickGuiScreen extends GuiScreen {
 
     @Override
     public void onGuiClosed() {
-        Access.getInstance().getConfigManager().saveConfig(Access.getInstance().getConfigManager().moduleConfig.name);
+        Access.getInstance().getConfigManager().saveAllConfig();
     }
 
     @Override

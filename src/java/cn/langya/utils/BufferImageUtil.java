@@ -2,8 +2,6 @@ package cn.langya.utils;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.Java2DFrameConverter;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL12;
 import cn.cedo.render.GLUtil;
@@ -21,6 +19,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class BufferImageUtil {
 
+    /*
     public static BufferedImage mp4toBufferImage(File file) {
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(file);
         Java2DFrameConverter converter = new Java2DFrameConverter();
@@ -98,7 +97,6 @@ public class BufferImageUtil {
         return null;
     }
 
-    */
     public static int bufferImageToTexture(BufferedImage image){
 
         int[] pixels = new int[image.getWidth() * image.getHeight()];
@@ -149,5 +147,7 @@ public class BufferImageUtil {
         Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, width, height, width, height);
         GLUtil.endBlend();
     }
+    */
+
 
 }

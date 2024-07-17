@@ -5,6 +5,7 @@ import alan.base.ShaderRenderType;
 import alan.impl.MainMenuBackgroundShader;
 import cn.cedo.animations.Animation;
 import cn.cedo.animations.impl.DecelerateAnimation;
+import cn.cedo.particles.ParticleEngine;
 import cn.dxg.MainMenuBackground;
 import cn.langya.GuiLogin;
 import cn.langya.irc.IRC;
@@ -29,6 +30,7 @@ import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import cn.langya.font.FontManager;
 import soar.account.gui.GuiAccountManager;
@@ -68,7 +70,6 @@ public class GuiMainMenu extends GuiScreen {
     public Animation a = new DecelerateAnimation(500, 1.0);
     int bg = 0;
     MainMenuBackground shaderBackground;
-
 
     public GuiMainMenu()
     {
@@ -114,6 +115,7 @@ public class GuiMainMenu extends GuiScreen {
 
     public void initGui()
     {
+
 
         /*
         try {
@@ -255,6 +257,7 @@ public class GuiMainMenu extends GuiScreen {
     {
         // Renders the background
         RiseShaders.MAIN_MENU_SHADER.run(ShaderRenderType.OVERLAY, partialTicks, null);
+
         // JavaCVUtil.drawMP4();
         GlStateManager.pushMatrix();
         GlStateManager.translate((this.width / 2 + 90), 70.0F, 0.0F);

@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer;
 
+import cn.imflowow.LowFire;
 import cn.superskidder.modules.OldAnimation;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -668,6 +669,11 @@ public class ItemRenderer
             float f5 = (0.0F - f) / 2.0F;
             float f6 = f5 + f;
             float f7 = 0.0F - f / 2.0F;
+
+            if (Access.getInstance().getModuleManager().isEnabled(LowFire.class)) {
+                f7 += LowFire.y.getValue().floatValue();
+            }
+
             float f8 = f7 + f;
             float f9 = -0.5F;
             GlStateManager.translate((float)(-(i * 2 - 1)) * 0.24F, -0.3F, 0.0F);

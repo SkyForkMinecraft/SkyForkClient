@@ -3,10 +3,10 @@ package org.union4dev.base;
 import anti_leak.Native;
 import cn.cedo.drag.DragManager;
 import cn.chimera.command.CommandManager;
+import cn.dxg.config.ConfigManager;
 import cn.langya.MemoryManager;
 import cn.langya.RankManager;
 import cn.langya.TargetManager;
-import cn.langya.files.ConfigManager;
 import cn.langya.irc.IRCManager;
 import cn.langya.verify.Verify;
 import cn.superskidder.ComboHandler;
@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "4.7.2";
+    public static final String CLIENT_VERSION = "4.7.3";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -121,10 +121,9 @@ public final class Access {
     @Native
     public void init() {
         dragManager = new DragManager();
-        dragManager.loadDragData();
         moduleManager = new ModuleManager();
         configManager = new ConfigManager();
-        configManager.getConfigs().forEach(config -> configManager.loadConfig(config.name));
+        configManager.loadAllConfig();
         clickGui = new ClickGuiScreen();
         notificationManager = new NotificationManager();
         commandManager = new CommandManager();
