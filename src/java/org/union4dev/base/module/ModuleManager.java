@@ -114,7 +114,6 @@ public final class ModuleManager {
         register(Protocol.class,"花雨庭协议",Category.Client);
         register(LowFire.class,"低火",Category.Client);
         register(EnchantEffect.class,"自定义附魔颜色",Category.Client);
-
         //   register(cn.langya.irc.IRC.class,"客户端聊天",Category.Client);
 
     }
