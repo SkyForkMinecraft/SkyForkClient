@@ -562,31 +562,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     private void createDisplay() throws LWJGLException
     {
         Display.setResizable(true);
-        Display.setTitle(CLIENT_NAME  + " - " + CLIENT_VERSION + " - 加载中...");
+        Display.setTitle(CLIENT_NAME  + " - " + CLIENT_VERSION + " - 加载中...  (别点窗口不然会卡住)");
 
-        try
-        {
-            Display.create((new PixelFormat()).withDepthBits(24));
-        }
-        catch (LWJGLException lwjglexception)
-        {
-            logger.error("Couldn't set pixel format", lwjglexception);
-
-            try
-            {
-                Thread.sleep(1000L);
-            }
-            catch (InterruptedException ignored)
-            {
-            }
-
-            if (this.fullscreen)
-            {
-                this.updateDisplayMode();
-            }
-
-            Display.create();
-        }
+        Display.create((new PixelFormat()).withDepthBits(24));
     }
 
     private void setInitialDisplayMode() throws LWJGLException

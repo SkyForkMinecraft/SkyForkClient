@@ -1884,54 +1884,14 @@ public class Config
             DisplayMode displaymode = Display.getDisplayMode();
             dbg("FSAA Samples: " + i);
 
-            try
+            Display.destroy();
+            Display.setDisplayMode(displaymode);
+            Display.create((new PixelFormat()).withDepthBits(24).withSamples(i));
+
+            if (Util.getOSType() == Util.EnumOS.WINDOWS)
             {
-                Display.destroy();
-                Display.setDisplayMode(displaymode);
-                Display.create((new PixelFormat()).withDepthBits(24).withSamples(i));
-
-                if (Util.getOSType() == Util.EnumOS.WINDOWS)
-                {
-                    Display.setResizable(false);
-                    Display.setResizable(true);
-                }
-            }
-            catch (LWJGLException lwjglexception2)
-            {
-                warn("Error setting FSAA: " + i + "x");
-                lwjglexception2.printStackTrace();
-
-                try
-                {
-                    Display.setDisplayMode(displaymode);
-                    Display.create((new PixelFormat()).withDepthBits(24));
-
-                    if (Util.getOSType() == Util.EnumOS.WINDOWS)
-                    {
-                        Display.setResizable(false);
-                        Display.setResizable(true);
-                    }
-                }
-                catch (LWJGLException lwjglexception1)
-                {
-                    lwjglexception1.printStackTrace();
-
-                    try
-                    {
-                        Display.setDisplayMode(displaymode);
-                        Display.create();
-
-                        if (Util.getOSType() == Util.EnumOS.WINDOWS)
-                        {
-                            Display.setResizable(false);
-                            Display.setResizable(true);
-                        }
-                    }
-                    catch (LWJGLException lwjglexception)
-                    {
-                        lwjglexception.printStackTrace();
-                    }
-                }
+                Display.setResizable(false);
+                Display.setResizable(true);
             }
 
             if (!Minecraft.isRunningOnMac && getDefaultResourcePack() != null)
