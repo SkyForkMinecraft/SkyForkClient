@@ -30,6 +30,9 @@ public class RoundedUtil {
         drawRound(x, y, width, height, radius, false, color);
     }
 
+    public static void drawThemeColorRound (float x, float y, float width, float height, float radius, Color bottomLeft, Color topLeft, Color bottomRight, Color topRight, Color color) {
+        drawRound(x, y, width, height, radius, false, color);
+    }
 
     public static void drawGradientHorizontal(float x, float y, float width, float height, float radius, Color left, Color right) {
         drawGradientRound(x, y, width, height, radius, left, left, right, right);
@@ -68,6 +71,19 @@ public class RoundedUtil {
         GLUtil.endBlend();
     }
 
+    public static Color reAlpha(Color color, int alpha) {
+        // Ensure alpha is within the range [0, 255]
+        alpha = Math.max(0, Math.min(255, alpha));
+
+        // Get the RGB values of the color
+        int red = color.getRed();
+        int green = color.getGreen();
+        int blue = color.getBlue();
+
+        // Return a new color with the adjusted alpha value
+        return new Color(red, green, blue, alpha);
+    }
+
 
     public static void drawRound(float x, float y, float width, float height, float radius, boolean blur, Color color) {
         RenderUtil.resetColor();
@@ -84,7 +100,6 @@ public class RoundedUtil {
         roundedShader.unload();
         GLUtil.endBlend();
     }
-
 
     public static void drawRoundOutline(float x, float y, float width, float height, float radius, float outlineThickness, Color color, Color outlineColor) {
         RenderUtil.resetColor();

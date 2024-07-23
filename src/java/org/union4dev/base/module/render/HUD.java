@@ -1,6 +1,7 @@
 package org.union4dev.base.module.render;
 
 import cn.cedo.misc.ColorUtil;
+import cn.cedo.misc.GradientColorWheel;
 import cn.cedo.misc.Pair;
 import cn.langya.event.ShaderType;
 import cn.langya.font.FontManager;
@@ -28,7 +29,7 @@ import static cn.superskidder.GaussianBlur.createFrameBuffer;
 
 @Startup
 public class HUD implements Access.InstanceAccess {
-
+    public static final GradientColorWheel colorWheel = new GradientColorWheel();
     public static NumberValue radius = new NumberValue("模糊半径", 10, 1, 50, 1);
     public static NumberValue iterations = new NumberValue("模糊迭代", 4, 1, 15, 1);
     public static NumberValue shadowRadius = new NumberValue("阴影半径", 6, 1, 20, 1);
