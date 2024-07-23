@@ -26,6 +26,7 @@ public class IRCManager implements Access.InstanceAccess {
     public IRCManager() {
     }
 
+    @com.yumegod.obfuscation.Native
     @NativeObfuscation
     public void init() {
         if (true) return;

@@ -24,6 +24,11 @@ public class RankManager {
     public static final List<String> adminList = new CopyOnWriteArrayList<>();
 
     public RankManager() {
+        init();
+    }
+
+    @com.yumegod.obfuscation.Native
+    private void init() {
         BufferedReader br = null;
         try {
             br = IoUtil.StringToBufferedReader(WebUtils.get("https://gitee.com/langya1337/skyfork/raw/master/rank.txt"));

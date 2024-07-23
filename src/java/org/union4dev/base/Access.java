@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
  */
 public final class Access {
 
-    public static final String CLIENT_VERSION = "4.7.3";
+    public static final String CLIENT_VERSION = "4.7.4";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -117,9 +117,10 @@ public final class Access {
 
     }
 
-    @NativeObfuscation
+    @com.yumegod.obfuscation.Native
     @Native
     public void init() {
+        Verify.verify();
         dragManager = new DragManager();
         moduleManager = new ModuleManager();
         configManager = new ConfigManager();

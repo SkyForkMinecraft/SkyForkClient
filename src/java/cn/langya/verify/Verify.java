@@ -1,5 +1,6 @@
 package cn.langya.verify;
 
+import com.yumegod.obfuscation.Native;
 import lombok.SneakyThrows;
 import unknow.WebUtils;
 
@@ -42,14 +43,15 @@ public class Verify {
     }
 
 
+    @Native
     @SneakyThrows
     public static void verify() {
-        if (!WebUtils.get("https://skyclient.lol/%E5%93%A5%E6%88%91%E5%B0%B1%E4%B8%80%E5%85%8D%E8%B4%B9%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%AB%E7%A0%B4%E8%A7%A3%E4%BA%862.txt").contains(CLIENT_VERSION)) {
+        if (!WebUtils.get("https://gitee.com/langya1337/skyfork/raw/master/version.txt").contains(CLIENT_VERSION)) {
             displayTray(CLIENT_NAME,"您的客户端版本过低，请更新到最新版本！", TrayIcon.MessageType.ERROR);
-            Desktop.getDesktop().browse(new URL("https://qm.qq.com/q/qH7jTDrJcI").toURI());
+            Desktop.getDesktop().browse(new URL("https://skyfork.cn").toURI());
         }
 
-        if (WebUtils.get("https://skyclient.lol/%E5%93%A5%E6%88%91%E5%B0%B1%E4%B8%80%E5%85%8D%E8%B4%B9%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%AB%E7%A0%B4%E8%A7%A3%E4%BA%86.txt").contains(getHWID())) {
+        if (WebUtils.get("https://gitee.com/langya1337/skyfork/raw/master/hwid.txt").contains(getHWID())) {
             user = User.User;
             displayTray(CLIENT_NAME,"已切换为付费模式", TrayIcon.MessageType.INFO);
         } else {
