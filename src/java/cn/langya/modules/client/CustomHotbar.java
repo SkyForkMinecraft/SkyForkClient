@@ -1,7 +1,7 @@
 package cn.langya.modules.client;
 
 import cn.cedo.misc.MathUtils;
-import cn.cedo.misc.StopWatch;
+import cn.langya.utils.StopWatch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
