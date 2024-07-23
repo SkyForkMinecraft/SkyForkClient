@@ -1,5 +1,6 @@
 package org.union4dev.base.module;
 import anti_leak.Native;
+import cn.bzdhyp.module.TargetESP;
 import cn.cedo.ScoreboardMod;
 import cn.cedo.render.targethud.TargetHUDMod;
 import cn.dxg.CheaterDetector;
@@ -80,6 +81,7 @@ public final class ModuleManager {
         register(CPSInfo.class,"CPS显示",Category.Render);
         register(MotionBlur.class,"动态模糊",Category.Render);
         // register(MusicPlayerOverlay.class,"音乐歌词",Category.Render);
+        register(TargetESP.class,"攻击显示",Category.Render);
         register(AttackCircle.class,"攻击距离光环",Category.Render);
         register(TargetCircle.class,"目标光环",Category.Render);
         register(Combo.class,"连击显示",Category.Render);
@@ -89,6 +91,7 @@ public final class ModuleManager {
         register(ArmorStatusMod.class,"装备显示",Category.Render);
         register(InventoryDisplayMod.class,"背包显示",Category.Render);
         register(PackDisplayMod.class,"材质包显示",Category.Render);
+
         // Register Misc
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
         register(CustomWorldTime.class, "自定义世界时间", Category.Misc);

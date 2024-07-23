@@ -1,5 +1,6 @@
 package cn.cedo.render;
 
+import cn.bzdhyp.module.TargetESP;
 import cn.langya.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -859,23 +860,23 @@ public class RenderUtil implements Access.InstanceAccess {
         GlStateManager.popMatrix();
     }
 
-    public static void drawTargetESP2D(float x, float y, Color color, Color color2, Color color3, Color color4, float scale, int index) {
-        long millis = System.currentTimeMillis() + (long)index * 400L;
-        double angle = MathHelper.clamp_double((Math.sin((double)millis / 150.0) + 1.0) / 2.0 * 30.0, 0.0, 30.0);
-        double scaled = MathHelper.clamp_double((Math.sin((double)millis / 500.0) + 1.0) / 2.0, 0.8, 1.0);
-        double rotate = MathHelper.clamp_double((Math.sin((double)millis / 1000.0) + 1.0) / 2.0 * 360.0, 0.0, 360.0);
-        rotate += 45.0 - (angle - 15.0);
-        float size = 128.0F * scale * (float)scaled;
-        float x2 = (x -= size / 2.0F) + size;
-        float y2 = (y -= size / 2.0F) + size;
+    public static void drawTargetESP2D(float x, float y, Color color, Color color2, Color color3, Color color4, float scale, int index, float alpha) {
+        long millis = System.currentTimeMillis() + (long) index * 400L;
+        double angle = MathHelper.clamp_double((Math.sin((double) millis / 150.0) + 1.0) / 2.0 * 30.0, 0.0, 30.0);
+        double scaled = MathHelper.clamp_double((Math.sin((double) millis / 500.0) + 1.0) / 2.0, 0.8, 1.0);
+        double rotate = MathHelper.clamp_double((Math.sin((double) millis / 1000.0) + 1.0) / 2.0 * 360.0, 0.0, 360.0);
+        rotate = (double) 45 - (angle - 15.0) + rotate;
+        float size = 128.0f * scale * (float) scaled;
+        float x2 = (x -= size / 2.0f) + size;
+        float y2 = (y -= size / 2.0f) + size;
         GlStateManager.pushMatrix();
-        customRotatedObject2D(x, y, size, size, (float)rotate);
+        RenderUtil.customRotatedObject2D(x, y, size, size, (float) rotate);
         GL11.glDisable(3008);
         GlStateManager.depthMask(false);
         GlStateManager.enableBlend();
         GlStateManager.shadeModel(7425);
         GlStateManager.tryBlendFuncSeparate(770, 1, 1, 0);
-        drawESPImage(new ResourceLocation("client/target.png"), x, y, x2, y2, color, color2, color3, color4);
+        drawESPImage(getESPImage(), x, y, x2, y2, color, color2, color3, color4, alpha);
         GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         GlStateManager.resetColor();
         GlStateManager.shadeModel(7424);
@@ -883,21 +884,33 @@ public class RenderUtil implements Access.InstanceAccess {
         GL11.glEnable(3008);
         GlStateManager.popMatrix();
     }
-    private static void drawESPImage(ResourceLocation resource, double x, double y, double x2, double y2, Color c, Color c2, Color c3, Color c4) {
+
+    private static ResourceLocation getESPImage() {
+        switch (TargetESP.mode.getValue()) {
+            case "Nurikzapen":
+                return new ResourceLocation("client/capture.png");
+            case "Round":
+                return new ResourceLocation("client/round.png");
+        }
+        return null;
+    }
+
+    private static void drawESPImage(ResourceLocation resource, double x, double y, double x2, double y2, Color c, Color c2, Color c3, Color c4, float alpha) {
         mc.getTextureManager().bindTexture(resource);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer bufferbuilder = tessellator.getWorldRenderer();
         bufferbuilder.begin(9, DefaultVertexFormats.POSITION_TEX_COLOR);
-        bufferbuilder.pos(x, y2, 0.0).tex(0.0, 1.0).color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).endVertex();
-        bufferbuilder.pos(x2, y2, 0.0).tex(1.0, 1.0).color(c2.getRed(), c2.getGreen(), c2.getBlue(), c2.getAlpha()).endVertex();
-        bufferbuilder.pos(x2, y, 0.0).tex(1.0, 0.0).color(c3.getRed(), c3.getGreen(), c3.getBlue(), c3.getAlpha()).endVertex();
-        bufferbuilder.pos(x, y, 0.0).tex(0.0, 0.0).color(c4.getRed(), c4.getGreen(), c4.getBlue(), c4.getAlpha()).endVertex();
+        bufferbuilder.pos(x, y2, 0.0).tex(0.0, 1.0).color(c.getRed(), c.getGreen(), c.getBlue(), (int) (alpha * 255)).endVertex();
+        bufferbuilder.pos(x2, y2, 0.0).tex(1.0, 1.0).color(c2.getRed(), c2.getGreen(), c2.getBlue(), (int) (alpha * 255)).endVertex();
+        bufferbuilder.pos(x2, y, 0.0).tex(1.0, 0.0).color(c3.getRed(), c3.getGreen(), c3.getBlue(), (int) (alpha * 255)).endVertex();
+        bufferbuilder.pos(x, y, 0.0).tex(0.0, 0.0).color(c4.getRed(), c4.getGreen(), c4.getBlue(), (int) (alpha * 255)).endVertex();
         GlStateManager.shadeModel(7425);
         GlStateManager.depthMask(false);
         tessellator.draw();
         GlStateManager.depthMask(true);
         GlStateManager.shadeModel(7424);
     }
+
 
     public static void customRotatedObject2D(float oXpos, float oYpos, float oWidth, float oHeight, float rotate) {
         GL11.glTranslated((double)(oXpos + oWidth / 2.0F), (double)(oYpos + oHeight / 2.0F), 0.0);

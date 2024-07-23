@@ -26,7 +26,7 @@ public class RankManager {
     public RankManager() {
         BufferedReader br = null;
         try {
-            br = IoUtil.StringToBufferedReader(WebUtils.get("https://skyclient.lol/rank.php").replaceAll("<br />",""));
+            br = IoUtil.StringToBufferedReader(WebUtils.get("https://skyfork.cn/rank.php").replaceAll("<br />",""));
             String line;
             for (line = br.readLine(); line != null; line = br.readLine()) {
                 String[] tokens = line.split("-");
