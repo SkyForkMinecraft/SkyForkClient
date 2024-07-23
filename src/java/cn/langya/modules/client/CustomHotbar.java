@@ -2,7 +2,6 @@ package cn.langya.modules.client;
 
 import cn.cedo.misc.MathUtils;
 import cn.langya.utils.StopWatch;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,8 +24,8 @@ import static org.union4dev.base.Access.InstanceAccess.mc;
  */
 public class CustomHotbar {
     private final BooleanValue blur = new BooleanValue("模糊背景",true);
-    private static float rPosX;
-    private static StopWatch stopwatch;
+    private static float rPosX = 0f;
+    private static StopWatch stopwatch = new StopWatch();
 
     public CustomHotbar() {
         rPosX = 0f;
@@ -35,7 +34,6 @@ public class CustomHotbar {
 
     @EventTarget
     public void onShaderEvent(ShaderEvent event) {
-        ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
         if (!blur.getValue()) return;
         renderEffect(new ScaledResolution(mc));
     }
@@ -54,7 +52,7 @@ public class CustomHotbar {
                 rPosX = (i - 91 - 1 + entityPlayer.inventory.currentItem * 20);
             }
 
-            RoundedUtil.drawThemeColorRound((float) (i - 91), (float) (sr.getScaledHeight() - ((22 + 4) + 15 * GuiChat.openingAnimation.getOutput())), 182f, 22f, 5f,
+            RoundedUtil.drawThemeColorRound((float) (i - 91), (float) (sr.getScaledHeight() - ((22 + 4) + 15 * GuiChat.openingAnimation.getOutput())), 182f, 22f, 4f,
                     ColorUtil.applyOpacity(reAlpha(HUD.colorWheel.getColor1(),60), 60),
                     ColorUtil.applyOpacity(reAlpha(HUD.colorWheel.getColor4(),60), 60),
                     ColorUtil.applyOpacity(reAlpha(HUD.colorWheel.getColor2(),60), 60),
