@@ -8,6 +8,8 @@ import cn.imflowow.ChunkAnimator;
 import cn.imflowow.EnchantEffect;
 import cn.imflowow.LowFire;
 import cn.langya.modules.render.*;
+import cn.starx.MoBends;
+import cn.starx.WaveyCapes;
 import cn.superskidder.BlockOverlay;
 import cn.langya.elements.impls.*;
 import cn.langya.modules.client.*;
@@ -89,6 +91,9 @@ public final class ModuleManager {
         register(ArmorStatusMod.class,"装备显示",Category.Render);
         register(InventoryDisplayMod.class,"背包显示",Category.Render);
         register(PackDisplayMod.class,"材质包显示",Category.Render);
+        register(WaveyCapes.class,"真实的披风",Category.Render);
+        register(MoBends.class,"真实的动作",Category.Render);
+
         // Register Misc
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
         register(CustomWorldTime.class, "自定义世界时间", Category.Misc);
@@ -433,4 +438,15 @@ public final class ModuleManager {
         this.modules.get(module).setVisible(state);
     }
 
+    public AbstractValue getSetting(String moduleName, String valueName) {
+        for (ModuleHandle value : getCModules().values()) {
+            if (value.getName() != moduleName) continue;
+            for (AbstractValue<?> valueValue : value.getValues()) {
+                if (valueValue.getName() == valueName) {
+                    return valueValue;
+                }
+            }
+        }
+        return null;
+    }
 }

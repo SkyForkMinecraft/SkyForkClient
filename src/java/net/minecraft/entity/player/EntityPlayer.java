@@ -77,6 +77,8 @@ import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
 import org.union4dev.base.events.EventManager;
+import waveycapes.config.Config;
+import waveycapes.sim.StickSimulation;
 
 @SuppressWarnings("incomplete-switch")
 public abstract class EntityPlayer extends EntityLivingBase
@@ -114,6 +116,8 @@ public abstract class EntityPlayer extends EntityLivingBase
     public double chasingPosX;
     public double chasingPosY;
     public double chasingPosZ;
+
+    public final StickSimulation stickSimulation = new StickSimulation();
 
     /** Boolean value indicating weather a player is sleeping or not */
     protected boolean sleeping;
@@ -267,6 +271,45 @@ public abstract class EntityPlayer extends EntityLivingBase
         return (float)Math.sqrt(Math.pow(xDist, 2.0) + Math.pow(yDist, 2.0) + Math.pow(zDist, 2.0));
     }
 
+    public void updateSimulation(EntityPlayer abstractClientPlayer, int partCount) {
+        boolean dirty = false;
+        if(stickSimulation.points.size() != partCount) {
+            stickSimulation.points.clear();
+            stickSimulation.sticks.clear();
+            for (int i = 0; i < partCount; i++) {
+                StickSimulation.Point point = new StickSimulation.Point();
+                point.position.y = -i;
+                point.locked = i == 0;
+                stickSimulation.points.add(point);
+                if(i > 0) {
+                    stickSimulation.sticks.add(new StickSimulation.Stick(stickSimulation.points.get(i-1), point, 1f));
+                }
+            }
+            dirty = true;
+        }
+        if(dirty) {
+            for(int i = 0; i < 10; i++)
+                simulate(abstractClientPlayer);
+        }
+    }
+
+    public void simulate(EntityPlayer abstractClientPlayer) {
+        if(stickSimulation.points.isEmpty()) {
+            return;
+        }
+        stickSimulation.points.get(0).prevPosition.copy(stickSimulation.points.get(0).position);
+        double d = abstractClientPlayer.chasingPosX - abstractClientPlayer.posX;
+        double m = abstractClientPlayer.chasingPosZ - abstractClientPlayer.posZ;
+        float n = abstractClientPlayer.prevRenderYawOffset + abstractClientPlayer.renderYawOffset - abstractClientPlayer.prevRenderYawOffset;
+        double o = MathHelper.sin(n * 0.017453292F);
+        double p = -MathHelper.cos(n * 0.017453292F);
+        float heightMul = Config.heightMultiplier;
+        double fallHack = MathHelper.clamp_double((stickSimulation.points.get(0).position.y - (abstractClientPlayer.posY*heightMul)), 0d, 1d);
+        stickSimulation.points.get(0).position.x += (d * o + m * p) + fallHack;
+        stickSimulation.points.get(0).position.y = (float) (abstractClientPlayer.posY*heightMul + (abstractClientPlayer.isSneaking() ? -4 : 0));
+        stickSimulation.simulate();
+    }
+
     public boolean isBlocking()
     {
         return this.isUsingItem() && this.itemInUse.getItem().getItemUseAction(this.itemInUse) == EnumAction.BLOCK;
@@ -277,6 +320,8 @@ public abstract class EntityPlayer extends EntityLivingBase
      */
     public void onUpdate()
     {
+        simulate(this);
+
         this.noClip = this.isSpectator();
 
         if (this.isSpectator())

@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import cn.starx.MoBends;
 import com.google.common.collect.Lists;
 import java.nio.FloatBuffer;
 import java.util.List;
@@ -31,6 +32,7 @@ import net.optifine.shaders.Shaders;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
+import org.union4dev.base.Access;
 
 public abstract class RendererLivingEntity<T extends EntityLivingBase> extends Render<T>
 {
@@ -110,6 +112,11 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
     {
         if (!Reflector.RenderLivingEvent_Pre_Constructor.exists() || !Reflector.postForgeBusEvent(Reflector.RenderLivingEvent_Pre_Constructor, new Object[] {entity, this, Double.valueOf(x), Double.valueOf(y), Double.valueOf(z)}))
         {
+            if (Access.getInstance().getModuleManager().isEnabled(MoBends.class)) {
+                if (MoBends.onRenderLivingEvent(this, entity, x, y, z, entityYaw, partialTicks)) {
+                    return;
+                }
+            }
             if (animateModelLiving)
             {
                 entity.limbSwingAmount = 1.0F;
