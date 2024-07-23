@@ -1,5 +1,7 @@
 package net.minecraft.entity.player;
 
+import cn.starx.skinlayers3d.CustomizableModelPart;
+import cn.starx.skinlayers3d.PlayerSettings;
 import cn.cedo.KeepSprintEvent;
 import cn.dxg.RotationUtil;
 import com.google.common.base.Charsets;
@@ -81,7 +83,7 @@ import waveycapes.config.Config;
 import waveycapes.sim.StickSimulation;
 
 @SuppressWarnings("incomplete-switch")
-public abstract class EntityPlayer extends EntityLivingBase
+public abstract class EntityPlayer extends EntityLivingBase implements PlayerSettings
 {
     /** Inventory of the player */
     public InventoryPlayer inventory = new InventoryPlayer(this);
@@ -175,6 +177,9 @@ public abstract class EntityPlayer extends EntityLivingBase
     private final GameProfile gameProfile;
     private boolean hasReducedDebug = false;
 
+    private CustomizableModelPart headLayer;
+    private CustomizableModelPart[] skinLayer;
+
     /**
      * An instance of a fishing rod's hook. If this isn't null, the icon image of the fishing rod is slightly different
      */
@@ -199,6 +204,23 @@ public abstract class EntityPlayer extends EntityLivingBase
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0D);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.10000000149011612D);
     }
+
+    public CustomizableModelPart[] getSkinLayers() {
+        return this.skinLayer;
+    }
+
+    public void setupSkinLayers(CustomizableModelPart[] box) {
+        this.skinLayer = box;
+    }
+
+    public CustomizableModelPart getHeadLayers() {
+        return this.headLayer;
+    }
+
+    public void setupHeadLayers(CustomizableModelPart box) {
+        this.headLayer = box;
+    }
+
 
     protected void entityInit()
     {

@@ -9,6 +9,7 @@ import cn.imflowow.EnchantEffect;
 import cn.imflowow.LowFire;
 import cn.langya.modules.render.*;
 import cn.starx.MoBends;
+import cn.starx.SkinLayers3D;
 import cn.starx.WaveyCapes;
 import cn.superskidder.BlockOverlay;
 import cn.langya.elements.impls.*;
@@ -93,6 +94,7 @@ public final class ModuleManager {
         register(PackDisplayMod.class,"材质包显示",Category.Render);
         register(WaveyCapes.class,"真实的披风",Category.Render);
         register(MoBends.class,"真实的动作",Category.Render);
+        register(SkinLayers3D.class,"真实的皮肤",Category.Render);
 
         // Register Misc
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
