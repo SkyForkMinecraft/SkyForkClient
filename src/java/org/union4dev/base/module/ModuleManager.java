@@ -1,6 +1,5 @@
 package org.union4dev.base.module;
 import anti_leak.Native;
-import cn.bzdhyp.module.TargetESP;
 import cn.cedo.ScoreboardMod;
 import cn.cedo.render.targethud.TargetHUDMod;
 import cn.dxg.CheaterDetector;
@@ -9,6 +8,9 @@ import cn.imflowow.ChunkAnimator;
 import cn.imflowow.EnchantEffect;
 import cn.imflowow.LowFire;
 import cn.langya.modules.render.*;
+import cn.starx.MoBends;
+import cn.starx.SkinLayers3D;
+import cn.starx.WaveyCapes;
 import cn.superskidder.BlockOverlay;
 import cn.langya.elements.impls.*;
 import cn.langya.modules.client.*;
@@ -81,7 +83,6 @@ public final class ModuleManager {
         register(CPSInfo.class,"CPS显示",Category.Render);
         register(MotionBlur.class,"动态模糊",Category.Render);
         // register(MusicPlayerOverlay.class,"音乐歌词",Category.Render);
-        register(TargetESP.class,"攻击显示",Category.Render);
         register(AttackCircle.class,"攻击距离光环",Category.Render);
         register(TargetCircle.class,"目标光环",Category.Render);
         register(Combo.class,"连击显示",Category.Render);
@@ -91,6 +92,9 @@ public final class ModuleManager {
         register(ArmorStatusMod.class,"装备显示",Category.Render);
         register(InventoryDisplayMod.class,"背包显示",Category.Render);
         register(PackDisplayMod.class,"材质包显示",Category.Render);
+        register(WaveyCapes.class,"真实的披风",Category.Render);
+        register(MoBends.class,"真实的动作",Category.Render);
+        register(SkinLayers3D.class,"真实的皮肤",Category.Render);
 
         // Register Misc
         register(MoreParticles.class, "更多攻击粒子", Category.Misc);
@@ -436,4 +440,15 @@ public final class ModuleManager {
         this.modules.get(module).setVisible(state);
     }
 
+    public AbstractValue getSetting(String moduleName, String valueName) {
+        for (ModuleHandle value : getCModules().values()) {
+            if (value.getName() != moduleName) continue;
+            for (AbstractValue<?> valueValue : value.getValues()) {
+                if (valueValue.getName() == valueName) {
+                    return valueValue;
+                }
+            }
+        }
+        return null;
+    }
 }

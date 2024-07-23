@@ -1,5 +1,9 @@
 package net.minecraft.client.renderer.entity;
 
+
+import cn.starx.skinlayers3d.BodyLayerFeatureRenderer;
+import cn.starx.skinlayers3d.HeadLayerFeatureRenderer;
+import cn.starx.skinlayers3d.PlayerEntityModelAccessor;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelPlayer;
@@ -17,11 +21,14 @@ import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ResourceLocation;
+import waveycapes.renderlayers.CustomCapeRenderLayer;
 
-public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
+public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer> implements PlayerEntityModelAccessor
 {
     /** this field is used to indicate the 3-pixel wide arms */
     private boolean smallArms;
+    private HeadLayerFeatureRenderer headLayer;
+    private BodyLayerFeatureRenderer bodyLayer;
 
     public RenderPlayer(RenderManager renderManager)
     {
@@ -38,6 +45,11 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
         this.addLayer(new LayerDeadmau5Head(this));
         this.addLayer(new LayerCape(this));
         this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
+        this.headLayer = new HeadLayerFeatureRenderer(this);
+        this.bodyLayer = new BodyLayerFeatureRenderer(this);
+
+        //waveycape
+        this.addLayer(new CustomCapeRenderLayer(this,getMainModel()));
     }
 
     public ModelPlayer getMainModel()
@@ -206,4 +218,20 @@ public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer>
             super.rotateCorpse(bat, p_77043_2_, p_77043_3_, partialTicks);
         }
     }
+
+    @Override
+    public boolean hasThinArms() {
+        return this.smallArms;
+    }
+
+    @Override
+    public HeadLayerFeatureRenderer getHeadLayer() {
+        return this.headLayer;
+    }
+
+    @Override
+    public BodyLayerFeatureRenderer getBodyLayer() {
+        return this.bodyLayer;
+    }
+
 }
