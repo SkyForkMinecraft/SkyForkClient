@@ -1,14 +1,16 @@
 package com.skyfork.api.cedo.shader;
 
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
 import com.skyfork.client.Access;
 import com.skyfork.api.cedo.misc.FileUtils;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
 
@@ -16,7 +18,7 @@ public class ShaderUtil implements Access.InstanceAccess {
     private final int programID;
 
     public ShaderUtil(String fragmentShaderLoc, String vertexShaderLoc) {
-        int program = glCreateProgram();
+        int program = OpenGlHelper.glCreateProgram();
         try {
             int fragmentShaderID;
             switch (fragmentShaderLoc) {
@@ -127,7 +129,7 @@ public class ShaderUtil implements Access.InstanceAccess {
 
 
     public void setUniformf(String name, float... args) {
-        int loc = glGetUniformLocation(programID, name);
+        int loc = GL20.glGetUniformLocation(programID, name);
         switch (args.length) {
             case 1:
                 glUniform1f(loc, args[0]);
@@ -145,13 +147,13 @@ public class ShaderUtil implements Access.InstanceAccess {
     }
 
     public void setUniformi(String name, int... args) {
-        int loc = glGetUniformLocation(programID, name);
+        int loc = GL20.glGetUniformLocation(programID, name);
         if (args.length > 1) glUniform2i(loc, args[0], args[1]);
-        else glUniform1i(loc, args[0]);
+        else GL20.glUniform1i(loc, args[0]);
     }
 
     public static void drawQuads(float x, float y, float width, float height) {
-        glBegin(GL_QUADS);
+        GL11.glBegin(GL_QUADS);
         glTexCoord2f(0, 0);
         glVertex2f(x, y);
         glTexCoord2f(0, 1);
@@ -167,7 +169,7 @@ public class ShaderUtil implements Access.InstanceAccess {
         ScaledResolution sr = new ScaledResolution(mc);
         float width = (float) sr.getScaledWidth_double();
         float height = (float) sr.getScaledHeight_double();
-        glBegin(GL_QUADS);
+        GL11.glBegin(GL_QUADS);
         glTexCoord2f(0, 1);
         glVertex2f(0, 0);
         glTexCoord2f(0, 0);
@@ -180,7 +182,7 @@ public class ShaderUtil implements Access.InstanceAccess {
     }
 
     public static void drawQuads(float width, float height) {
-        glBegin(GL_QUADS);
+        GL11.glBegin(GL_QUADS);
         glTexCoord2f(0, 1);
         glVertex2f(0, 0);
         glTexCoord2f(0, 0);

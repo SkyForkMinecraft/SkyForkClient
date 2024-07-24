@@ -3,7 +3,6 @@ package net.minecraft.client.renderer;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
@@ -51,7 +50,17 @@ public class OpenGlHelper
     public static int GL_VERTEX_SHADER;
     public static int GL_FRAGMENT_SHADER;
     private static boolean arbMultitexture;
+
+    /**
+     * An OpenGL constant corresponding to GL_TEXTURE0, used when setting data pertaining to auxiliary OpenGL texture
+     * units.
+     */
     public static int defaultTexUnit;
+
+    /**
+     * An OpenGL constant corresponding to GL_TEXTURE1, used when setting data pertaining to auxiliary OpenGL texture
+     * units.
+     */
     public static int lightmapTexUnit;
     public static int GL_TEXTURE2;
     private static boolean arbTextureEnvCombine;
@@ -94,6 +103,9 @@ public class OpenGlHelper
     public static final int GL_QUADS = 7;
     public static final int GL_TRIANGLES = 4;
 
+    /**
+     * Initializes the texture constants to be used when rendering lightmap values
+     */
     public static void initializeTextures()
     {
         Config.initDisplay();
@@ -379,17 +391,23 @@ public class OpenGlHelper
         }
     }
 
+    /**
+     * creates a shader with the given mode and returns the GL id. params: mode
+     */
     public static int glCreateShader(int type)
     {
         return arbShaders ? ARBShaderObjects.glCreateShaderObjectARB(type) : GL20.glCreateShader(type);
     }
 
-    public static void glShaderSource(int i, ByteBuffer byteBuffer) {
-        String charBuffer = StandardCharsets.UTF_8.decode(byteBuffer).toString();
-        if (arbShaders) {
-            ARBShaderObjects.glShaderSourceARB(i, charBuffer);
-        } else {
-            GL20.glShaderSource(i, charBuffer);
+    public static void glShaderSource(int shaderIn, ByteBuffer string)
+    {
+        if (arbShaders)
+        {
+            ARBShaderObjects.glShaderSourceARB(shaderIn, string);
+        }
+        else
+        {
+            GL20.glShaderSource(shaderIn, string);
         }
     }
 
@@ -470,11 +488,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniform1ivARB(location, values);
+            ARBShaderObjects.glUniform1ARB(location, values);
         }
         else
         {
-            GL20.glUniform1iv(location, values);
+            GL20.glUniform1(location, values);
         }
     }
 
@@ -494,11 +512,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniform1fvARB(location, values);
+            ARBShaderObjects.glUniform1ARB(location, values);
         }
         else
         {
-            GL20.glUniform1fv(location, values);
+            GL20.glUniform1(location, values);
         }
     }
 
@@ -506,11 +524,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniform2ivARB(location, values);
+            ARBShaderObjects.glUniform2ARB(location, values);
         }
         else
         {
-            GL20.glUniform2iv(location, values);
+            GL20.glUniform2(location, values);
         }
     }
 
@@ -518,11 +536,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniform2fvARB(location, values);
+            ARBShaderObjects.glUniform2ARB(location, values);
         }
         else
         {
-            GL20.glUniform2fv(location, values);
+            GL20.glUniform2(location, values);
         }
     }
 
@@ -530,11 +548,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniform3ivARB(location, values);
+            ARBShaderObjects.glUniform3ARB(location, values);
         }
         else
         {
-            GL20.glUniform3iv(location, values);
+            GL20.glUniform3(location, values);
         }
     }
 
@@ -542,11 +560,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniform3fvARB(location, values);
+            ARBShaderObjects.glUniform3ARB(location, values);
         }
         else
         {
-            GL20.glUniform3fv(location, values);
+            GL20.glUniform3(location, values);
         }
     }
 
@@ -554,11 +572,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniform4ivARB(location, values);
+            ARBShaderObjects.glUniform4ARB(location, values);
         }
         else
         {
-            GL20.glUniform4iv(location, values);
+            GL20.glUniform4(location, values);
         }
     }
 
@@ -566,11 +584,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniform4fvARB(location, values);
+            ARBShaderObjects.glUniform4ARB(location, values);
         }
         else
         {
-            GL20.glUniform4fv(location, values);
+            GL20.glUniform4(location, values);
         }
     }
 
@@ -578,11 +596,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniformMatrix2fvARB(location, transpose, matrices);
+            ARBShaderObjects.glUniformMatrix2ARB(location, transpose, matrices);
         }
         else
         {
-            GL20.glUniformMatrix2fv(location, transpose, matrices);
+            GL20.glUniformMatrix2(location, transpose, matrices);
         }
     }
 
@@ -590,11 +608,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniformMatrix3fvARB(location, transpose, matrices);
+            ARBShaderObjects.glUniformMatrix3ARB(location, transpose, matrices);
         }
         else
         {
-            GL20.glUniformMatrix3fv(location, transpose, matrices);
+            GL20.glUniformMatrix3(location, transpose, matrices);
         }
     }
 
@@ -602,11 +620,11 @@ public class OpenGlHelper
     {
         if (arbShaders)
         {
-            ARBShaderObjects.glUniformMatrix4fvARB(location, transpose, matrices);
+            ARBShaderObjects.glUniformMatrix4ARB(location, transpose, matrices);
         }
         else
         {
-            GL20.glUniformMatrix4fv(location, transpose, matrices);
+            GL20.glUniformMatrix4(location, transpose, matrices);
         }
     }
 
@@ -741,6 +759,9 @@ public class OpenGlHelper
         }
     }
 
+    /**
+     * Calls the appropriate glGenFramebuffers method and returns the newly created fbo, or returns -1 if not supported.
+     */
     public static int glGenFramebuffers()
     {
         if (!framebufferSupported)
@@ -876,6 +897,9 @@ public class OpenGlHelper
         }
     }
 
+    /**
+     * Sets the current lightmap texture to the specified OpenGL constant
+     */
     public static void setActiveTexture(int texture)
     {
         if (arbMultitexture)
@@ -888,6 +912,9 @@ public class OpenGlHelper
         }
     }
 
+    /**
+     * Sets the current lightmap texture to the specified OpenGL constant
+     */
     public static void setClientActiveTexture(int texture)
     {
         if (arbMultitexture)
@@ -900,6 +927,9 @@ public class OpenGlHelper
         }
     }
 
+    /**
+     * Sets the current coordinates of the given lightmap texture
+     */
     public static void setLightmapTextureCoords(int target, float p_77475_1_, float p_77475_2_)
     {
         if (arbMultitexture)

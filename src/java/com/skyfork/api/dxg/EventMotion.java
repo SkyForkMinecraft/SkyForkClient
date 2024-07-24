@@ -4,7 +4,6 @@
 
 package com.skyfork.api.dxg;
 
-import javafx.event.EventType;
 import com.skyfork.client.events.base.Event;
 import net.minecraft.client.*;
 
@@ -29,8 +28,7 @@ public class EventMotion implements Event
     public double Y;
     public double Z;
     public boolean GROUND;
-    public EventType EventTyped;
-    
+
     public EventMotion(final float yaw, final float pitch, final float prevYaw, final float prevPitch, final double posX, final double posY, final double posZ, final boolean ground) {
         this.prevYaw = prevYaw;
         this.prevPitch = prevPitch;
