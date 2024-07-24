@@ -18,8 +18,8 @@ import net.minecraft.stats.StatFileWriter;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
-import org.union4dev.base.events.EventManager;
-import org.union4dev.base.events.misc.AttackEvent;
+import com.skyfork.client.events.EventManager;
+import com.skyfork.client.events.misc.AttackEvent;
 
 public class PlayerControllerMP
 {

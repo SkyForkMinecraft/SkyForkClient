@@ -1,7 +1,7 @@
 package net.minecraft.client.gui;
 
-import cn.langya.font.FontManager;
-import cn.langya.modules.client.ClientSettings;
+import com.skyfork.api.langya.font.FontManager;
+import com.skyfork.api.langya.modules.client.ClientSettings;
 import com.google.common.collect.Lists;
 
 import java.util.Iterator;
@@ -14,7 +14,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.union4dev.base.Access;
+import com.skyfork.client.Access;
 
 public class GuiNewChat extends Gui
 {

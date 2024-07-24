@@ -1,6 +1,6 @@
 package net.minecraft.client.gui;
 
-import cn.langya.font.FontDrawer;
+import com.skyfork.api.langya.font.FontDrawer;
 import com.google.common.collect.Lists;
 import java.util.List;
 import net.minecraft.client.Minecraft;

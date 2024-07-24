@@ -1,6 +1,5 @@
 package net.minecraft.client.gui;
 
-import cn.cedo.shader.blur.GaussianBlur;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -33,8 +32,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.union4dev.base.events.EventManager;
-import org.union4dev.base.events.misc.GuiClickEvent;
+import com.skyfork.client.events.EventManager;
+import com.skyfork.client.events.misc.GuiClickEvent;
 import tv.twitch.chat.ChatUserInfo;
 
 import java.awt.*;

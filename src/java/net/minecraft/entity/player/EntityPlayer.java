@@ -1,9 +1,9 @@
 package net.minecraft.entity.player;
 
-import cn.starx.skinlayers3d.CustomizableModelPart;
-import cn.starx.skinlayers3d.PlayerSettings;
-import cn.cedo.KeepSprintEvent;
-import cn.dxg.RotationUtil;
+import com.skyfork.api.starx.skinlayers3d.CustomizableModelPart;
+import com.skyfork.api.starx.skinlayers3d.PlayerSettings;
+import com.skyfork.api.cedo.KeepSprintEvent;
+import com.skyfork.api.dxg.RotationUtil;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
@@ -78,9 +78,9 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.LockCode;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSettings;
-import org.union4dev.base.events.EventManager;
-import waveycapes.config.Config;
-import waveycapes.sim.StickSimulation;
+import com.skyfork.client.events.EventManager;
+import com.skyfork.api.waveycapes.config.Config;
+import com.skyfork.api.waveycapes.sim.StickSimulation;
 
 @SuppressWarnings("incomplete-switch")
 public abstract class EntityPlayer extends EntityLivingBase implements PlayerSettings

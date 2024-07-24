@@ -2,7 +2,7 @@ package net.minecraft.client.renderer.entity;
 
 import java.util.Random;
 
-import cn.langya.modules.client.ItemPhysic;
+import com.skyfork.api.langya.modules.client.ItemPhysic;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -13,7 +13,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import org.union4dev.base.Access;
+import com.skyfork.client.Access;
 
 public class RenderEntityItem extends Render<EntityItem>
 {

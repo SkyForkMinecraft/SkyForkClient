@@ -3,15 +3,15 @@ package net.minecraft.client.renderer;
 import java.awt.*;
 import java.util.Collection;
 
-import cn.langya.font.FontManager;
-import cn.langya.modules.client.ClientSettings;
+import com.skyfork.api.langya.font.FontManager;
+import com.skyfork.api.langya.modules.client.ClientSettings;
 import lombok.Getter;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import cn.cedo.shader.RoundedUtil;
+import com.skyfork.api.cedo.shader.RoundedUtil;
 
 @Getter
 public abstract class InventoryEffectRenderer extends GuiContainer

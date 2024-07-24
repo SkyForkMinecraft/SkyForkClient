@@ -1,16 +1,12 @@
 package net.minecraft.client.gui;
 
-import alan.RiseShaders;
-import alan.base.ShaderRenderType;
-import alan.impl.MainMenuBackgroundShader;
-import cn.cedo.animations.Animation;
-import cn.cedo.animations.impl.DecelerateAnimation;
-import cn.cedo.particles.ParticleEngine;
-import cn.dxg.MainMenuBackground;
-import cn.langya.GuiLogin;
-import cn.langya.irc.IRC;
-import cn.langya.irc.IRCManager;
-import cn.langya.verify.Verify;
+import com.skyfork.api.alan.RiseShaders;
+import com.skyfork.api.alan.base.ShaderRenderType;
+import com.skyfork.api.alan.impl.MainMenuBackgroundShader;
+import com.skyfork.api.cedo.animations.Animation;
+import com.skyfork.api.cedo.animations.impl.DecelerateAnimation;
+import com.skyfork.api.dxg.MainMenuBackground;
+import com.skyfork.api.langya.verify.Verify;
 
 import java.io.IOException;
 import java.net.URI;
@@ -30,10 +26,9 @@ import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
-import cn.langya.font.FontManager;
-import soar.account.gui.GuiAccountManager;
+import com.skyfork.api.langya.font.FontManager;
+import com.skyfork.api.soar.account.gui.GuiAccountManager;
 
 import javax.swing.*;
 

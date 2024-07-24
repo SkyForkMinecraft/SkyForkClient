@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer;
 
-import cn.imflowow.ChunkAnimator;
+import com.skyfork.api.imflowow.ChunkAnimator;
 import com.google.common.collect.Lists;
 import java.util.BitSet;
 import java.util.List;
@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.optifine.SmartAnimations;
-import org.union4dev.base.Access;
+import com.skyfork.client.Access;
 
 public abstract class ChunkRenderContainer
 {

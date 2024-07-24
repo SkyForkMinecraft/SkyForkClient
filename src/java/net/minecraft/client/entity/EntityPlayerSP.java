@@ -1,6 +1,6 @@
 package net.minecraft.client.entity;
 
-import cn.dxg.EventMotion;
+import com.skyfork.api.dxg.EventMotion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -26,13 +26,13 @@ import net.minecraft.util.*;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import org.lwjgl.util.vector.Vector2f;
-import org.union4dev.base.Access;
-import org.union4dev.base.events.EventManager;
-import org.union4dev.base.events.misc.ChatEvent;
-import org.union4dev.base.events.movement.MotionUpdateEvent;
-import org.union4dev.base.events.movement.MoveEvent;
-import org.union4dev.base.events.movement.SlowdownEvent;
-import org.union4dev.base.events.update.UpdateEvent;
+import com.skyfork.client.Access;
+import com.skyfork.client.events.EventManager;
+import com.skyfork.client.events.misc.ChatEvent;
+import com.skyfork.client.events.movement.MotionUpdateEvent;
+import com.skyfork.client.events.movement.MoveEvent;
+import com.skyfork.client.events.movement.SlowdownEvent;
+import com.skyfork.client.events.update.UpdateEvent;
 
 public class EntityPlayerSP extends AbstractClientPlayer
 {

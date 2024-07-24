@@ -1,10 +1,10 @@
 package net.minecraft.entity;
 
-import cn.superskidder.modules.OldAnimation;
+import com.skyfork.api.superskidder.modules.OldAnimation;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
-import de.florianmichael.vialoadingbase.ViaLoadingBase;
+import com.skyfork.api.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -32,9 +32,9 @@ import net.minecraft.scoreboard.Team;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import org.union4dev.base.Access;
-import org.union4dev.base.events.EventManager;
-import org.union4dev.base.events.movement.JumpEvent;
+import com.skyfork.client.Access;
+import com.skyfork.client.events.EventManager;
+import com.skyfork.client.events.movement.JumpEvent;
 
 import java.util.*;
 

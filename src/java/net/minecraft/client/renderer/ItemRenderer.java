@@ -1,7 +1,7 @@
 package net.minecraft.client.renderer;
 
-import cn.imflowow.LowFire;
-import cn.superskidder.modules.OldAnimation;
+import com.skyfork.api.imflowow.LowFire;
+import com.skyfork.api.superskidder.modules.OldAnimation;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +30,7 @@ import net.optifine.DynamicLights;
 import net.optifine.reflect.Reflector;
 import net.optifine.shaders.Shaders;
 import org.lwjgl.opengl.GL11;
-import org.union4dev.base.Access;
+import com.skyfork.client.Access;
 
 public class ItemRenderer
 {

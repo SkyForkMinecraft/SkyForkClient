@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.chunk;
 
-import cn.imflowow.ChunkAnimator;
+import com.skyfork.api.imflowow.ChunkAnimator;
 import com.google.common.collect.Sets;
 import java.nio.FloatBuffer;
 import java.util.BitSet;
@@ -45,7 +45,7 @@ import net.optifine.reflect.ReflectorForge;
 import net.optifine.render.AabbFrame;
 import net.optifine.render.RenderEnv;
 import net.optifine.shaders.SVertexBuilder;
-import org.union4dev.base.Access;
+import com.skyfork.client.Access;
 
 public class RenderChunk
 {

@@ -4,6 +4,8 @@ import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.mojang.authlib.GameProfile;
+import com.skyfork.api.dxg.Protocol;
+import com.skyfork.client.Access;
 import io.netty.buffer.Unpooled;
 import java.io.File;
 import java.io.IOException;
@@ -1823,6 +1825,14 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     {
         PacketThreadUtil.checkThreadAndEnqueue(packetIn, this, this.gameController);
 
+        if (Access.getInstance().getModuleManager().isEnabled(Protocol.class) && Access.getInstance().getVexviewPacket().getChannel().equals(packetIn.getChannelName())) {
+            try {
+                Access.getInstance().getVexviewPacket().process(packetIn.getBufferData());
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         if ("MC|TrList".equals(packetIn.getChannelName()))
         {
             PacketBuffer packetbuffer = packetIn.getBufferData();

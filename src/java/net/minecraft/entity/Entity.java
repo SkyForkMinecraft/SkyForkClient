@@ -5,9 +5,9 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
-import cn.cedo.PlayerMoveUpdateEvent;
-import cn.dxg.Vector3d;
-import de.florianmichael.vialoadingbase.ViaLoadingBase;
+import com.skyfork.api.cedo.PlayerMoveUpdateEvent;
+import com.skyfork.api.dxg.Vector3d;
+import com.skyfork.api.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -52,7 +52,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import org.union4dev.base.events.EventManager;
+import com.skyfork.client.events.EventManager;
 
 public abstract class Entity implements ICommandSender
 {

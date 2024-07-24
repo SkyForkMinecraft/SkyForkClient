@@ -1,9 +1,8 @@
 package net.minecraft.client.gui.inventory;
 
-import cn.langya.font.FontManager;
+import com.skyfork.api.langya.font.FontManager;
 import com.google.common.collect.Sets;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -18,9 +17,9 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
-import org.union4dev.base.Access;
-import soar.ClickEffect;
-import soar.GuiClickEffect;
+import com.skyfork.client.Access;
+import com.skyfork.api.soar.ClickEffect;
+import com.skyfork.api.soar.GuiClickEffect;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -12,7 +12,7 @@ import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.util.List;
 
-import guichaguri.betterfps.BetterFpsHelper;
+import com.skyfork.api.betterfps.BetterFpsHelper;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;

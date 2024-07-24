@@ -1,19 +1,18 @@
 package net.minecraft.client.gui;
 
-import cn.cedo.animations.Animation;
-import cn.cedo.animations.Direction;
-import cn.cedo.animations.impl.DecelerateAnimation;
-import cn.cedo.misc.ColorUtil;
-import cn.cedo.shader.blur.GaussianBlur;
-import lombok.Getter;
+import com.skyfork.api.cedo.animations.Animation;
+import com.skyfork.api.cedo.animations.Direction;
+import com.skyfork.api.cedo.animations.impl.DecelerateAnimation;
+import com.skyfork.api.cedo.misc.ColorUtil;
+import com.skyfork.api.cedo.shader.blur.GaussianBlur;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import cn.langya.font.FontManager;
-import cn.cedo.shader.RoundedUtil;
+import com.skyfork.api.langya.font.FontManager;
+import com.skyfork.api.cedo.shader.RoundedUtil;
 
 import java.awt.*;
 

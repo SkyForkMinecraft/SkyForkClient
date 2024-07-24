@@ -2,7 +2,7 @@ package net.minecraft.block;
 
 import java.util.List;
 
-import de.florianmichael.vialoadingbase.ViaLoadingBase;
+import com.skyfork.api.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;

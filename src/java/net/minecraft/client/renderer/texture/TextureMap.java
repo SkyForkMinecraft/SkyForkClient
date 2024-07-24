@@ -38,8 +38,8 @@ import net.optifine.util.CounterInt;
 import net.optifine.util.TextureUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.union4dev.base.events.EventManager;
-import soar.SwitchTextureEvent;
+import com.skyfork.client.events.EventManager;
+import com.skyfork.api.soar.SwitchTextureEvent;
 
 public class TextureMap extends AbstractTexture implements ITickableTextureObject
 {

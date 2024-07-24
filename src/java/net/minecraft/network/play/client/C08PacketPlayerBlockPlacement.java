@@ -2,7 +2,7 @@ package net.minecraft.network.play.client;
 
 import java.io.IOException;
 
-import de.florianmichael.vialoadingbase.ViaLoadingBase;
+import com.skyfork.api.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;

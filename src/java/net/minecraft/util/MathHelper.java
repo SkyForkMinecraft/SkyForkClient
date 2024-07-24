@@ -3,8 +3,8 @@ package net.minecraft.util;
 import java.util.Random;
 import java.util.UUID;
 
-import guichaguri.betterfps.BetterFpsConfig;
-import guichaguri.betterfps.math.*;
+import com.skyfork.api.betterfps.BetterFpsConfig;
+import com.skyfork.api.betterfps.math.*;
 import net.optifine.util.MathUtils;
 
 public class MathHelper

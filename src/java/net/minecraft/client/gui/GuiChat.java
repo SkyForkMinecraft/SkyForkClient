@@ -1,11 +1,11 @@
 
 package net.minecraft.client.gui;
 
-import cn.cedo.animations.Animation;
-import cn.cedo.animations.Direction;
-import cn.cedo.animations.impl.DecelerateAnimation;
-import cn.cedo.drag.Dragging;
-import cn.langya.utils.MouseUtil;
+import com.skyfork.api.cedo.animations.Animation;
+import com.skyfork.api.cedo.animations.Direction;
+import com.skyfork.api.cedo.animations.impl.DecelerateAnimation;
+import com.skyfork.api.cedo.drag.Dragging;
+import com.skyfork.api.langya.utils.MouseUtil;
 import com.google.common.collect.Lists;
 
 import java.awt.*;
@@ -21,8 +21,8 @@ import net.minecraft.util.MovingObjectPosition;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.union4dev.base.Access;
-import cn.cedo.shader.RoundedUtil;
+import com.skyfork.client.Access;
+import com.skyfork.api.cedo.shader.RoundedUtil;
 
 public class GuiChat extends GuiScreen
 {

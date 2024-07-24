@@ -1,7 +1,7 @@
 package net.minecraft.client.entity;
 
-import cn.dxg.LookEvent;
-import cn.langya.modules.client.Cape;
+import com.skyfork.api.dxg.LookEvent;
+import com.skyfork.api.langya.modules.client.Cape;
 import com.mojang.authlib.GameProfile;
 import java.io.File;
 import net.minecraft.client.Minecraft;
@@ -25,8 +25,8 @@ import net.optifine.player.CapeUtils;
 import net.optifine.player.PlayerConfigurations;
 import net.optifine.reflect.Reflector;
 import org.lwjgl.util.vector.Vector2f;
-import org.union4dev.base.Access;
-import org.union4dev.base.events.EventManager;
+import com.skyfork.client.Access;
+import com.skyfork.client.events.EventManager;
 
 public abstract class AbstractClientPlayer extends EntityPlayer
 {

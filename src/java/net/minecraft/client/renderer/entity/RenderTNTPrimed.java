@@ -1,6 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
-import cn.superskidder.modules.TNTTimer;
+import com.skyfork.api.superskidder.modules.TNTTimer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,7 +9,7 @@ import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import org.union4dev.base.Access;
+import com.skyfork.client.Access;
 
 public class RenderTNTPrimed extends Render<EntityTNTPrimed>
 {

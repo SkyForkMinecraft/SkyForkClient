@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 
-import guichaguri.betterfps.gui.GuiBetterFpsConfig;
+import com.skyfork.api.betterfps.gui.GuiBetterFpsConfig;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.client.audio.SoundEventAccessorComposite;

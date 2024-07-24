@@ -2,7 +2,7 @@ package net.minecraft.block;
 
 import java.util.Random;
 
-import de.florianmichael.vialoadingbase.ViaLoadingBase;
+import com.skyfork.api.florianmichael.vialoadingbase.ViaLoadingBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;

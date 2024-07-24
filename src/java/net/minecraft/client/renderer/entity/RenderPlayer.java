@@ -1,9 +1,9 @@
 package net.minecraft.client.renderer.entity;
 
 
-import cn.starx.skinlayers3d.BodyLayerFeatureRenderer;
-import cn.starx.skinlayers3d.HeadLayerFeatureRenderer;
-import cn.starx.skinlayers3d.PlayerEntityModelAccessor;
+import com.skyfork.api.starx.skinlayers3d.BodyLayerFeatureRenderer;
+import com.skyfork.api.starx.skinlayers3d.HeadLayerFeatureRenderer;
+import com.skyfork.api.starx.skinlayers3d.PlayerEntityModelAccessor;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelPlayer;
@@ -21,7 +21,7 @@ import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ResourceLocation;
-import waveycapes.renderlayers.CustomCapeRenderLayer;
+import com.skyfork.api.waveycapes.renderlayers.CustomCapeRenderLayer;
 
 public class RenderPlayer extends RendererLivingEntity<AbstractClientPlayer> implements PlayerEntityModelAccessor
 {

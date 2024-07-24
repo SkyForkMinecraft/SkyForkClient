@@ -1,7 +1,7 @@
 package net.minecraft.client.gui;
 
-import cn.cedo.render.GLUtil;
-import cn.cedo.render.RenderUtil;
+import com.skyfork.api.cedo.render.GLUtil;
+import com.skyfork.api.cedo.render.RenderUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
