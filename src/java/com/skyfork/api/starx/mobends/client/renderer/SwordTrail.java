@@ -10,8 +10,8 @@ import com.skyfork.api.starx.mobends.client.model.entity.ModelBendsPlayer;
 import com.skyfork.api.starx.mobends.util.GUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
-import org.lwjgl.compatibility.util.vector.ReadableVector3f;
-import org.lwjgl.compatibility.util.vector.Vector3f;
+import org.lwjgl.util.vector.ReadableVector3f;
+import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;

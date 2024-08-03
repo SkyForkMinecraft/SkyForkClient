@@ -10,7 +10,7 @@ import com.skyfork.api.starx.mobends.data.Data_Player;
 import com.skyfork.api.starx.mobends.util.GUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
-import org.lwjgl.compatibility.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class Animation_Attack_Combo1
 {

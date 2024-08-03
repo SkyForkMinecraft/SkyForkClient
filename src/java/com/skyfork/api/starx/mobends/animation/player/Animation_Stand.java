@@ -11,7 +11,7 @@ import com.skyfork.api.starx.mobends.data.Data_Player;
 import com.skyfork.api.starx.mobends.data.EntityData;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.EntityLivingBase;
-import org.lwjgl.compatibility.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class Animation_Stand extends Animation
 {

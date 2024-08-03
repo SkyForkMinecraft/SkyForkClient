@@ -26,7 +26,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import org.lwjgl.compatibility.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.opengl.GL11;
 
 public class ModelBendsPlayer extends ModelPlayer

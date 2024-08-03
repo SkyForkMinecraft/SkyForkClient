@@ -10,8 +10,8 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GLAllocation;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
-import org.lwjgl.compatibility.util.vector.ReadableVector3f;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.ReadableVector3f;
 
 public class ModelRendererBends extends ModelRenderer
 {

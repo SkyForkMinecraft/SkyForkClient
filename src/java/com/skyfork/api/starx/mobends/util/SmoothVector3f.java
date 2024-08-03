@@ -4,7 +4,8 @@
 
 package com.skyfork.api.starx.mobends.util;
 
-import org.lwjgl.compatibility.util.vector.Vector3f;
+
+import org.lwjgl.util.vector.Vector3f;
 
 public class SmoothVector3f
 {

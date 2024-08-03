@@ -8,7 +8,7 @@ import com.skyfork.api.starx.mobends.client.model.ModelRendererBends;
 import com.skyfork.api.starx.mobends.client.model.entity.ModelBendsPlayer;
 import com.skyfork.api.starx.mobends.data.Data_Player;
 import net.minecraft.entity.player.EntityPlayer;
-import org.lwjgl.compatibility.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class Animation_Attack_Stance
 {
