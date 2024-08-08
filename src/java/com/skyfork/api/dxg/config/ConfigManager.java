@@ -22,11 +22,11 @@ public class ConfigManager implements Access.InstanceAccess {
         if (!dir.exists()) {
             dir.mkdir();
         }
-        if (accountFile.exists()) {
+        if (!accountFile.exists()) {
             try {
                 accountFile.createNewFile();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Failed to create account file");
             }
         }
         configs.add(new ModuleConfig());
