@@ -27,6 +27,7 @@ public class FontManager {
     public static FontDrawer icon18 = getFont("micon", 18);
     public static FontDrawer icon30 = getFont("micon", 30);
 
+    public static FontDrawer ficon18 = getFont("fluxicon", 18);
     public static FontDrawer sicon20 = getFont("icon", 20);
     public static FontDrawer sicon24 = getFont("icon", 24);
 
