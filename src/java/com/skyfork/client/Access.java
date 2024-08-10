@@ -12,6 +12,7 @@ import com.skyfork.api.langya.verify.Verify;
 import com.skyfork.api.superskidder.ComboHandler;
 import com.skyfork.api.yapeteam.notification.NotificationManager;
 import com.skyfork.api.florianmichael.viamcp.ViaMCP;
+import com.yumegod.obfuscation.Rename;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -37,9 +38,10 @@ import java.util.regex.Pattern;
  *
  * @author cubk
  */
+@Rename
 public final class Access {
 
-    public static final String CLIENT_VERSION = "4.7.5";
+    public static final String CLIENT_VERSION = "4.7.6";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;

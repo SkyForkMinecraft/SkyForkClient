@@ -409,9 +409,12 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      * Starts the game: initializes the canvas, the title, the settings, etcetera.
      */
     private void startGame() throws LWJGLException {
+        /*
         if (PCLChecker.titleCheck()) {
             Access.displayTray("SkyFork","禁止使用PCL启动器 请使用HMCL启动器", TrayIcon.MessageType.ERROR);
         }
+
+         */
         this.gameSettings = new GameSettings(this, this.mcDataDir);
         this.defaultResourcePacks.add(this.mcDefaultResourcePack);
         this.startTimerHackThread();

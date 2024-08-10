@@ -74,10 +74,8 @@ public class GuiButton extends Gui
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
-            GaussianBlur.startBlur();
             if(hovered) RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 10, new Color(0, 0, 0, 160));
             else RoundedUtil.drawRound(this.xPosition, this.yPosition, this.width, this.height, 10, new Color(0, 0, 0, 80));
-            GaussianBlur.endBlur(10,2);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             hoverAnimation.setDirection(Direction.FORWARDS);
             if (!hoverAnimation.isDone() || hoverAnimation.finished(Direction.FORWARDS)) {

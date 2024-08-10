@@ -1,6 +1,8 @@
 package com.skyfork.api.langya;
 
 import com.skyfork.api.langya.event.TextEvent;
+import com.yumegod.obfuscation.FlowObfuscate;
+import com.yumegod.obfuscation.StringObfuscate;
 import net.minecraft.util.EnumChatFormatting;
 import com.skyfork.client.annotations.event.EventTarget;
 import com.skyfork.api.unknow.IoUtil;
@@ -16,6 +18,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 2024/6/5 下午9:25
  */
 
+@FlowObfuscate
+@StringObfuscate
 public class RankManager {
     public static final String PRIMARY_COLOR = EnumChatFormatting.RED.toString();
     public static final String SECONDARY_COLOR = EnumChatFormatting.GRAY.toString();
@@ -26,7 +30,6 @@ public class RankManager {
         init();
     }
 
-    @com.yumegod.obfuscation.Native
     private void init() {
         BufferedReader br = null;
         try {
