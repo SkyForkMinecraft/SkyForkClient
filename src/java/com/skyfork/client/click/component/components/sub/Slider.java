@@ -1,4 +1,4 @@
-package com.skyfork.client.gui.click.component.components.sub;
+package com.skyfork.client.click.component.components.sub;
 
 import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;

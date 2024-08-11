@@ -1,5 +1,7 @@
 package com.skyfork.api.langya;
 
+import com.skyfork.api.dxg.GLUtil;
+import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -150,4 +152,19 @@ public class RenderUtil {
     }
 
 
+    public static void drawCircle2(double x, double y, float radius, int color) {
+        if (radius == 0.0f) {
+            return;
+        }
+        float correctRadius = radius * 2.0f;
+        GLUtil.setup2DRendering(() -> {
+            com.skyfork.api.cedo.render.RenderUtil.glColor(color);
+            GL11.glEnable(2832);
+            GL11.glHint(3153, 4354);
+            GL11.glPointSize(correctRadius);
+            GLUtil.setupRendering(0, () -> GL11.glVertex2d(x, y));
+            GL11.glDisable(2832);
+            GlStateManager.resetColor();
+        });
+    }
 }
