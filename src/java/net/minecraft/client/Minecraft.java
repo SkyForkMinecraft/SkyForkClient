@@ -12,6 +12,7 @@ import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.skyfork.api.florianmichael.viamcp.fixes.AttackOrder;
 import com.skyfork.api.betterfps.BetterFpsClient;
+import com.skyfork.api.unknow.IconUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.audio.MusicTicker;
@@ -108,6 +109,7 @@ import com.skyfork.api.superblaubeere27.CPSCounter;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -612,27 +614,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         if (util$enumos != Util.EnumOS.OSX)
         {
-            InputStream inputstream = null;
-            InputStream inputstream1 = null;
-
-            try
-            {
-                inputstream = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_16x16.png"));
-                inputstream1 = this.mcDefaultResourcePack.getInputStreamAssets(new ResourceLocation("icons/icon_32x32.png"));
-
-                if (inputstream != null && inputstream1 != null)
-                {
-                    Display.setIcon(new ByteBuffer[] {this.readImageToBuffer(inputstream), this.readImageToBuffer(inputstream1)});
-                }
-            }
-            catch (IOException ioexception)
-            {
-                logger.error("Couldn't set icon", ioexception);
-            }
-            finally
-            {
-                IOUtils.closeQuietly(inputstream);
-                IOUtils.closeQuietly(inputstream1);
+            final ByteBuffer[] clientFavicon = IconUtils.getFavicon();
+            if(clientFavicon != null) {
+                Display.setIcon(clientFavicon);
             }
         }
     }
@@ -762,20 +746,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
     }
 
-    private ByteBuffer readImageToBuffer(InputStream imageStream) throws IOException
-    {
-        BufferedImage bufferedimage = ImageIO.read(imageStream);
-        int[] aint = bufferedimage.getRGB(0, 0, bufferedimage.getWidth(), bufferedimage.getHeight(), null, 0, bufferedimage.getWidth());
-        ByteBuffer bytebuffer = ByteBuffer.allocate(4 * aint.length);
-
-        for (int i : aint)
-        {
-            bytebuffer.putInt(i << 8 | i >> 24 & 255);
-        }
-
-        bytebuffer.flip();
-        return bytebuffer;
-    }
 
     private void updateDisplayMode() throws LWJGLException
     {
