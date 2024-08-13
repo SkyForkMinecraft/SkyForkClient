@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
 @Rename
 public final class Access {
 
-    public static final String CLIENT_VERSION = "4.7.6";
+    public static final String CLIENT_VERSION = "4.7.7";
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;

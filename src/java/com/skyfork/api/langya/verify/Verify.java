@@ -45,10 +45,6 @@ public class Verify {
     @Native
     @SneakyThrows
     public static void verify() {
-        if (!WebUtils.get("https://gitee.com/langya1337/skyfork/raw/master/version.txt").contains(CLIENT_VERSION)) {
-            displayTray(CLIENT_NAME,"您的客户端版本过低，请更新到最新版本！", TrayIcon.MessageType.ERROR);
-            Desktop.getDesktop().browse(new URL("https://skyfork.cn").toURI());
-        }
 
         if (WebUtils.get("https://gitee.com/langya1337/skyfork/raw/master/hwid.txt").contains(getHWID())) {
             user = User.User;
