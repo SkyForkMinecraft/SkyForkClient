@@ -7,7 +7,7 @@ import com.skyfork.api.langya.event.ShaderType;
 import com.skyfork.api.langya.font.FontManager;
 import com.skyfork.api.superskidder.BloomUtil;
 import com.skyfork.api.superskidder.GaussianBlur;
-import com.skyfork.api.superskidder.KawaseBlur;
+import com.skyfork.api.dxg.KawaseBlur;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.shader.Framebuffer;
 import com.skyfork.client.Access;
@@ -38,6 +38,7 @@ public class HUD implements Access.InstanceAccess {
     public static ComboValue blurMode = new ComboValue("模糊方式", "高斯模糊", "高斯模糊", "川濑模糊");
     public static final ColorValue color1 = new ColorValue("Color 1", new Color(0x4A4DAC));
     public static final ColorValue color2 = new ColorValue("Color 2", new Color(0xFFFFFF));
+    private static Framebuffer stencilFramebuffer = new Framebuffer(1, 1, false);
 
     private static Framebuffer bloomFramebuffer = new Framebuffer(1, 1, false);
     public static Color color(final int tick) {
@@ -97,11 +98,16 @@ public class HUD implements Access.InstanceAccess {
                 GaussianBlur.renderBlur(radius.getValue().floatValue());
                 break;
             case "川濑模糊":
-                KawaseBlur.renderBlur(iterations.getValue().intValue(), offset.getValue().intValue());
+                stencilFramebuffer = createFrameBuffer(stencilFramebuffer);
+
+                stencilFramebuffer.framebufferClear();
+                stencilFramebuffer.bindFramebuffer(false);
+                KawaseBlur.renderBlur(stencilFramebuffer.framebufferTexture, iterations.getValue().intValue(), offset.getValue().intValue());
+                stencilFramebuffer.unbindFramebuffer();
                 break;
         }
-        StencilUtil.uninitStencilBuffer();
 
+        StencilUtil.uninitStencilBuffer();
 
         bloomFramebuffer = createFrameBuffer(bloomFramebuffer);
         bloomFramebuffer.framebufferClear();

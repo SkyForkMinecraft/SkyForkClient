@@ -26,6 +26,12 @@ public class ShaderUtil implements Access.InstanceAccess {
                 case "roundedRectGradient":
                     fragmentShaderID = createShader(new ByteArrayInputStream(roundedRectGradient.getBytes()), GL_FRAGMENT_SHADER);
                     break;
+                case "kawaseDown":
+                    fragmentShaderID = createShader(new ByteArrayInputStream(kawaseDown.getBytes()), GL_FRAGMENT_SHADER);
+                    break;
+                case "kawaseUp":
+                    fragmentShaderID = createShader(new ByteArrayInputStream(kawaseUp.getBytes()), GL_FRAGMENT_SHADER);
+                    break;
                 default:
                     fragmentShaderID = createShader(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(fragmentShaderLoc)).getInputStream(), GL_FRAGMENT_SHADER);
                     break;
@@ -135,6 +141,40 @@ public class ShaderUtil implements Access.InstanceAccess {
 
         return shader;
     }
+
+    private String kawaseDown = "#version 120\n" +
+            "\n" +
+            "uniform sampler2D inTexture;\n" +
+            "uniform vec2 offset, halfpixel, iResolution;\n" +
+            "\n" +
+            "void main() {\n" +
+            "    vec2 uv = vec2(gl_FragCoord.xy / iResolution);\n" +
+            "    vec4 sum = texture2D(inTexture, gl_TexCoord[0].st) * 4.0;\n" +
+            "    sum += texture2D(inTexture, uv - halfpixel.xy * offset);\n" +
+            "    sum += texture2D(inTexture, uv + halfpixel.xy * offset);\n" +
+            "    sum += texture2D(inTexture, uv + vec2(halfpixel.x, -halfpixel.y) * offset);\n" +
+            "    sum += texture2D(inTexture, uv - vec2(halfpixel.x, -halfpixel.y) * offset);\n" +
+            "    gl_FragColor = vec4(sum.rgb * .125, 1.0);\n" +
+            "}\n";
+    private String kawaseUp = "#version 120\n" +
+            "\n" +
+            "uniform sampler2D inTexture, textureToCheck;\n" +
+            "uniform vec2 halfpixel, offset, iResolution;\n" +
+            "uniform int check;\n" +
+            "\n" +
+            "void main() {\n" +
+            "    vec2 uv = vec2(gl_FragCoord.xy / iResolution);\n" +
+            "    vec4 sum = texture2D(inTexture, uv + vec2(-halfpixel.x * 2.0, 0.0) * offset);\n" +
+            "    sum += texture2D(inTexture, uv + vec2(-halfpixel.x, halfpixel.y) * offset) * 2.0;\n" +
+            "    sum += texture2D(inTexture, uv + vec2(0.0, halfpixel.y * 2.0) * offset);\n" +
+            "    sum += texture2D(inTexture, uv + vec2(halfpixel.x, halfpixel.y) * offset) * 2.0;\n" +
+            "    sum += texture2D(inTexture, uv + vec2(halfpixel.x * 2.0, 0.0) * offset);\n" +
+            "    sum += texture2D(inTexture, uv + vec2(halfpixel.x, -halfpixel.y) * offset) * 2.0;\n" +
+            "    sum += texture2D(inTexture, uv + vec2(0.0, -halfpixel.y * 2.0) * offset);\n" +
+            "    sum += texture2D(inTexture, uv + vec2(-halfpixel.x, -halfpixel.y) * offset) * 2.0;\n" +
+            "\n" +
+            "    gl_FragColor = vec4(sum.rgb /12.0, mix(1.0, texture2D(textureToCheck, gl_TexCoord[0].st).a, check));\n" +
+            "}\n";
 
 
     private final String roundedRectGradient = "#version 120\n" +
