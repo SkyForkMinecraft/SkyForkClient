@@ -28,6 +28,7 @@ import com.skyfork.client.module.ModuleManager;
 import com.skyfork.api.soar.account.AccountManager;
 
 import java.awt.*;
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,7 +42,8 @@ import java.util.regex.Pattern;
 @Rename
 public final class Access {
 
-    public static final String CLIENT_VERSION = "4.7.7";
+    public static final String CLIENT_VERSION = "4.7.8";
+    public static final File DIRECTORY = new File(Minecraft.getMinecraft().mcDataDir, "SkyForkClient");
     public static String CLIENT_NAME = "SkyFork-Client";
     public static Color CLIENT_COLOR = new Color(205,189,255);
     public static boolean loaded;
@@ -63,12 +65,6 @@ public final class Access {
      */
     @Getter
     private ModuleManager moduleManager;
-
-    /**
-     * ConfigManager instance for access config
-     */
-    @Getter
-    private ConfigManager configManager;
 
     @Getter
     private VexViewPacket vexviewPacket;
@@ -122,11 +118,11 @@ public final class Access {
 
     @com.yumegod.obfuscation.Native
     public void init() {
+        if (!DIRECTORY.exists()) DIRECTORY.mkdir();
         Verify.verify();
         dragManager = new DragManager();
         moduleManager = new ModuleManager();
-        configManager = new ConfigManager();
-        configManager.loadAllConfig();
+        Access.getInstance().getModuleManager().loadConfig("module.json");
         clickGui = new ClickGuiScreen();
         notificationManager = new NotificationManager();
         commandManager = new CommandManager();

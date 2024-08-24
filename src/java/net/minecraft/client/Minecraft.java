@@ -951,8 +951,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         {
             this.stream.shutdownStream();
             logger.info("Stopping!");
-            Access.getInstance().getConfigManager().saveAllConfig();
+            Access.getInstance().getModuleManager().saveConfig("module.json");
+            Access.getInstance().getDragManager().saveDragData();
             Access.getInstance().getAccountManager().save();
+
             try
             {
                 this.loadWorld(null);

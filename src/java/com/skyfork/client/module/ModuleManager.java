@@ -1,4 +1,5 @@
 package com.skyfork.client.module;
+import com.google.gson.*;
 import com.skyfork.api.cedo.ScoreboardMod;
 import com.skyfork.api.cedo.render.targethud.TargetHUDMod;
 import com.skyfork.api.dxg.CheaterDetector;
@@ -18,6 +19,7 @@ import com.skyfork.api.superskidder.modules.Combo;
 import com.skyfork.api.superskidder.modules.OldAnimation;
 import com.skyfork.api.superskidder.modules.TNTTimer;
 import com.skyfork.api.tgformat.ESP;
+import com.skyfork.client.Access;
 import net.minecraft.util.EnumChatFormatting;
 import com.skyfork.client.annotations.event.EventTarget;
 import com.skyfork.client.annotations.module.*;
@@ -33,9 +35,16 @@ import com.skyfork.api.soar.ArmorStatusMod;
 import com.skyfork.api.soar.GuiClickEffect;
 import com.skyfork.api.soar.InventoryDisplayMod;
 import com.skyfork.api.soar.PackDisplayMod;
+import org.apache.commons.io.FileUtils;
 import tech.skidonion.obfuscator.annotations.NativeObfuscation;
 
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -436,6 +445,89 @@ public final class ModuleManager {
      */
     public void setVisible(Class<?> module, boolean state) {
         this.modules.get(module).setVisible(state);
+    }
+
+    private static final File MODULE_DATA = new File(Access.DIRECTORY, "module.json");
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    public JsonObject save() {
+        JsonObject object = new JsonObject();
+        for (ModuleHandle module : modules.values()){
+            JsonObject moduleObj = new JsonObject();
+            moduleObj.addProperty("Enable",module.isEnabled());
+            moduleObj.addProperty("KeyCode",module.getKey());
+            JsonObject valueObj = new JsonObject();
+            moduleObj.add("Values",valueObj);
+            for (AbstractValue<?> value : module.getValues()){
+                if (value instanceof NumberValue) {
+                    valueObj.addProperty(value.getName(), ((NumberValue) value).getValue());
+                } else if (value instanceof BooleanValue) {
+                    valueObj.addProperty(value.getName(), ((BooleanValue) value).getValue());
+                } else if (value instanceof ComboValue) {
+                    valueObj.addProperty(value.getName(), ((ComboValue) value).getValue());
+                } else if (value instanceof ColorValue) {
+                    valueObj.addProperty(value.getName(), ((ColorValue) value).getValue().getRGB());
+                    //  valueObj.add(value.getName(), ((ColorValue) value).getRainbow().getJsonObject());
+                }
+            }
+            object.add(module.getName(),moduleObj);
+        }
+        return object;
+    }
+
+    public void load(JsonObject object) {
+        for (ModuleHandle module : modules.values()) {
+            if (object.has(module.getName())) {
+                JsonObject moduleObject = object.get(module.getName()).getAsJsonObject();
+                if (moduleObject.has("Enable")) {
+                    module.setEnable(moduleObject.get("Enable").getAsBoolean());
+                }
+                if (moduleObject.has("KeyCode")) {
+                    module.setKey(moduleObject.get("KeyCode").getAsInt());
+                }
+                if (moduleObject.has("Values")) {
+                    JsonObject valuesObject = moduleObject.get("Values").getAsJsonObject();
+                    for (AbstractValue<?> value : module.getValues()) {
+                        if (valuesObject.has(value.getName())) {
+                            JsonElement theValue = valuesObject.get(value.getName());
+                            if (value instanceof NumberValue) {
+                                ((NumberValue) value).setValue(theValue.getAsNumber().doubleValue());
+                            } else if (value instanceof BooleanValue) {
+                                ((BooleanValue) value).setValue(theValue.getAsBoolean());
+                            } else if (value instanceof ComboValue) {
+                                ((ComboValue) value).setValue(theValue.getAsString());
+                            } else if (value instanceof ColorValue) {
+                                ((ColorValue) value).setValue(new Color(theValue.getAsInt()));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void loadConfig(String name) {
+        if (MODULE_DATA.exists()) {
+            System.out.println("Loading config: " + name);
+            try {
+                load(new JsonParser().parse(new FileReader(MODULE_DATA)).getAsJsonObject());
+            } catch (FileNotFoundException e) {
+                System.out.println("Failed to load config: " + name);
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Config " + name + " doesn't exist, creating a new one...");
+            saveConfig("module.json");
+        }
+    }
+    public void saveConfig(String name) {
+        try {
+            System.out.println("Saving config: " + name);
+            MODULE_DATA.createNewFile();
+            FileUtils.writeByteArrayToFile(MODULE_DATA, gson.toJson(save()).getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            System.out.println("Failed to save config: " + name);
+        }
     }
 
     public AbstractValue getSetting(String moduleName, String valueName) {
